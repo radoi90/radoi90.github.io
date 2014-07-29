@@ -1,0 +1,59 @@
+@font-face {
+  font-family: 'molotregular';
+  src: url('molot-webfont.eot');
+  src: url('molot-webfont.eot?#iefix') format("embedded-opentype"), url('molot-webfont.woff') format("woff"), url('molot-webfont.ttf') format("truetype"), url('molot-webfont.svg#molotregular') format("svg");
+  font-weight: normal;
+  font-style: normal;
+}
+.molot {
+  font-family: 'molotregular';
+}
+
+.center {
+  display: block;
+  margin-left: auto;
+  margin-right: auto;
+  text-align: center;
+}
+
+.profile-page {
+  background: #f2f5f6;
+  /* Old browsers */
+  background: -moz-radial-gradient(center, ellipse cover, #f2f5f6 0%, #e3eaed 37%, #b6d1db 100%);
+  /* FF3.6+ */
+  background: -webkit-gradient(radial, center center, 0px, center center, 100%, color-stop(0%, #f2f5f6), color-stop(37%, #e3eaed), color-stop(100%, #b6d1db));
+  /* Chrome,Safari4+ */
+  background: -webkit-radial-gradient(center, ellipse cover, #f2f5f6 0%, #e3eaed 37%, #b6d1db 100%);
+  /* Chrome10+,Safari5.1+ */
+  background: -o-radial-gradient(center, ellipse cover, #f2f5f6 0%, #e3eaed 37%, #b6d1db 100%);
+  /* Opera 12+ */
+  background: -ms-radial-gradient(center, ellipse cover, #f2f5f6 0%, #e3eaed 37%, #b6d1db 100%);
+  /* IE10+ */
+  background: radial-gradient(ellipse at center, #f2f5f6 0%, #e3eaed 37%, #b6d1db 100%);
+  /* W3C */
+  filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#f2f5f6', endColorstr='#b6d1db',GradientType=1 );
+  /* IE6-9 fallback on horizontal gradient */
+  margin: 0;
+  margin-top: 12px;
+  background-repeat: no-repeat;
+  background-attachment: fixed;
+}
+
+.profile-page .header-unit {
+  float: center;
+  margin-bottom: 15px;
+}
+.profile-page .header-unit h1 {
+  font-size: 54px;
+  text-shadow: 0px 4px #fff;
+  font-weight: normal;
+}
+.profile-page .Q {
+  font-size: 72px;
+}
+
+#disclaimer {
+  font-size: 11px;
+  margin: 0;
+  color: rgb(124, 120, 120);
+}

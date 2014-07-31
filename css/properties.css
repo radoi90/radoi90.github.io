@@ -21,7 +21,7 @@ button {
 body {
     font: 14px 'Helvetica Neue', Helvetica, Arial, sans-serif;
     line-height: 1.4em;
-    background: #eeeeee url('../images/bg.png');
+    background: #eeeeee url('../img/bg.png');
     color: #4d4d4d;
     width: 850px;
     margin: 0 auto;
@@ -222,8 +222,9 @@ label[for='view-all'] {
 
 #property-list li .markview {
     text-align: center;
-    padding-left: 10px;
-    width: 30px;
+    position: absolute;
+    display: inline-block;
+    width: 40px;
     height: 40px;
     top: 0;
     bottom: 0;
@@ -237,7 +238,10 @@ label[for='view-all'] {
 
 #property-list li .star {
     text-align: center;
-    width: 20px;
+    position: absolute;
+    display: inline-block;
+    padding-left: 38px;
+    width: 30px;
     height: 40px;
     top: 0;
     bottom: 0;
@@ -251,7 +255,10 @@ label[for='view-all'] {
 
 #property-list li .hide {
     text-align: center;
-    width: 20px;
+    position: absolute;
+    display: inline-block;
+    padding-left: 70px;
+    width: 30px;
     height: 40px;
     top: 0;
     bottom: 0;
@@ -313,7 +320,7 @@ label[for='view-all'] {
 
 #property-list li label {
     word-break: break-word;
-    margin: 15px 15px 15px 60px;
+    margin: 15px 15px 15px 110px;
     display: inline-block;
     line-height: 1.2;
     -webkit-transition: color 0.4s;

@@ -1,5 +1,3 @@
-var search = JSON.parse('{"rental_prices":{"per_week":"725","accurate":"per_week","per_month":"3142"},"num_floors":"0","listing_status":"rent","num_bedrooms":"2","latitude":51.51935,"agent_address":"61 Southwark Street","property_type":"Flat","longitude":-0.105861,"thumbnail_url":"http://li.zoocdn.com/ae63a9fc49e9ee108ab8f1fb3ce86f97ee988ae3_80_60.jpg","description":"A beautifully proportioned, two double bedroom, two bathroom apartment in a sympathetic conversion of a magnificent gothic-styled period building. Over 900 square feet of accommodation is creatively arranged and comprises of a long, double width hallway off which there are two double bedrooms (one en-suite), a family bathroom, and a separate kitchen. The hallway ends with double doors on to the reception room. The proportions of the original building give the apartment a spacious feel. Furnishings and decorations are contemporary and understated.25 Farringdon Road has excellent transport connections thanks to nearby Farringdon Station which offers both Underground and Thameslink rail services. There are also bus services from Blackfriars to Kings Cross from outside the building. There is easy access on foot to Clerkenwell and The City to the East and Hatton Garden and Holborn to the West.BathroomBedroom 1Bedroom 2En-suite bathroomKitchenReception","post_town":"London","details_url":"http://www.zoopla.co.uk/to-rent/details/34027208?utm_source=v1:_aOLSmDUCBfb6xf8ebN-sCStLQQnhaLa&utm_medium=api","short_description":"A beautifully proportioned, two double bedroom, two bathroom apartment in a sympathetic conversion of a magnificent gothic-styled period building. Over 900 square feet of accommodation is creatively arranged and comprises of a long, double width hallway off which there are two double bedrooms ...","outcode":"EC1M","county":"London","price":"725","listing_id":"34027208","image_caption":"Reception","status":"to_rent","agent_name":"Dwell Residential","num_recepts":"0","country":"England","displayable_address":"Farringdon Road, London EC1M","first_published_date":"2014-07-29 21:08:56","floor_plan":["http://lc.zoocdn.com/8605d072260fd7d96ecd7e74bef16f72e7cba956.jpg"],"street_name":"London","num_bathrooms":"0","price_change":[{"date":"2014-07-29 19:05:53","price":"725"}],"agent_logo":"http://st.zoocdn.com/zoopla_static_agent_logo_(35997).data","agent_phone":"020 3318 6636","image_url":"http://li.zoocdn.com/ae63a9fc49e9ee108ab8f1fb3ce86f97ee988ae3_354_255.jpg","last_published_date":"2014-07-29 21:08:56"}');
-
 $(function() {
 
   Parse.$ = jQuery;
@@ -377,16 +375,20 @@ $(function() {
     signUp: function(e) {
       var self = this;
       var email = this.$("#signup-email").val();
-      var username = email;
       var password = this.$("#signup-password").val();
-      
-      Parse.User.signUp(username, password, { ACL: new Parse.ACL() }, {
+
+      var user = new Parse.User();
+      user.set("password", password);
+      user.set("email", email);
+      user.set("username", email);
+      user.set("ACL", new Parse.ACL());
+       
+      user.signUp(null, {
         success: function(user) {
           new ManagePropertiesView();
           self.undelegateEvents();
           delete self;
         },
-
         error: function(user, error) {
           self.$(".signup-form .error").html(error.message).show();
           self.$(".signup-form button").removeAttr("disabled");

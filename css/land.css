@@ -270,7 +270,7 @@ img {
     margin-left: 0;
   }
 }
-@media (max-width: 640) {
+@media (max-width: 640px) {
   .landing-page .col-sm-6 {
     width: 100%;
   }

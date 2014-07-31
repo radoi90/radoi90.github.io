@@ -1,3 +1,11 @@
+@font-face {
+  font-family: 'molotregular';
+  src: url('molot-webfont.eot');
+  src: url('molot-webfont.eot?#iefix') format("embedded-opentype"), url('molot-webfont.woff') format("woff"), url('molot-webfont.ttf') format("truetype"), url('molot-webfont.svg#molotregular') format("svg");
+  font-weight: normal;
+  font-style: normal;
+}
+
 html,body {
     margin: 0;
     padding: 0;
@@ -23,7 +31,6 @@ body {
     line-height: 1.4em;
     background: #eeeeee url('../img/bg.png');
     color: #4d4d4d;
-    width: 850px;
     margin: 0 auto;
     -webkit-font-smoothing: antialiased;
     -moz-font-smoothing: antialiased;
@@ -35,7 +42,8 @@ body {
 #propertyapp {
     background: #fff;
     background: rgba(255, 255, 255, 0.9);
-    margin: 130px 0 40px 0;
+    margin-top: 130px;
+    margin-bottom: 40px;
     border: 1px solid #ccc;
     position: relative;
     border-top-left-radius: 2px;
@@ -54,18 +62,24 @@ body {
 }
 
 #propertyapp h1 {
+    font-family: 'molotregular';
+    color: black;
+    font-size: 54px;
+    text-shadow: 0px 4px #fff;
+    font-weight: normal;
     position: absolute;
     top: -120px;
     width: 100%;
-    font-size: 70px;
-    font-weight: bold;
     text-align: center;
-    color: #888;
     -webkit-text-rendering: optimizeLegibility;
     -moz-text-rendering: optimizeLegibility;
     -ms-text-rendering: optimizeLegibility;
     -o-text-rendering: optimizeLegibility;
     text-rendering: optimizeLegibility;
+}
+
+#propertyapp h1 span {
+    font-size: 66px;
 }
 
 #header {

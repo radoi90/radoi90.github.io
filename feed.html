@@ -3,8 +3,8 @@
   <head>
     <meta charset="utf-8">
     <title>HouseQuest App</title>
-    <link href="css/properties.css" media="all" rel="stylesheet" type="text/css"/>
     <link href="css/bootstrap3.css" rel="stylesheet" type="text/css">
+    <link href="css/properties.css" media="all" rel="stylesheet" type="text/css"/>
     <script src="http://code.jquery.com/jquery-2.0.3.min.js"></script>
     <script src="js/underscore.js"></script>
     <script src="js/json2.js"></script>
@@ -19,7 +19,7 @@
     <!-- Property App Interface -->
 
     <div class="container"> 
-      <div id="propertyapp">
+      <div id="propertyapp" class="col-md-10 col-md-offset-1">
         <div class="title">
           <h1>House<span>Q</span>uest</h1>
         </div>
@@ -63,13 +63,22 @@
           <input id="new-property" placeholder="What property are you adding?" type="text" />
         </header>
 
-        <div id="main">
+        <div class="row-fluid" id="main">
           <input id="view-all" type="checkbox">
           <label for="view-all">Mark all as viewed</label>
           
-          <ul id="property-list">
-            <img src='img/spinner.gif' class='spinner' />
-          </ul>
+          <div class="col-md-5">
+            <iframe width="100%" height="300px"
+              frameborder="0" style="border:0;  margin: 10px 0;"
+              src="https://www.google.com/maps/embed/v1/place?key=AIzaSyDn87RmPxJamjCTxGxTQuu8QNdvrgKQvoI
+                &q=Space+Needle,Seattle+WA">
+            </iframe>
+          </div>
+          <div class="col-md-7">
+            <ul id="property-list">
+              <img src='img/spinner.gif' class='spinner' />
+            </ul>
+          </div>
         </div>
 
         <div id="property-stats"></div>

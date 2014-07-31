@@ -72,19 +72,19 @@
     </script>
 
     <script type="text/template" id="item-template">
-      <li class="<%= starred ? 'starred' : '' %> <%= hidden ? 'hidden' : '' %> <%= viewed ? '' : 'unviewed' %>">
-	<div class="view">
-	  <input class="markview" type="checkbox" <%= viewed ? 'checked="checked"' : '' %>>
-    <input class="star" type="checkbox" <%= starred ? 'checked="checked"' : '' %>>
-    <input class="hide" type="checkbox" <%= hidden ? 'checked="checked"' : '' %>>
-	  <label class="property-content"><%= _.escape(content.displayable_address) %> 
-    <%= _.escape(content.num_bedrooms) %> bed 
-    <%= _.escape(content.num_bathrooms) %> bath 
-    £<%= _.escape(content.rental_prices.per_month) %> pcm
-    </label>
-	  <button class="property-destroy"></button>
-	</div>
-	<input class="edit" value="<%= _.escape(content) %>">
+      <li class="listing <%= starred ? 'starred' : '' %> <%= hidden ? 'hidden' : '' %> <%= viewed ? '' : 'unviewed' %>">
+      	<a class="view" href="<%= _.escape(content.details_url) %>">
+      	  <input class="markview" type="checkbox" <%= viewed ? 'checked="checked"' : '' %>>
+          <input class="star" type="checkbox" <%= starred ? 'checked="checked"' : '' %>>
+          <input class="hide" type="checkbox" <%= hidden ? 'checked="checked"' : '' %>>
+      	  <label class="property-content"><%= _.escape(content.displayable_address) %> 
+          <%= _.escape(content.num_bedrooms) %> bed 
+          <%= _.escape(content.num_bathrooms) %> bath 
+          £<%= _.escape(content.rental_prices.per_month) %> pcm
+          </label>
+      	  <button class="property-destroy"></button>
+      	</a>
+      	<input class="edit" value="<%= _.escape(content) %>">
       </li>
     </script>
 

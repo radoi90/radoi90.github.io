@@ -185,7 +185,6 @@ label[for='view-all'] {
     margin: 0;
     padding: 0;
     list-style: none;
-    text-align: center;
 }
 
 #property-list .spinner {
@@ -195,7 +194,7 @@ label[for='view-all'] {
 #property-list .listing {
     background: #EEEEEE;
     margin: 10px 0;
-    padding: 20px;
+    padding: 10px;
     -moz-box-shadow:    0px 2px 4px 0px rgba(0,0,0,0.50);
     box-shadow:         0px 2px 4px 0px rgba(0,0,0,0.50);
 }

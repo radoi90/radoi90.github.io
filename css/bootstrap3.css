@@ -2049,7 +2049,7 @@ fieldset[disabled] .btn {
 .btn-default.active,
 .open .dropdown-toggle.btn-default {
   color: #333;
-  background-color: #ebebeb;
+  background-color: #FAFAFA;
   border-color: #adadad;
 }
 .btn-default:active,
@@ -5647,9 +5647,6 @@ button.close {
 .pull-left {
   float: left !important;
 }
-.hide {
-  display: none !important;
-}
 .show {
   display: block !important;
 }
@@ -5662,10 +5659,6 @@ button.close {
   text-shadow: none;
   background-color: transparent;
   border: 0;
-}
-.hidden {
-  display: none !important;
-  visibility: hidden !important;
 }
 .affix {
   position: fixed;

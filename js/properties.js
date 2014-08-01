@@ -1,5 +1,3 @@
-var search = JSON.parse('{"rental_prices":{"per_week":"725","accurate":"per_week","per_month":"3142"},"num_floors":"0","listing_status":"rent","num_bedrooms":"2","latitude":51.51935,"agent_address":"61 Southwark Street","property_type":"Flat","longitude":-0.105861,"thumbnail_url":"http://li.zoocdn.com/ae63a9fc49e9ee108ab8f1fb3ce86f97ee988ae3_80_60.jpg","description":"A beautifully proportioned, two double bedroom, two bathroom apartment in a sympathetic conversion of a magnificent gothic-styled period building. Over 900 square feet of accommodation is creatively arranged and comprises of a long, double width hallway off which there are two double bedrooms (one en-suite), a family bathroom, and a separate kitchen. The hallway ends with double doors on to the reception room. The proportions of the original building give the apartment a spacious feel. Furnishings and decorations are contemporary and understated.25 Farringdon Road has excellent transport connections thanks to nearby Farringdon Station which offers both Underground and Thameslink rail services. There are also bus services from Blackfriars to Kings Cross from outside the building. There is easy access on foot to Clerkenwell and The City to the East and Hatton Garden and Holborn to the West.BathroomBedroom 1Bedroom 2En-suite bathroomKitchenReception","post_town":"London","details_url":"http://www.zoopla.co.uk/to-rent/details/34027208?utm_source=v1:_aOLSmDUCBfb6xf8ebN-sCStLQQnhaLa&utm_medium=api","short_description":"A beautifully proportioned, two double bedroom, two bathroom apartment in a sympathetic conversion of a magnificent gothic-styled period building. Over 900 square feet of accommodation is creatively arranged and comprises of a long, double width hallway off which there are two double bedrooms ...","outcode":"EC1M","county":"London","price":"725","listing_id":"34027208","image_caption":"Reception","status":"to_rent","agent_name":"Dwell Residential","num_recepts":"0","country":"England","displayable_address":"Farringdon Road, London EC1M","first_published_date":"2014-07-29 21:08:56","floor_plan":["http://lc.zoocdn.com/8605d072260fd7d96ecd7e74bef16f72e7cba956.jpg"],"street_name":"London","num_bathrooms":"0","price_change":[{"date":"2014-07-29 19:05:53","price":"725"}],"agent_logo":"http://st.zoocdn.com/zoopla_static_agent_logo_(35997).data","agent_phone":"020 3318 6636","image_url":"http://li.zoocdn.com/ae63a9fc49e9ee108ab8f1fb3ce86f97ee988ae3_354_255.jpg","last_published_date":"2014-07-29 21:08:56"}');
-
 $(function() {
 
   Parse.$ = jQuery;
@@ -40,7 +38,7 @@ $(function() {
 
     // Toggle the `starred` state of this property item.
     view: function() {
-      this.save({viewed: !this.get("viewed")});
+      this.save({viewed: true});
     }
   });
 
@@ -202,7 +200,7 @@ $(function() {
     initialize: function() {
       var self = this;
 
-      _.bindAll(this, 'addOne', 'addAll', 'addSome', 'render', 'toggleAllViewed', 'logOut', 'createOnEnter');
+      _.bindAll(this, 'addOne', 'addAll', 'addActive', 'addSome', 'render', 'toggleAllViewed', 'logOut', 'createOnEnter');
 
       // Main property management template
       this.$el.html(_.template($("#manage-properties-template").html()));
@@ -218,7 +216,7 @@ $(function() {
       this.properties.query.equalTo("user", Parse.User.current());
         
       this.properties.bind('add',     this.addOne);
-      this.properties.bind('reset',   this.addAll);
+      this.properties.bind('reset',   this.addActive);
       this.properties.bind('all',     this.render);
 
       // Fetch all the properties items for this user
@@ -240,18 +238,18 @@ $(function() {
     render: function() {
       var starred = this.properties.starred().length;
       var hidden = this.properties.hidden().length;
-      var unviewed = this.properties.unviewed().length;
+      var viewed = this.properties.viewed().length;
 
       this.$('#property-stats').html(this.statsTemplate({
         total:      this.properties.length,
         starred:    starred, 
         hidden:     hidden,
-        unviewed:   unviewed
+        viewed:   viewed
       }));
 
       this.delegateEvents();
 
-      this.allViewIcon.checked = !unviewed;
+      this.allViewIcon.checked = viewed;
     },
 
     // Filters the list based on which type of filter is selected
@@ -272,8 +270,8 @@ $(function() {
         this.addSome(function(item) { return item.get('starred') });
       } else if (filterValue === "hidden") {
         this.addSome(function(item) { return item.get('hidden') });
-      } else if (filterValue === "unviewed") {
-        this.addSome(function(item) { return !item.get('viewed') });
+      } else if (filterValue === "viewed") {
+        this.addSome(function(item) { return item.get('viewed') });
       } else {
         this.addSome(function(item) { return !item.get('hidden') });
       }
@@ -282,8 +280,8 @@ $(function() {
     // Resets the filters to display all properties
     resetFilters: function() {
       this.$("ul#filters a").removeClass("selected");
-      this.$("ul#filters a#all").addClass("selected");
-      this.addAll();
+      this.$("ul#filters a#active").addClass("selected");
+      this.addSome(function(item) { return !item.get('hidden') });
     },
 
     // Add a single property item to the list by creating a view for it, and
@@ -293,10 +291,16 @@ $(function() {
       this.$("#property-list").append(view.render().el);
     },
 
-    // Add all items in the Properties collection at once.
+     // Add all items in the Properties collection at once.
     addAll: function(collection, filter) {
       this.$("#property-list").html("");
       this.properties.each(this.addOne);
+    },
+
+    // Add all active items in the Properties collection at once.
+    addActive: function(collection, filter) {
+      this.$("#property-list").html("");
+      this.addSome(function(item) { return !item.get('hidden') });
     },
 
     // Only adds some properties, based on a filtering function that is passed in
@@ -377,16 +381,20 @@ $(function() {
     signUp: function(e) {
       var self = this;
       var email = this.$("#signup-email").val();
-      var username = email;
       var password = this.$("#signup-password").val();
-      
-      Parse.User.signUp(username, password, { ACL: new Parse.ACL() }, {
+
+      var user = new Parse.User();
+      user.set("password", password);
+      user.set("email", email);
+      user.set("username", email);
+      user.set("ACL", new Parse.ACL());
+       
+      user.signUp(null, {
         success: function(user) {
           new ManagePropertiesView();
           self.undelegateEvents();
           delete self;
         },
-
         error: function(user, error) {
           self.$(".signup-form .error").html(error.message).show();
           self.$(".signup-form button").removeAttr("disabled");
@@ -425,14 +433,15 @@ $(function() {
 
   var AppRouter = Parse.Router.extend({
     routes: {
-      "all": "all",
       "active": "active",
+      "all": "all",
       "starred": "starred",
       "hidden": "hidden",
-      "unviewed": "unviewed"
+      "viewed": "viewed"
     },
 
     initialize: function(options) {
+      state.set({ filter: "active" });
     },
 
     all: function() {
@@ -451,8 +460,8 @@ $(function() {
       state.set({ filter: "hidden" });
     },
 
-    unviewed: function() {
-      state.set({ filter: "unviewed" });
+    viewed: function() {
+      state.set({ filter: "viewed" });
     }
   });
 

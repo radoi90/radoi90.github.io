@@ -1,3 +1,11 @@
+@font-face {
+  font-family: 'molotregular';
+  src: url('molot-webfont.eot');
+  src: url('molot-webfont.eot?#iefix') format("embedded-opentype"), url('molot-webfont.woff') format("woff"), url('molot-webfont.ttf') format("truetype"), url('molot-webfont.svg#molotregular') format("svg");
+  font-weight: normal;
+  font-style: normal;
+}
+
 html,body {
     margin: 0;
     padding: 0;
@@ -21,9 +29,8 @@ button {
 body {
     font: 14px 'Helvetica Neue', Helvetica, Arial, sans-serif;
     line-height: 1.4em;
-    background: #eeeeee url('../images/bg.png');
+    background: #eeeeee url('../img/bg.png');
     color: #4d4d4d;
-    width: 850px;
     margin: 0 auto;
     -webkit-font-smoothing: antialiased;
     -moz-font-smoothing: antialiased;
@@ -35,25 +42,15 @@ body {
 #propertyapp {
     background: #fff;
     background: rgba(255, 255, 255, 0.9);
-    margin: 130px 0 40px 0;
+    padding: 0;
+    margin-top: 130px;
+    margin-bottom: 40px;
     border: 1px solid #ccc;
     position: relative;
     border-top-left-radius: 2px;
     border-top-right-radius: 2px;
     box-shadow: 0 2px 6px 0 rgba(0, 0, 0, 0.2),
     0 25px 50px 0 rgba(0, 0, 0, 0.15);
-}
-
-#propertyapp:before {
-    content: '';
-    border-left: 1px solid #f5d6d6;
-    border-right: 1px solid #f5d6d6;
-    width: 2px;
-    position: absolute;
-    top: 45px;
-    top: 0px;
-    left: 90px;
-    height: 100%;
 }
 
 #propertyapp input::-webkit-input-placeholder {
@@ -66,13 +63,15 @@ body {
 }
 
 #propertyapp h1 {
+    font-family: 'molotregular';
+    color: black;
+    font-size: 54px;
+    text-shadow: 0px 4px #fff;
+    font-weight: normal;
     position: absolute;
     top: -120px;
     width: 100%;
-    font-size: 70px;
-    font-weight: bold;
     text-align: center;
-    color: #888;
     -webkit-text-rendering: optimizeLegibility;
     -moz-text-rendering: optimizeLegibility;
     -ms-text-rendering: optimizeLegibility;
@@ -80,8 +79,8 @@ body {
     text-rendering: optimizeLegibility;
 }
 
-.section {
-    position: relative;
+#propertyapp h1 span {
+    font-size: 66px;
 }
 
 #header {
@@ -92,7 +91,7 @@ body {
 #header:before {
     content: '';
     position: absolute;
-    top: 0;
+    top: 30px;
     right: 0;
     left: 0;
     height: 15px;
@@ -186,22 +185,86 @@ label[for='view-all'] {
     margin: 0;
     padding: 0;
     list-style: none;
-    text-align: center;
 }
 
 #property-list .spinner {
     margin: 15px auto;
 }
 
-#property-list li {
-    text-align: left;
-    position: relative;
-    font-size: 24px;
-    border-bottom: 1px dotted #ccc;
+#property-list .listing {
+    background: #EEEEEE;
+    margin: 10px 0;
+    padding: 10px;
+    -moz-box-shadow:    0px 2px 4px 0px rgba(0,0,0,0.50);
+    box-shadow:         0px 2px 4px 0px rgba(0,0,0,0.50);
 }
 
-#property-list li:last-child {
-    border-bottom: none;
+#property-list .listing>a{
+    display: block;
+}
+
+a {
+    text-decoration: none;
+}
+
+.listing_image {
+    padding-right: 0;
+}
+
+.listing_headline {
+    margin-top: 12px;
+    margin-bottom: 13px;
+}
+
+.listing_headline .col-xs-3 {
+    padding-left: 10px;
+    padding-right: 10px;
+}
+
+.listing_headline p {
+    margin-bottom: 5px;
+    font-family: HelveticaNeue-Thin;
+    font-size: 17px;
+    color: #6F6F6F;
+    text-align: center;
+}
+
+.listing_headline h3 {
+    margin: 0;
+    font-family: HelveticaNeue-Thin;
+    font-weight: bold;
+    font-size: 16px;
+    color: #000000;
+    text-align: center;
+}
+
+.listing_location {
+    padding-right: 0;
+}
+
+.listing_location p, h4 {
+    margin-top: 0;
+    margin-bottom: 5px;
+    white-space: nowrap;
+    overflow: scroll;
+}
+
+.listing_options {
+    margin-top: 10px;
+}
+
+.listing_options .btn {
+    width: 100%;
+    height: 40px;
+}
+
+.listing_options .col-xs-8 {
+    padding: 0;
+}
+
+.listing_options .col-xs-2 {
+    padding-left: 8px;
+    padding-right: 0;
 }
 
 #property-list li.editing {
@@ -221,12 +284,6 @@ label[for='view-all'] {
 }
 
 #property-list li .markview {
-    text-align: center;
-    padding-left: 10px;
-    width: 30px;
-    height: 40px;
-    top: 0;
-    bottom: 0;
     margin: auto 0;
     border: none; /* Mobile Safari */
     -webkit-appearance: none;
@@ -236,11 +293,6 @@ label[for='view-all'] {
 }
 
 #property-list li .star {
-    text-align: center;
-    width: 20px;
-    height: 40px;
-    top: 0;
-    bottom: 0;
     margin: auto 0;
     border: none; /* Mobile Safari */
     -webkit-appearance: none;
@@ -250,11 +302,6 @@ label[for='view-all'] {
 }
 
 #property-list li .hide {
-    text-align: center;
-    width: 20px;
-    height: 40px;
-    top: 0;
-    bottom: 0;
     margin: auto 0;
     border: none; /* Mobile Safari */
     -webkit-appearance: none;
@@ -264,19 +311,17 @@ label[for='view-all'] {
 }
 
 #property-list li .markview:after {
-    font-size: 18px;
-    content: '✔';
-    line-height: 43px; /* 40 + a couple of pixels visual adjustment */
-    font-size: 20px;
-    color: #d9d9d9;
+    content: 'ARRANGE VIEWING';
+    line-height: 41px; /* 40 + a couple of pixels visual adjustment */
     text-shadow: 0 -1px 0 #bfbfbf;
+    letter-spacing: 2px;
+    font-family: HelveticaNeue-Thin;
 }
 
 #property-list li .star:after {
-    font-size: 18px;
-    content: '★';
-    line-height: 43px; /* 40 + a couple of pixels visual adjustment */
     font-size: 20px;
+    content: '★';
+    line-height: 41px; /* 40 + a couple of pixels visual adjustment */
     color: #d9d9d9;
     text-shadow: 0 -1px 0 #bfbfbf;
 }
@@ -284,14 +329,13 @@ label[for='view-all'] {
 #property-list li .hide:after {
     font-size: 18px;
     content: '✗';
-    line-height: 43px; /* 40 + a couple of pixels visual adjustment */
-    font-size: 20px;
+    line-height: 41px; /* 40 + a couple of pixels visual adjustment */
     color: #d9d9d9;
     text-shadow: 0 -1px 0 #bfbfbf;
 }
 
 #property-list li .markview:checked:after {
-    color: #85ada7;
+    content: 'VIEWING PENDING';
     text-shadow: 0 1px 0 #669991;
     bottom: 1px;
     position: relative;
@@ -313,7 +357,7 @@ label[for='view-all'] {
 
 #property-list li label {
     word-break: break-word;
-    margin: 15px 15px 15px 60px;
+    margin: 15px 15px 15px 110px;
     display: inline-block;
     line-height: 1.2;
     -webkit-transition: color 0.4s;
@@ -329,8 +373,6 @@ label[for='view-all'] {
 }
 
 #property-list li .property-destroy {
-    display: none;
-    position: absolute;
     top: 0;
     right: 10px;
     bottom: 0;
@@ -360,10 +402,6 @@ label[for='view-all'] {
     content: '✖';
 }
 
-#property-list li:hover .property-destroy {
-    display: block;
-}
-
 #property-list li .edit {
     display: none;
 }
@@ -387,11 +425,11 @@ label[for='view-all'] {
     content: '';
     position: absolute;
     right: 0;
-    bottom: 31px;
+    bottom: 30px;
     left: 0;
     height: 100px;
     z-index: -1;
-    box-shadow: 0 1px 1px rgba(0, 0, 0, 0.3),
+    box-shadow:
     0 6px 0 -3px rgba(255, 255, 255, 0.8),
     0 7px 1px -3px rgba(0, 0, 0, 0.3),
     0 42px 0 -6px rgba(255, 255, 255, 0.8),

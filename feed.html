@@ -3,29 +3,30 @@
   <head>
     <meta charset="utf-8">
     <title>HouseQuest App</title>
+    <link href="css/bootstrap3.css" rel="stylesheet" type="text/css">
     <link href="css/properties.css" media="all" rel="stylesheet" type="text/css"/>
     <script src="http://code.jquery.com/jquery-2.0.3.min.js"></script>
     <script src="js/underscore.js"></script>
     <script src="js/json2.js"></script>
     <script src="http://www.parsecdn.com/js/parse-1.2.13.min.js"></script>
     <script src="js/properties.js"></script>
+
+    <meta name="viewport" content="width=device-width, initial-scale=1">
   </head>
 
   <body>
 
     <!-- Property App Interface -->
 
-    <div id="propertyapp">
-      <div class="title">
-        <h1>HouseQuest Properties</h1>
-      </div>
+    <div class="container"> 
+      <div id="propertyapp" class="col-md-10 col-md-offset-1">
+        <div class="title">
+          <h1>House<span>Q</span>uest</h1>
+        </div>
 
-      <div class="content">
+        <div class="content">
+        </div>
       </div>
-    </div>
-
-    <div id="credits">
-      Powered by <a href="https://www.parse.com">Parse</a> using the <a href="https://www.parse.com/docs/js_guide">JavaScript SDK</a>.
     </div>
 
     <!-- Templates -->
@@ -62,13 +63,23 @@
           <input id="new-property" placeholder="What property are you adding?" type="text" />
         </header>
 
-        <div id="main">
+        <div class="row-fluid" id="main">
           <input id="view-all" type="checkbox">
           <label for="view-all">Mark all as viewed</label>
           
-          <ul id="property-list">
-            <img src='images/spinner.gif' class='spinner' />
-          </ul>
+          <div class="col-md-5">
+            <iframe width="100%" height="300px"
+              frameborder="0" style="border:0;  margin: 10px 0;"
+              src="https://www.google.com/maps/embed/v1/place?key=AIzaSyDn87RmPxJamjCTxGxTQuu8QNdvrgKQvoI
+                &q=Big+Ben,London+UK">
+            </iframe>
+          </div>
+
+          <div class="col-md-7">
+            <ul id="property-list">
+              <img src='img/spinner.gif' class='spinner' />
+            </ul>
+          </div>
         </div>
 
         <div id="property-stats"></div>
@@ -76,41 +87,77 @@
     </script>
 
     <script type="text/template" id="item-template">
-      <li class="<%= starred ? 'starred' : '' %> <%= hidden ? 'hidden' : '' %> <%= viewed ? '' : 'unviewed' %>">
-	<div class="view">
-	  <input class="markview" type="checkbox" <%= viewed ? 'checked="checked"' : '' %>>
-    <input class="star" type="checkbox" <%= starred ? 'checked="checked"' : '' %>>
-    <input class="hide" type="checkbox" <%= hidden ? 'checked="checked"' : '' %>>
-	  <label class="property-content"><%= _.escape(content.displayable_address) %> 
-    <%= _.escape(content.num_bedrooms) %> bed 
-    <%= _.escape(content.num_bathrooms) %> bath 
-    £<%= _.escape(content.rental_prices.per_month) %> pcm
-    </label>
-	  <button class="property-destroy"></button>
-	</div>
-	<input class="edit" value="<%= _.escape(content) %>">
+      <li class="listing <%= starred ? 'starred' : '' %> <%= hidden ? 'hidden' : '' %> <%= viewed ? '' : 'unviewed' %>">
+      	<a class="view row" href="<%= _.escape(content.details_url) %>">
+          <div class="listing_image col-xs-5">
+            <img src="<%= _.escape(content.image_url) %>" style="width: 100%;">
+          </div>
+
+          <div class="listing_info col-xs-7">
+           <div class="row-fluid listing_location">
+              <h4><%=_.escape(content.property_type) %> for <%=_.escape(content.listing_status) %> in:</h4>
+              <p><%= _.escape(content.street_name) %> <%= _.escape(content.outcode) %></p>
+            </div>
+           
+            <div class="row listing_headline">
+              <div class="col-xs-3">
+                <p>BEDS</p>
+                <h3><%=_.escape(content.num_bedrooms)%></h3>
+              </div>
+
+              <div class="col-xs-3">
+                <p>BATHS</p>
+                <h3><%=_.escape(content.num_bathrooms)%></h3>
+              </div>
+
+              <div class="col-xs-3">
+                <p>LOUNGE</p>
+                <h3><%=_.escape(content.num_recepts)%></h3>
+              </div>
+
+              <div class="col-xs-3">
+                <p>PCM</p>
+                <h3>£<%=_.escape(content.rental_prices.per_month)%></h3>
+              </div>
+            </div>
+
+            <div class="row-fluid listing_options">
+              <div class="col-xs-8">
+                <input class="markview btn btn-primary" type="checkbox" <%= viewed ? 'checked="checked"' : '' %>> 
+              </div>
+              <div class="col-xs-2">
+                <input class="star btn btn-default" type="checkbox" <%= starred ? 'checked="checked"' : '' %>>
+              </div>
+              <div class="col-xs-2">
+                <input class="hide btn btn-default" type="checkbox" <%= hidden ? 'checked="checked"' : '' %>> 
+              </div>
+            </div>            
+          </div>
+      	</a>
+      	<input class="edit" value="<%= _.escape(content) %>">
       </li>
     </script>
 
     <script type="text/template" id="stats-template">
       <footer id="footer">
-	<span id="property-count"><strong><%= unviewed %></strong> <%= unviewed == 1 ? 'property' : 'properties' %> still not viewed</span>
+	<span id="property-count"><strong><%= viewed %></strong> <%= viewed == 1 ? 'viewing' : 'viewings' %> requested</span>
 	<ul id="filters">
+    <li>
+      <a href="javascript:void(0)" id="active" class="selected">Active</a>
+    </li>
+    <li>
+      <a href="javascript:void(0)" id="starred">Starred</a>
+    </li>
+    <li>
+      <a href="javascript:void(0)" id="viewed">Viewings</a>
+    </li>
 	  <li>
-	    <a href="javascript:void(0)" id="all" class="selected">All</a>
-	  </li>
-	  <li>
-	    <a href="javascript:void(0)" id="active">Active</a>
-	  </li>
-	  <li>
-	    <a href="javascript:void(0)" id="starred">Starred</a>
+	    <a href="javascript:void(0)" id="all">All</a>
 	  </li>
     <li>
       <a href="javascript:void(0)" id="hidden">Hidden</a>
     </li>
-    <li>
-      <a href="javascript:void(0)" id="unviewed">Not viewed</a>
-    </li>
+    
 	</ul>
 	<button id="clear-hidden">Clear hidden (<%= hidden %>)</button>
       </footer>

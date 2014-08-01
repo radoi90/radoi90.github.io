@@ -1,3 +1,23 @@
+var dateDiff = function(date) {
+  var milisDiff = new Date() - date, 
+        secDiff = milisDiff / 1000,
+        minDiff = secDiff / 60,
+          hDiff = minDiff / 60,
+        dayDiff = hDiff / 24,
+       weekDiff = dayDiff/7;
+
+  if (weekDiff >= 2) return Math.floor(weekDiff) + " weeks ago";
+  else if (weekDiff >=1) return "1 week ago";
+  else if (dayDiff >=2) return Math.floor(dayDiff) + " days ago";
+  else if (dayDiff >=1) return "1 day ago";
+  else if (hDiff >=2) return Math.floor(hDiff) + " hours ago";
+  else if (hDiff >=1) return "1 hour ago";
+  else if (minDiff >=2) return Math.floor(minDiff) +  " minutes ago";
+  else if (minDiff >=1) return "1 minute ago";
+  else if (secDiff >=2) return Math.floor(secDiff) + " seconds ago";
+  else return "moments ago";
+}
+
 $(function() {
 
   Parse.$ = jQuery;
@@ -45,7 +65,7 @@ $(function() {
   // This is the transient application state, not persisted on Parse
   var AppState = Parse.Object.extend("AppState", {
     defaults: {
-      filter: "all"
+      filter: "active"
     }
   });
 
@@ -91,7 +111,7 @@ $(function() {
 
     // Properties are sorted by their original insertion order.
     comparator: function(property) {
-      return property.get('order');
+      return -Date.parse(property.get('content').last_published_date);
     }
 
   });
@@ -138,6 +158,8 @@ $(function() {
     // Toggle the `"star"` state of the model.
     toggleStar: function() {
       this.model.star();
+      var d = Date.parse("2014-07-28 07:48:27"), today = new Date();
+      console.log(dateDiff(today,d));
     },
 
     // Toggle the `"hidden"` state of the model.

@@ -213,7 +213,7 @@ label[for='view-all'] {
 #property-list .listing {
     background: #EEEEEE;
     margin: 10px 0;
-    padding: 10px;
+    padding: 10px 10px 0 10px;
     -moz-box-shadow:    0px 2px 4px 0px rgba(0,0,0,0.50);
     box-shadow:         0px 2px 4px 0px rgba(0,0,0,0.50);
 }
@@ -284,6 +284,11 @@ a {
 .listing_options .col-xs-2 {
     padding-left: 8px;
     padding-right: 0;
+}
+
+.listing_age p {
+    font-size: 10px;
+    margin: 0;
 }
 
 #property-list li.editing {

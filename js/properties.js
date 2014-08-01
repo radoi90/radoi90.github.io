@@ -38,7 +38,7 @@ $(function() {
 
     // Toggle the `starred` state of this property item.
     view: function() {
-      this.save({viewed: !this.get("viewed")});
+      this.save({viewed: true});
     }
   });
 

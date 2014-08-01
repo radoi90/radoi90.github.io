@@ -207,8 +207,58 @@ a {
     text-decoration: none;
 }
 
-#property-list li:last-child {
-    border-bottom: none;
+.listing_image {
+    padding-right: 0;
+}
+
+.listing_headline .col-xs-3 {
+    padding-left: 10px;
+    padding-right: 10px;
+}
+
+.listing_headline p {
+    margin-bottom: 5px;
+    font-family: HelveticaNeue-Thin;
+    font-size: 17px;
+    color: #6F6F6F;
+    text-align: center;
+}
+
+.listing_headline h3 {
+    margin: 0;
+    font-family: HelveticaNeue-Thin;
+    font-weight: bold;
+    font-size: 16px;
+    color: #000000;
+    text-align: center;
+}
+
+.listing_location {
+    padding-right: 0;
+}
+
+.listing_location p, h4 {
+    margin-bottom: 0;
+    white-space: nowrap;
+    overflow: scroll;
+}
+
+.listing_options {
+    margin-top: 10px;
+}
+
+.listing_options .btn {
+    width: 100%;
+    height: 40px;
+}
+
+.listing_options .col-xs-8 {
+    padding: 0;
+}
+
+.listing_options .col-xs-2 {
+    padding-left: 8px;
+    padding-right: 0;
 }
 
 #property-list li.editing {
@@ -228,12 +278,6 @@ a {
 }
 
 #property-list li .markview {
-    text-align: center;
-    display: inline-block;
-    width: 40px;
-    height: 40px;
-    top: 0;
-    bottom: 0;
     margin: auto 0;
     border: none; /* Mobile Safari */
     -webkit-appearance: none;
@@ -243,12 +287,6 @@ a {
 }
 
 #property-list li .star {
-    text-align: center;
-    display: inline-block;
-    width: 30px;
-    height: 40px;
-    top: 0;
-    bottom: 0;
     margin: auto 0;
     border: none; /* Mobile Safari */
     -webkit-appearance: none;
@@ -258,12 +296,6 @@ a {
 }
 
 #property-list li .hide {
-    text-align: center;
-    display: inline-block;
-    width: 30px;
-    height: 40px;
-    top: 0;
-    bottom: 0;
     margin: auto 0;
     border: none; /* Mobile Safari */
     -webkit-appearance: none;
@@ -273,19 +305,17 @@ a {
 }
 
 #property-list li .markview:after {
-    font-size: 18px;
-    content: '✔';
-    line-height: 43px; /* 40 + a couple of pixels visual adjustment */
-    font-size: 20px;
-    color: #d9d9d9;
+    content: 'ARRANGE VIEWING';
+    line-height: 41px; /* 40 + a couple of pixels visual adjustment */
     text-shadow: 0 -1px 0 #bfbfbf;
+    letter-spacing: 2px;
+    font-family: HelveticaNeue-Thin;
 }
 
 #property-list li .star:after {
-    font-size: 18px;
-    content: '★';
-    line-height: 43px; /* 40 + a couple of pixels visual adjustment */
     font-size: 20px;
+    content: '★';
+    line-height: 41px; /* 40 + a couple of pixels visual adjustment */
     color: #d9d9d9;
     text-shadow: 0 -1px 0 #bfbfbf;
 }
@@ -293,14 +323,13 @@ a {
 #property-list li .hide:after {
     font-size: 18px;
     content: '✗';
-    line-height: 43px; /* 40 + a couple of pixels visual adjustment */
-    font-size: 20px;
+    line-height: 41px; /* 40 + a couple of pixels visual adjustment */
     color: #d9d9d9;
     text-shadow: 0 -1px 0 #bfbfbf;
 }
 
 #property-list li .markview:checked:after {
-    color: #85ada7;
+    content: 'VIEWING PENDING';
     text-shadow: 0 1px 0 #669991;
     bottom: 1px;
     position: relative;

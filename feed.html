@@ -94,6 +94,11 @@
           </div>
 
           <div class="listing_info col-xs-7">
+           <div class="row-fluid listing_location">
+              <h4><%=_.escape(content.property_type) %> for <%=_.escape(content.listing_status) %> in:</h4>
+              <p><%= _.escape(content.street_name) %> <%= _.escape(content.outcode) %></p>
+            </div>
+           
             <div class="row listing_headline">
               <div class="col-xs-3">
                 <p>BEDS</p>
@@ -116,13 +121,6 @@
               </div>
             </div>
 
-            <div class="row">
-              <div class="col-xs-10 listing_location">
-                <h4><%=_.escape(content.property_type) %> for <%=_.escape(content.listing_status) %> in:</h4>
-                <p><%= _.escape(content.street_name) %>, <%= _.escape(content.outcode) %></p>
-              </div>
-            </div>
-
             <div class="row-fluid listing_options">
               <div class="col-xs-8">
                 <input class="markview btn btn-primary" type="checkbox" <%= viewed ? 'checked="checked"' : '' %>> 
@@ -142,23 +140,24 @@
 
     <script type="text/template" id="stats-template">
       <footer id="footer">
-	<span id="property-count"><strong><%= unviewed %></strong> <%= unviewed == 1 ? 'property' : 'properties' %> still not viewed</span>
+	<span id="property-count"><strong><%= viewed %></strong> <%= viewed == 1 ? 'viewing' : 'viewings' %> requested</span>
 	<ul id="filters">
+    <li>
+      <a href="javascript:void(0)" id="active" class="selected">Active</a>
+    </li>
+    <li>
+      <a href="javascript:void(0)" id="starred">Starred</a>
+    </li>
+    <li>
+      <a href="javascript:void(0)" id="viewed">Viewings</a>
+    </li>
 	  <li>
-	    <a href="javascript:void(0)" id="all" class="selected">All</a>
-	  </li>
-	  <li>
-	    <a href="javascript:void(0)" id="active">Active</a>
-	  </li>
-	  <li>
-	    <a href="javascript:void(0)" id="starred">Starred</a>
+	    <a href="javascript:void(0)" id="all">All</a>
 	  </li>
     <li>
       <a href="javascript:void(0)" id="hidden">Hidden</a>
     </li>
-    <li>
-      <a href="javascript:void(0)" id="unviewed">Not viewed</a>
-    </li>
+    
 	</ul>
 	<button id="clear-hidden">Clear hidden (<%= hidden %>)</button>
       </footer>

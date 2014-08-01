@@ -211,6 +211,11 @@ a {
     padding-right: 0;
 }
 
+.listing_headline {
+    margin-top: 12px;
+    margin-bottom: 13px;
+}
+
 .listing_headline .col-xs-3 {
     padding-left: 10px;
     padding-right: 10px;
@@ -238,7 +243,8 @@ a {
 }
 
 .listing_location p, h4 {
-    margin-bottom: 0;
+    margin-top: 0;
+    margin-bottom: 5px;
     white-space: nowrap;
     overflow: scroll;
 }

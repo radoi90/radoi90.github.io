@@ -200,7 +200,7 @@ $(function() {
     initialize: function() {
       var self = this;
 
-      _.bindAll(this, 'addOne', 'addAll', 'addSome', 'render', 'toggleAllViewed', 'logOut', 'createOnEnter');
+      _.bindAll(this, 'addOne', 'addAll', 'addActive', 'addSome', 'render', 'toggleAllViewed', 'logOut', 'createOnEnter');
 
       // Main property management template
       this.$el.html(_.template($("#manage-properties-template").html()));
@@ -216,7 +216,7 @@ $(function() {
       this.properties.query.equalTo("user", Parse.User.current());
         
       this.properties.bind('add',     this.addOne);
-      this.properties.bind('reset',   this.addAll);
+      this.properties.bind('reset',   this.addActive);
       this.properties.bind('all',     this.render);
 
       // Fetch all the properties items for this user
@@ -238,18 +238,18 @@ $(function() {
     render: function() {
       var starred = this.properties.starred().length;
       var hidden = this.properties.hidden().length;
-      var unviewed = this.properties.unviewed().length;
+      var viewed = this.properties.viewed().length;
 
       this.$('#property-stats').html(this.statsTemplate({
         total:      this.properties.length,
         starred:    starred, 
         hidden:     hidden,
-        unviewed:   unviewed
+        viewed:   viewed
       }));
 
       this.delegateEvents();
 
-      this.allViewIcon.checked = !unviewed;
+      this.allViewIcon.checked = viewed;
     },
 
     // Filters the list based on which type of filter is selected
@@ -270,8 +270,8 @@ $(function() {
         this.addSome(function(item) { return item.get('starred') });
       } else if (filterValue === "hidden") {
         this.addSome(function(item) { return item.get('hidden') });
-      } else if (filterValue === "unviewed") {
-        this.addSome(function(item) { return !item.get('viewed') });
+      } else if (filterValue === "viewed") {
+        this.addSome(function(item) { return item.get('viewed') });
       } else {
         this.addSome(function(item) { return !item.get('hidden') });
       }
@@ -280,8 +280,8 @@ $(function() {
     // Resets the filters to display all properties
     resetFilters: function() {
       this.$("ul#filters a").removeClass("selected");
-      this.$("ul#filters a#all").addClass("selected");
-      this.addAll();
+      this.$("ul#filters a#active").addClass("selected");
+      this.addSome(function(item) { return !item.get('hidden') });
     },
 
     // Add a single property item to the list by creating a view for it, and
@@ -291,10 +291,16 @@ $(function() {
       this.$("#property-list").append(view.render().el);
     },
 
-    // Add all items in the Properties collection at once.
+     // Add all items in the Properties collection at once.
     addAll: function(collection, filter) {
       this.$("#property-list").html("");
       this.properties.each(this.addOne);
+    },
+
+    // Add all active items in the Properties collection at once.
+    addActive: function(collection, filter) {
+      this.$("#property-list").html("");
+      this.addSome(function(item) { return !item.get('hidden') });
     },
 
     // Only adds some properties, based on a filtering function that is passed in
@@ -427,14 +433,15 @@ $(function() {
 
   var AppRouter = Parse.Router.extend({
     routes: {
-      "all": "all",
       "active": "active",
+      "all": "all",
       "starred": "starred",
       "hidden": "hidden",
-      "unviewed": "unviewed"
+      "viewed": "viewed"
     },
 
     initialize: function(options) {
+      state.set({ filter: "active" });
     },
 
     all: function() {
@@ -453,8 +460,8 @@ $(function() {
       state.set({ filter: "hidden" });
     },
 
-    unviewed: function() {
-      state.set({ filter: "unviewed" });
+    viewed: function() {
+      state.set({ filter: "viewed" });
     }
   });
 

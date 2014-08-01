@@ -27,9 +27,28 @@ button {
 }
 
 body {
+    background: #f2f5f6;
+    /* Old browsers */
+    background: -moz-radial-gradient(center, ellipse cover, #f2f5f6 0%, #e3eaed 37%, #b6d1db 100%);
+    /* FF3.6+ */
+    background: -webkit-gradient(radial, center center, 0px, center center, 100%, color-stop(0%, #f2f5f6), color-stop(37%, #e3eaed), color-stop(100%, #b6d1db));
+    /* Chrome,Safari4+ */
+    background: -webkit-radial-gradient(center, ellipse cover, #f2f5f6 0%, #e3eaed 37%, #b6d1db 100%);
+    /* Chrome10+,Safari5.1+ */
+    background: -o-radial-gradient(center, ellipse cover, #f2f5f6 0%, #e3eaed 37%, #b6d1db 100%);
+    /* Opera 12+ */
+    background: -ms-radial-gradient(center, ellipse cover, #f2f5f6 0%, #e3eaed 37%, #b6d1db 100%);
+    /* IE10+ */
+    background: radial-gradient(ellipse at center, #f2f5f6 0%, #e3eaed 37%, #b6d1db 100%);
+    /* W3C */
+    filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#f2f5f6', endColorstr='#b6d1db',GradientType=1 );
+    /* IE6-9 fallback on horizontal gradient */
+    margin: 0;
+    margin-top: 25px;
+    background-repeat: no-repeat;
+    background-attachment: fixed;
     font: 14px 'Helvetica Neue', Helvetica, Arial, sans-serif;
     line-height: 1.4em;
-    background: #eeeeee url('../img/bg.png');
     color: #4d4d4d;
     margin: 0 auto;
     -webkit-font-smoothing: antialiased;
@@ -99,7 +118,7 @@ body {
     border-bottom: 1px solid #6c615c;
     background: #8d7d77;
     background: -webkit-gradient(linear, left top, left bottom, from(rgba(132, 110, 100, 0.8)),to(rgba(101, 84, 76, 0.8)));
-    background: -webkit-linear-gradient(top, rgba(132, 110, 100, 0.8), rgba(101, 84, 76, 0.8));
+    background: -webkit-linear-gradient(top, rgba(26, 101, 184, 0.8), rgba(126, 161, 199, 0.8)););
     background: -moz-linear-gradient(top, rgba(132, 110, 100, 0.8), rgba(101, 84, 76, 0.8));
     background: -o-linear-gradient(top, rgba(132, 110, 100, 0.8), rgba(101, 84, 76, 0.8));
     background: -ms-linear-gradient(top, rgba(132, 110, 100, 0.8), rgba(101, 84, 76, 0.8));
@@ -332,6 +351,10 @@ a {
     line-height: 41px; /* 40 + a couple of pixels visual adjustment */
     color: #d9d9d9;
     text-shadow: 0 -1px 0 #bfbfbf;
+}
+
+#property-list li .markview:checked {
+    background-color: rgba(79, 130, 146, 0.69);
 }
 
 #property-list li .markview:checked:after {

@@ -18,6 +18,28 @@ var dateDiff = function(date) {
   else return "moments ago";
 }
 
+var map;
+
+function initializeMap() {
+  var mapOptions = {
+    zoom: 15,
+    center: new google.maps.LatLng(51.53, -0.1)
+  }
+  
+  map = new google.maps.Map(document.getElementById('map-canvas'),
+                                mapOptions);
+}
+
+function setMarker(map, property) {
+  var myLatLng = new google.maps.LatLng(property.get('content').latitude, property.get('content').longitude);
+  var marker = new google.maps.Marker({
+      position: myLatLng,
+      map: map,
+      title: property.get('order') + "",
+      zIndex: property.get('order')
+  });
+}
+
 $(function() {
 
   Parse.$ = jQuery;
@@ -311,17 +333,20 @@ $(function() {
     addOne: function(property) {
       var view = new PropertyView({model: property});
       this.$("#property-list").append(view.render().el);
+      setMarker(map, property);
     },
 
      // Add all items in the Properties collection at once.
     addAll: function(collection, filter) {
       this.$("#property-list").html("");
+      initializeMap();
       this.properties.each(this.addOne);
     },
 
     // Add all active items in the Properties collection at once.
     addActive: function(collection, filter) {
       this.$("#property-list").html("");
+      initializeMap();
       this.addSome(function(item) { return !item.get('hidden') });
     },
 
@@ -329,6 +354,7 @@ $(function() {
     addSome: function(filter) {
       var self = this;
       this.$("#property-list").html("");
+      initializeMap();
       this.properties.chain().filter(filter).each(function(item) { self.addOne(item) });
     },
 

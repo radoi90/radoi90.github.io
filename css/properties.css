@@ -11,6 +11,15 @@ html,body {
     padding: 0;
 }
 
+#map-col {
+    padding-right: 0;
+}
+
+#map-canvas {
+    height: 300px;
+    margin-top: 10px;
+}
+
 button {
     margin: 0;
     padding: 0;
@@ -228,6 +237,12 @@ a {
 
 .listing_image {
     padding-right: 0;
+    padding-bottom: 10px;   
+}
+
+.listing_image img {
+    width: 100%;
+    max-width: 220px;
 }
 
 .listing_headline {
@@ -235,7 +250,7 @@ a {
     margin-bottom: 13px;
 }
 
-.listing_headline .col-xs-3 {
+.listing_headline .col-sm-3 {
     padding-left: 10px;
     padding-right: 10px;
 }
@@ -277,11 +292,11 @@ a {
     height: 40px;
 }
 
-.listing_options .col-xs-8 {
+.listing_options .col-sm-8 {
     padding: 0;
 }
 
-.listing_options .col-xs-2 {
+.listing_options .col-sm-2 {
     padding-left: 8px;
     padding-right: 0;
 }

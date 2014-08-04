@@ -83,7 +83,7 @@
     </script>
 
     <script type="text/template" id="item-template">
-      <li class="listing <%= starred ? 'starred' : '' %> <%= hidden ? 'hidden' : '' %> <%= viewed ? '' : 'unviewed' %>">
+      <li id="<%= _.escape(content.listing_id) %>" class="listing <%= starred ? 'starred' : '' %> <%= hidden ? 'hidden' : '' %> <%= viewed ? '' : 'unviewed' %>">
       	<a class="view row" href="<%= _.escape(content.details_url) %>">
           <div class="listing_image col-md-5">
             <img src="<%= _.escape(content.image_url) %>">

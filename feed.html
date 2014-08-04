@@ -33,21 +33,23 @@
 
     <script type="text/template" id="login-template">
       <header id="header"></header>
-      <div class="login">
+      <div class="col-sm-6 col-md-4 col-sm-offset-3 col-md-offset-4 login">
         <form class="login-form">
           <h2>Log In</h2>
           <div class="error" style="display:none"></div>
-          <input type="email" id="login-email" placeholder="Email" />
-          <input type="password" id="login-password" placeholder="Password" />
-          <button>Log In</button>
+          <div class="success" style="display:none"></div>
+          <input class="form-control" type="email" id="login-email" placeholder="Email" />
+          <input class="form-control" type="password" id="login-password" placeholder="Password" />
+          <button class="btn btn-default">Log In</button>
+          <a class="reset-password">reset password</a>
         </form>
 
         <form class="signup-form">
           <h2>Sign Up</h2>
           <div class="error" style="display:none"></div>
-          <input type="email" id="signup-email" placeholder="Email" />
-          <input type="password" id="signup-password" placeholder="Create a Password" />
-          <button>Sign Up</button>
+          <input class="form-control" type="email" id="signup-email" placeholder="Email" />
+          <input class="form-control" type="password" id="signup-password" placeholder="Create a Password" />
+          <button class="btn btn-default">Sign Up</button>
         </form>
       </div>
     </script>

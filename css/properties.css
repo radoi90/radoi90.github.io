@@ -549,8 +549,8 @@ a {
 }
 
 #propertyapp .content .login {
-    width: 350px;
-    margin: 45px auto 25px auto;
+    margin-top: 45px;
+    margin-bottom: 25px;
 }
 
 #propertyapp .content .login h2 {
@@ -565,7 +565,6 @@ a {
     font-size: 20px;
     padding: 5px;
     width: 100%;
-    max-width: 340px;
 }
 
 #propertyapp .content .login .signup-form {
@@ -585,6 +584,13 @@ a {
 #propertyapp .content .login .error {
     border: 1px solid red;
     background: #FDEFF0;
+    padding: 5px 15px;
+    margin-bottom: 15px;
+}
+
+#propertyapp .content .login .success {
+    border: 1px solid green;
+    background: #F3FFF3;
     padding: 5px 15px;
     margin-bottom: 15px;
 }

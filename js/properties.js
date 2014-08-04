@@ -18,9 +18,24 @@ var dateDiff = function(date) {
   else return "moments ago";
 }
 
-var map;
+var getJSONP = function(url, success) {
+  var ud = '_' + +new Date,
+      script = document.createElement('script'),
+      head = document.getElementsByTagName('head')[0] 
+             || document.documentElement;
 
-function initializeMap() {
+  window[ud] = function(data) {
+      head.removeChild(script);
+      success && success(data);
+  };
+
+  script.src = url.replace('callback=?', 'jsonp=' + ud);
+  head.appendChild(script);
+};
+
+var map, inputProperty, hook;
+
+var initializeMap = function() {
   var mapOptions = {
     zoom: 11,
     center: new google.maps.LatLng(51.5072, -0.1275)
@@ -30,9 +45,9 @@ function initializeMap() {
                                 mapOptions);
   var transitLayer = new google.maps.TransitLayer();
   transitLayer.setMap(map);
-}
+};
 
-function setMarker(view) {
+var setMarker = function(view) {
   var property =  view.model;
   var myLatLng = new google.maps.LatLng(property.get('content').latitude, property.get('content').longitude);
 
@@ -52,9 +67,9 @@ function setMarker(view) {
     map: map,
     icon: image,
     title: "1",
-    zIndex: $("#"+ view.el.id).index()
+    zIndex: -$("#"+ view.el.id).index()
   });
-}
+};
 
 $(function() {
 
@@ -324,6 +339,8 @@ $(function() {
     addOne: function(property) {
       var view = new PropertyView({model: property});
       this.$("#property-list").append(view.render().el);
+      $("#" + view.el.id + " h4").text(
+        String.fromCharCode(65 + $("#"+ view.el.id).index()) +". " +$("#" + view.el.id + " h4").text());
       
       setMarker(view);
     },
@@ -352,20 +369,25 @@ $(function() {
 
     // If you hit return in the main input field, create new Property model
     createOnEnter: function(e) {
-      var self = this;
+      hook = this;
       if (e.keyCode != 13) return;
+      var zooplaAPI = 'http://api.zoopla.co.uk/api/v1/property_listings.js?listing_id=' +
+                      this.input.val() +
+                      '&api_key=kwt27yfdcvd6ek4gq2bqy2z5&callback=?';
+      this.input.val('');
+      getJSONP(zooplaAPI, function(data) {
+        hook.properties.create({
+          //TODO:
+          content:         data.listing[0],
+          hidden:          false,
+          starred:         false,
+          viewed:          false,
+          user:            Parse.User.current(),
+          ACL:             new Parse.ACL(Parse.User.current())
+        });
 
-      this.properties.create({
-        //TODO:
-        content:         JSON.parse(this.input.val()),
-        hidden:          false,
-        starred:         false,
-        viewed:          false,
-        user:            Parse.User.current(),
-        ACL:             new Parse.ACL(Parse.User.current())
+        hook.resetFilters();
       });
-
-      this.resetFilters();
     },
 
     // Clear all hidden property items, destroying their models.
@@ -383,7 +405,8 @@ $(function() {
   var LogInView = Parse.View.extend({
     events: {
       "submit form.login-form": "logIn",
-      "submit form.signup-form": "signUp"
+      "submit form.signup-form": "signUp",
+      "click a.reset-password": "resetPassword"
     },
 
     el: ".content",
@@ -406,7 +429,8 @@ $(function() {
         },
 
         error: function(user, error) {
-          self.$(".login-form .error").html("Invalid email or password. Please try again.").show();
+          self.$(".login-form .success").hide();  
+          self.$(".login-form .error").html("Invalid email or password. Please try again. Or, <a class='reset-password'>reset password</a>.").show();
           self.$(".login-form button").removeAttr("disabled");
         }
       });
@@ -442,6 +466,26 @@ $(function() {
       this.$(".signup-form button").attr("disabled", "disabled");
 
       return false;
+    },
+
+    resetPassword: function() {
+      var email = this.$("#login-email").val();
+
+      Parse.User.requestPasswordReset(email, {
+        success: function() {
+          self.$(".login-form .success").html("We've sent you a password reset email to " + email).show();
+          self.$(".login-form .error").hide();
+        },
+        error: function(error) {
+          self.$(".login-form .success").hide();
+          if(email.length > 0) {
+            self.$(".login-form .error").html("There is no user assigned to " + email).show();
+          } else {
+            self.$(".login-form .error").html("To reset your password enter the email you used to sign up.").show();
+          }          
+          self.$(".login-form button").removeAttr("disabled");
+        }
+      });
     },
 
     render: function() {

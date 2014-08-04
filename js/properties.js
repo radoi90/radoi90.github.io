@@ -22,21 +22,37 @@ var map;
 
 function initializeMap() {
   var mapOptions = {
-    zoom: 15,
-    center: new google.maps.LatLng(51.53, -0.1)
+    zoom: 11,
+    center: new google.maps.LatLng(51.5072, -0.1275)
   }
   
   map = new google.maps.Map(document.getElementById('map-canvas'),
                                 mapOptions);
+  var transitLayer = new google.maps.TransitLayer();
+  transitLayer.setMap(map);
 }
 
-function setMarker(map, property) {
+function setMarker(view) {
+  var property =  view.model;
   var myLatLng = new google.maps.LatLng(property.get('content').latitude, property.get('content').longitude);
+
+  var image = {
+    url: 'https://embed-dot-more-than-a-map.appspot.com/images/marker-' 
+    + String.fromCharCode(65 + $("#"+ view.el.id).index()) +'.png',
+    // This marker is 20 pixels wide by 32 pixels tall.
+    size: new google.maps.Size(48, 63),
+    // The origin for this image is 0,0.
+    origin: new google.maps.Point(0,0),
+    // The anchor for this image is the base of the flagpole at 0,32.
+    anchor: new google.maps.Point(23, 63)
+  };
+
   var marker = new google.maps.Marker({
-      position: myLatLng,
-      map: map,
-      title: property.get('order') + "",
-      zIndex: property.get('order')
+    position: myLatLng,
+    map: map,
+    icon: image,
+    title: "1",
+    zIndex: $("#"+ view.el.id).index()
   });
 }
 
@@ -149,15 +165,16 @@ $(function() {
       "click .star"              : "toggleStar",
       "click .hide"              : "toggleHidden",
       "click .property-destroy"   : "clear",
+      "mouseleave .listing" : "highlight"  
     },
 
     // The PropertyView listens for changes to its model, re-rendering. Since there's
     // a one-to-one correspondence between a Property and a PropertyView in this
     // app, we set a direct reference on the model for convenience.
     initialize: function() {
-      _.bindAll(this, 'render', 'close', 'remove');
-      this.model.bind('change', this.render);
+      _.bindAll(this, 'render', 'remove');
       this.model.bind('destroy', this.remove);
+      this.el.id = this.model.get("content").listing_id;
     },
 
     // Re-render the contents of the property item.
@@ -184,6 +201,10 @@ $(function() {
     // Remove the item, destroy the model.
     clear: function() {
       this.model.destroy();
+    },
+
+    highlight: function() {
+      console.log("hover");
     }
 
   });
@@ -303,7 +324,8 @@ $(function() {
     addOne: function(property) {
       var view = new PropertyView({model: property});
       this.$("#property-list").append(view.render().el);
-      setMarker(map, property);
+      
+      setMarker(view);
     },
 
      // Add all items in the Properties collection at once.

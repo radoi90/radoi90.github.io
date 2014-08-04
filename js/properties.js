@@ -124,14 +124,7 @@ $(function() {
       return this.filter(function(property){ return property.get('starred'); });
     },
 
-    // We keep the Properties in sequential order, despite being saved by unordered
-    // GUID in the database. This generates the next order number for new items.
-    nextOrder: function() {
-      if (!this.length) return 1;
-      return this.last().get('order') + 1;
-    },
-
-    // Properties are sorted by their original insertion order.
+    // Properties are sorted by their listing date.
     comparator: function(property) {
       return -Date.parse(property.get('content').last_published_date);
     }
@@ -155,10 +148,7 @@ $(function() {
       "click .markview"              : "toggleViewed",
       "click .star"              : "toggleStar",
       "click .hide"              : "toggleHidden",
-      "dblclick label.property-content" : "edit",
       "click .property-destroy"   : "clear",
-      "keypress .edit"      : "updateOnEnter",
-      "blur .edit"          : "close"
     },
 
     // The PropertyView listens for changes to its model, re-rendering. Since there's
@@ -173,15 +163,12 @@ $(function() {
     // Re-render the contents of the property item.
     render: function() {
       $(this.el).html(this.template(this.model.toJSON()));
-      this.input = this.$('.edit');
       return this;
     },
 
     // Toggle the `"star"` state of the model.
     toggleStar: function() {
       this.model.star();
-      var d = Date.parse("2014-07-28 07:48:27"), today = new Date();
-      console.log(dateDiff(today,d));
     },
 
     // Toggle the `"hidden"` state of the model.
@@ -192,23 +179,6 @@ $(function() {
     // Toggle the `"viewed"` state of the model.
     toggleViewed: function() {
       this.model.view();
-    },
-
-    // Switch this view into `"editing"` mode, displaying the input field.
-    edit: function() {
-      $(this.el).addClass("editing");
-      this.input.focus();
-    },
-
-    //TODO: Close the `"editing"` mode, saving changes to the property.
-    close: function() {
-      this.model.save({content: JSON.parse(this.input.val())});
-      $(this.el).removeClass("editing");
-    },
-
-    // If you hit `enter`, we're through editing the item.
-    updateOnEnter: function(e) {
-      if (e.keyCode == 13) this.close();
     },
 
     // Remove the item, destroy the model.
@@ -366,7 +336,6 @@ $(function() {
       this.properties.create({
         //TODO:
         content:         JSON.parse(this.input.val()),
-        order:           this.properties.nextOrder(),
         hidden:          false,
         starred:         false,
         viewed:          false,
@@ -374,7 +343,6 @@ $(function() {
         ACL:             new Parse.ACL(Parse.User.current())
       });
 
-      this.input.val('');
       this.resetFilters();
     },
 

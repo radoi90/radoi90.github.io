@@ -564,7 +564,8 @@ a {
     margin-bottom: 10px;
     font-size: 20px;
     padding: 5px;
-    width: 340px;;
+    width: 100%;
+    max-width: 340px;
 }
 
 #propertyapp .content .login .signup-form {

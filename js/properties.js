@@ -446,7 +446,7 @@ $(function() {
         },
 
         error: function(user, error) {
-          elf.$(".login-form .success").hide();  
+          self.$(".login-form .success").hide();  
           self.$(".login-form .error").html("Invalid email or password. Please try again. Or, <a class='reset-password'>reset password</a>.").show();
           self.$(".login-form button").removeAttr("disabled");
         }

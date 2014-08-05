@@ -11,6 +11,10 @@ html,body {
     padding: 0;
 }
 
+#map-col {
+    padding-right: 0;
+}
+
 #map-canvas {
     height: 500px;
     width: 100%;
@@ -451,11 +455,53 @@ a {
 }
 
 #footer {
-    padding-top: 12px;
+    color: #777;
+    padding: 0 15px;
+    position: absolute;
+    right: 0;
+    bottom: -31px;
+    left: 0;
+    z-index: 1;
+    text-align: center;
+}
+
+#footer:before {
+    content: '';
+    position: absolute;
+    right: 0;
+    bottom: 30px;
+    left: 0;
+    height: 100px;
+    z-index: -1;
+    box-shadow:
+    0 6px 0 -3px rgba(255, 255, 255, 0.8),
+    0 7px 1px -3px rgba(0, 0, 0, 0.3),
+    0 42px 0 -6px rgba(255, 255, 255, 0.8),
+    0 43px 2px -6px rgba(0, 0, 0, 0.2);
+}
+
+#property-count {
+    float: left;
+    text-align: left;
+}
+
+#filters {
+    margin: 0;
+    padding: 0;
+    list-style: none;
+    position: absolute;
+    right: 0;
+    left: 0;
 }
 
 #filters li {
     display: inline;
+}
+
+#filters li a {
+    color: #83756f;
+    margin: 2px;
+    text-decoration: none;
 }
 
 #filters li a.selected {
@@ -503,8 +549,8 @@ a {
 }
 
 #propertyapp .content .login {
-    margin-top: 45px;
-    margin-bottom: 25px;
+    width: 350px;
+    margin: 45px auto 25px auto;
 }
 
 #propertyapp .content .login h2 {
@@ -518,7 +564,7 @@ a {
     margin-bottom: 10px;
     font-size: 20px;
     padding: 5px;
-    width: 100%;
+    width: 340px;;
 }
 
 #propertyapp .content .login .signup-form {
@@ -538,13 +584,6 @@ a {
 #propertyapp .content .login .error {
     border: 1px solid red;
     background: #FDEFF0;
-    padding: 5px 15px;
-    margin-bottom: 15px;
-}
-
-#propertyapp .content .login .success {
-    border: 1px solid green;
-    background: #F3FFF3;
     padding: 5px 15px;
     margin-bottom: 15px;
 }

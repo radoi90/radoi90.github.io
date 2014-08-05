@@ -236,8 +236,6 @@ $(function() {
     // Delegated events for creating new items, and clearing completed ones.
     events: {
       "keypress #new-property":  "createOnEnter",
-      "click #clear-hidden": "clearHidden",
-      "click #view-all": "toggleAllViewed",
       "click .log-out": "logOut",
       "click ul#filters a": "selectFilter"
     },
@@ -250,13 +248,12 @@ $(function() {
     initialize: function() {
       var self = this;
 
-      _.bindAll(this, 'addOne', 'addAll', 'addActive', 'addSome', 'render', 'toggleAllViewed', 'logOut', 'createOnEnter');
+      _.bindAll(this, 'addOne', 'addAll', 'addActive', 'addSome', 'render', 'logOut', 'createOnEnter');
 
       // Main property management template
       this.$el.html(_.template($("#manage-properties-template").html()));
       
       this.input = this.$("#new-property");
-      this.allViewIcon = this.$("#view-all")[0];
 
       // Create our collection of Properties
       this.properties = new PropertyList;
@@ -298,13 +295,12 @@ $(function() {
       }));
 
       this.delegateEvents();
-
-      this.allViewIcon.checked = viewed;
     },
 
     // Filters the list based on which type of filter is selected
     selectFilter: function(e) {
-      var el = $(e.target);
+      var el = $(e.target.parentElement);
+      console.log(el);
       var filterValue = el.attr("id");
       state.set({filter: filterValue});
       Parse.history.navigate(filterValue);
@@ -312,8 +308,8 @@ $(function() {
 
     filter: function() {
       var filterValue = state.get("filter");
-      this.$("ul#filters a").removeClass("selected");
-      this.$("ul#filters a#" + filterValue).addClass("selected");
+      this.$("ul#filters li").removeClass("selected");
+      this.$("ul#filters li#" + filterValue).addClass("selected");
       if (filterValue === "all") {
         this.addAll();
       } else if (filterValue === "starred") {
@@ -329,8 +325,8 @@ $(function() {
 
     // Resets the filters to display all properties
     resetFilters: function() {
-      this.$("ul#filters a").removeClass("selected");
-      this.$("ul#filters a#active").addClass("selected");
+      this.$("ul#filters li").removeClass("selected");
+      this.$("ul#filters li#active").addClass("selected");
       this.addSome(function(item) { return !item.get('hidden') });
     },
 
@@ -388,17 +384,6 @@ $(function() {
 
         hook.resetFilters();
       });
-    },
-
-    // Clear all hidden property items, destroying their models.
-    clearHidden: function() {
-      _.each(this.properties.hidden(), function(property){ property.destroy(); });
-      return false;
-    },
-
-    toggleAllViewed: function () {
-      var viewed = this.allViewIcon.checked;
-      this.properties.each(function (property) { property.save({'viewed': viewed}); });
     }
   });
 

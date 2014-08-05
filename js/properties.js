@@ -143,7 +143,6 @@ $(function() {
 
     // Toggle the `starred` state of this property item.
     view: function() {
-      if (!this.get("viewed"))
         this.save({viewed: true});
     }
   });
@@ -230,6 +229,9 @@ $(function() {
     // Re-render the contents of the property item.
     render: function() {
       $(this.el).html(this.template(this.model.toJSON()));
+
+      $("#" + this.el.id + " h4").text(
+        ($("#"+ this.el.id).index() + 1) +". " +$("#" + this.el.id + " h4").text());
       return this;
     },
 
@@ -364,6 +366,7 @@ $(function() {
     addOne: function(property) {
       var view = new PropertyView({model: property});
       this.$("#property-list").append(view.render().el);
+
       $("#" + view.el.id + " h4").text(
         ($("#"+ view.el.id).index() + 1) +". " +$("#" + view.el.id + " h4").text());
       

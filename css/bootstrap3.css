@@ -3507,9 +3507,9 @@ select[multiple].input-group-sm > .input-group-btn > .btn {
 .nav-tabs > li > a:hover {
   border-color: #eee #eee #ddd;
 }
-.nav-tabs > li.active > a,
-.nav-tabs > li.active > a:hover,
-.nav-tabs > li.active > a:focus {
+.nav-tabs > li.selected > a,
+.nav-tabs > li.selected > a:hover,
+.nav-tabs > li.selected > a:focus {
   color: #555;
   cursor: default;
   background-color: #fff;
@@ -3569,9 +3569,9 @@ select[multiple].input-group-sm > .input-group-btn > .btn {
 .nav-pills > li + li {
   margin-left: 2px;
 }
-.nav-pills > li.active > a,
-.nav-pills > li.active > a:hover,
-.nav-pills > li.active > a:focus {
+.nav-pills > li.selected > a,
+.nav-pills > li.selected > a:hover,
+.nav-pills > li.selected > a:focus {
   color: #fff;
   background-color: #428bca;
 }

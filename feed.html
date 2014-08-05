@@ -33,21 +33,23 @@
 
     <script type="text/template" id="login-template">
       <header id="header"></header>
-      <div class="login">
+      <div class="col-sm-6 col-md-4 col-sm-offset-3 col-md-offset-4 login">
         <form class="login-form">
           <h2>Log In</h2>
           <div class="error" style="display:none"></div>
-          <input type="email" id="login-email" placeholder="Email" />
-          <input type="password" id="login-password" placeholder="Password" />
-          <button>Log In</button>
+          <div class="success" style="display:none"></div>
+          <input class="form-control" type="email" id="login-email" placeholder="Email" />
+          <input class="form-control" type="password" id="login-password" placeholder="Password" />
+          <button class="btn btn-default">Log In</button>
+          <a class="reset-password">reset password</a>
         </form>
 
         <form class="signup-form">
           <h2>Sign Up</h2>
           <div class="error" style="display:none"></div>
-          <input type="email" id="signup-email" placeholder="Email" />
-          <input type="password" id="signup-password" placeholder="Create a Password" />
-          <button>Sign Up</button>
+          <input class="form-control" type="email" id="signup-email" placeholder="Email" />
+          <input class="form-control" type="password" id="signup-password" placeholder="Create a Password" />
+          <button class="btn btn-default">Sign Up</button>
         </form>
       </div>
     </script>
@@ -60,14 +62,21 @@
       <div class="section">
 
         <header id="header">
-          <input id="new-property" placeholder="Add a Zoopla/Rightmove link" type="text" />
+          <div class="row">
+            <div class="col-md-6">
+              <input id="new-property" placeholder="Add a Zoopla listing ID" type="text" />
+            </div>
+            <div class="col-md-6">
+              <div id="property-stats"></div>
+            </div>
+          </div>
         </header>
 
-        <div class="row-fluid" id="main">
-          <input id="view-all" type="checkbox">
-          <label for="view-all">Mark all as viewed</label>
-          
-          <div id="map-col" class="col-sm-6">
+        <div class="row-fluid" id="main">          
+          <div id="map-col" class="col-sm-6 hidden-xs">
+            <div id="transit-wpr" style="padding-top: 6px;">
+              <button class="btn btn-primary btn-xs" id="transit">Toggle transit layer</button>
+            </div>
             <div id="map-canvas"></div>
           </div>
 
@@ -77,9 +86,37 @@
             </ul>
           </div>
         </div>
-
-        <div id="property-stats"></div>
       </div>
+
+      <script>
+        $(function() {
+
+          // grab the initial top offset of the navigation 
+          var sticky_navigation_offset_top = $('#map-canvas').offset().top;
+          
+          // our function that decides weather the navigation bar should have "fixed" css position or not.
+          var sticky_navigation = function(){
+            var scroll_top = $(window).scrollTop(); // our current vertical position from the top
+            
+            // if we've scrolled more than the navigation, change its position to fixed to stick to top, otherwise change it back to relative
+            if (scroll_top > sticky_navigation_offset_top) { 
+              var width = $("#map-col").width(), left = $("#map-col").offset().left;
+              $('#map-canvas').css({ 'position': 'fixed', 'top':0, 'left':left+15, 'width': width });
+            } else {
+              $('#map-canvas').css({ 'position': 'relative', 'left':0 }); 
+            }   
+          };
+          
+          // run our function on load
+          sticky_navigation();
+          
+          // and run it again every time you scroll
+          $(window).scroll(function() {
+             sticky_navigation();
+          });
+          
+        });
+      </script>
     </script>
 
     <script type="text/template" id="item-template">
@@ -98,7 +135,7 @@
             <div class="row listing_headline">
               <div class="col-xs-3">
                 <p>BEDS</p>
-                <h3><%=_.escape(content.num_bedrooms)%></h3>
+                <h3><%=_.escape(content.num_bedrooms) > 0 ? _.escape(content.num_bedrooms) : 'STUDIO'%></h3>
               </div>
 
               <div class="col-xs-3">
@@ -130,7 +167,7 @@
             </div>
 
             <div class="row-fluid listing_age">
-              <p class="help-block text-right">Added <%= _.escape(dateDiff(Date.parse(content.last_published_date))) %></p>
+              <p class="help-block text-right">Added <%= _.escape(dateDiff(content.last_published_date)) %></p>
             </div>            
           </div>
       	</a>
@@ -138,60 +175,26 @@
     </script>
 
     <script type="text/template" id="stats-template">
-      <footer id="footer">
-      	<span id="property-count"><strong><%= viewed %></strong> <%= viewed == 1 ? 'viewing' : 'viewings' %> requested</span>
-      	<ul id="filters">
-          <li>
-            <a href="javascript:void(0)" id="active" class="selected">Active</a>
+      <div id="footer">
+        <ul class="nav nav-pills" id="filters">
+          <li class="selected" id="active">
+            <a href="javascript:void(0)">Active<span class="badge"><%= total-hidden%></span></a>
           </li>
-          <li>
-            <a href="javascript:void(0)" id="starred">Starred</a>
+          <li id="starred">
+            <a href="javascript:void(0)">Starred<span class="badge"><%= starred%></span></a>
           </li>
-          <li>
-            <a href="javascript:void(0)" id="viewed">Viewings</a>
+          <li id="viewed">
+            <a href="javascript:void(0)">Viewings<span class="badge"><%= viewed%></span></a>
           </li>
-      	  <li>
-      	    <a href="javascript:void(0)" id="all">All</a>
-      	  </li>
-          <li>
-            <a href="javascript:void(0)" id="hidden">Hidden</a>
+          <li id="all">
+            <a href="javascript:void(0)">All<span class="badge"><%= total%></span></a>
           </li>
-          
-      	</ul>
-      	<button id="clear-hidden">Clear hidden (<%= hidden %>)</button>
-      </footer>
+          <li id="hidden">
+            <a href="javascript:void(0)">Hidden<span class="badge"><%= hidden%></span></a>
+          </li>
+        </ul>
+      </div>
     </script>
-
-    <script>
-      $(function() {
-
-        // grab the initial top offset of the navigation 
-        var sticky_navigation_offset_top = $('#map-canvas').offset().top;
-        
-        // our function that decides weather the navigation bar should have "fixed" css position or not.
-        var sticky_navigation = function(){
-          var scroll_top = $(window).scrollTop(); // our current vertical position from the top
-          
-          // if we've scrolled more than the navigation, change its position to fixed to stick to top, otherwise change it back to relative
-          if (scroll_top > sticky_navigation_offset_top) { 
-            var width = $("#map-col").width(), left = $("#map-col").offset().left;
-            $('#map-canvas').css({ 'position': 'fixed', 'top':0, 'left':left+15, 'width': width });
-          } else {
-            $('#map-canvas').css({ 'position': 'relative', 'left':0 }); 
-          }   
-        };
-        
-        // run our function on load
-        sticky_navigation();
-        
-        // and run it again every time you scroll
-        $(window).scroll(function() {
-           sticky_navigation();
-        });
-        
-      });
-    </script>
-
   </body>
 
 </html>

@@ -1,4 +1,6 @@
-var dateDiff = function(date) {
+var dateDiff = function(s) {
+  var a = s.split(/[^0-9]/);
+  var date = new Date (a[0],a[1]-1,a[2],a[3],a[4],a[5] );
   var milisDiff = new Date() - date, 
         secDiff = milisDiff / 1000,
         minDiff = secDiff / 60,
@@ -18,26 +20,87 @@ var dateDiff = function(date) {
   else return "moments ago";
 }
 
-var map;
+var getJSONP = function(url, success) {
+  var ud = '_' + +new Date,
+      script = document.createElement('script'),
+      head = document.getElementsByTagName('head')[0] 
+             || document.documentElement;
+
+  window[ud] = function(data) {
+      head.removeChild(script);
+      success && success(data);
+  };
+
+  script.src = url.replace('callback=?', 'jsonp=' + ud);
+  head.appendChild(script);
+};
+
+var map, inputProperty, hook, markers = [];
 
 function initializeMap() {
   var mapOptions = {
-    zoom: 15,
-    center: new google.maps.LatLng(51.53, -0.1)
+    zoom: 11,
+    center: new google.maps.LatLng(51.5072, -0.1275)
   }
   
   map = new google.maps.Map(document.getElementById('map-canvas'),
                                 mapOptions);
+
+  var transitLayer = new google.maps.TransitLayer();
+  transitLayer.setMap(map);
+
+  var control = document.getElementById('transit-wpr');
+  map.controls[google.maps.ControlPosition.TOP_RIGHT].push(control);
+
+  google.maps.event.addDomListener(control, 'click', function() {
+    transitLayer.setMap(transitLayer.getMap() ? null : map);
+  });
+};
+
+// Add a marker to the map and push to the array.
+function addMarker(view) {
+  var property =  view.model;
+  var myLatLng = new google.maps.LatLng(property.get('content').latitude, property.get('content').longitude);
+
+  var image = {
+    url: 'http://chart.apis.google.com/chart?chst=d_map_pin_letter&chld=' +
+    ($("#"+ view.el.id).index() + 1 ) +
+    '|428bca|FFFFFF',
+    // This marker is 20 pixels wide by 32 pixels tall.
+    size: new google.maps.Size(21, 34),
+    // The origin for this image is 0,0.
+    origin: new google.maps.Point(0,0),
+    // The anchor for this image is the base of the flagpole at 0,32.
+    anchor: new google.maps.Point(11, 34)
+  };
+
+  var marker = new google.maps.Marker({
+    position: myLatLng,
+    map: map,
+    icon: image,
+    title: "" + $("#"+ view.el.id).index(),
+    zIndex: -$("#"+ view.el.id).index()
+  });
+
+  markers.push(marker);
 }
 
-function setMarker(map, property) {
-  var myLatLng = new google.maps.LatLng(property.get('content').latitude, property.get('content').longitude);
-  var marker = new google.maps.Marker({
-      position: myLatLng,
-      map: map,
-      title: property.get('order') + "",
-      zIndex: property.get('order')
-  });
+// Sets the map on all markers in the array.
+function setAllMap(map) {
+  for (var i = 0; i < markers.length; i++) {
+    markers[i].setMap(map);
+  }
+}
+
+// Removes the markers from the map, but keeps them in the array.
+function clearMarkers() {
+  setAllMap(null);
+}
+
+// Deletes all markers in the array by removing references to them.
+function deleteMarkers() {
+  clearMarkers();
+  markers = [];
 }
 
 $(function() {
@@ -80,7 +143,8 @@ $(function() {
 
     // Toggle the `starred` state of this property item.
     view: function() {
-      this.save({viewed: true});
+      if (!this.get("viewed"))
+        this.save({viewed: true});
     }
   });
 
@@ -124,16 +188,12 @@ $(function() {
       return this.filter(function(property){ return property.get('starred'); });
     },
 
-    // We keep the Properties in sequential order, despite being saved by unordered
-    // GUID in the database. This generates the next order number for new items.
-    nextOrder: function() {
-      if (!this.length) return 1;
-      return this.last().get('order') + 1;
-    },
-
-    // Properties are sorted by their original insertion order.
+    // Properties are sorted by their listing date.
     comparator: function(property) {
-      return -Date.parse(property.get('content').last_published_date);
+      var s = property.get('content').last_published_date;
+      var a = s.split(/[^0-9]/);
+      var date = new Date (a[0],a[1]-1,a[2],a[3],a[4],a[5] );
+      return -date;
     }
 
   });
@@ -152,36 +212,30 @@ $(function() {
 
     // The DOM events specific to an item.
     events: {
-      "click .markview"              : "toggleViewed",
+      "click .markview"          : "toggleViewed",
       "click .star"              : "toggleStar",
       "click .hide"              : "toggleHidden",
-      "dblclick label.property-content" : "edit",
-      "click .property-destroy"   : "clear",
-      "keypress .edit"      : "updateOnEnter",
-      "blur .edit"          : "close"
+      "mouseleave .listing"      : "highlight"
     },
 
     // The PropertyView listens for changes to its model, re-rendering. Since there's
     // a one-to-one correspondence between a Property and a PropertyView in this
     // app, we set a direct reference on the model for convenience.
     initialize: function() {
-      _.bindAll(this, 'render', 'close', 'remove');
+      _.bindAll(this, 'render');
       this.model.bind('change', this.render);
-      this.model.bind('destroy', this.remove);
+      this.el.id = this.model.get("content").listing_id;
     },
 
     // Re-render the contents of the property item.
     render: function() {
       $(this.el).html(this.template(this.model.toJSON()));
-      this.input = this.$('.edit');
       return this;
     },
 
     // Toggle the `"star"` state of the model.
     toggleStar: function() {
       this.model.star();
-      var d = Date.parse("2014-07-28 07:48:27"), today = new Date();
-      console.log(dateDiff(today,d));
     },
 
     // Toggle the `"hidden"` state of the model.
@@ -194,26 +248,8 @@ $(function() {
       this.model.view();
     },
 
-    // Switch this view into `"editing"` mode, displaying the input field.
-    edit: function() {
-      $(this.el).addClass("editing");
-      this.input.focus();
-    },
-
-    //TODO: Close the `"editing"` mode, saving changes to the property.
-    close: function() {
-      this.model.save({content: JSON.parse(this.input.val())});
-      $(this.el).removeClass("editing");
-    },
-
-    // If you hit `enter`, we're through editing the item.
-    updateOnEnter: function(e) {
-      if (e.keyCode == 13) this.close();
-    },
-
-    // Remove the item, destroy the model.
-    clear: function() {
-      this.model.destroy();
+    highlight: function() {
+      console.log("hover");
     }
 
   });
@@ -230,8 +266,6 @@ $(function() {
     // Delegated events for creating new items, and clearing completed ones.
     events: {
       "keypress #new-property":  "createOnEnter",
-      "click #clear-hidden": "clearHidden",
-      "click #view-all": "toggleAllViewed",
       "click .log-out": "logOut",
       "click ul#filters a": "selectFilter"
     },
@@ -244,13 +278,12 @@ $(function() {
     initialize: function() {
       var self = this;
 
-      _.bindAll(this, 'addOne', 'addAll', 'addActive', 'addSome', 'render', 'toggleAllViewed', 'logOut', 'createOnEnter');
+      _.bindAll(this, 'addOne', 'addAll', 'addActive', 'addSome', 'render', 'logOut', 'createOnEnter');
 
       // Main property management template
       this.$el.html(_.template($("#manage-properties-template").html()));
       
       this.input = this.$("#new-property");
-      this.allViewIcon = this.$("#view-all")[0];
 
       // Create our collection of Properties
       this.properties = new PropertyList;
@@ -292,13 +325,11 @@ $(function() {
       }));
 
       this.delegateEvents();
-
-      this.allViewIcon.checked = viewed;
     },
 
     // Filters the list based on which type of filter is selected
     selectFilter: function(e) {
-      var el = $(e.target);
+      var el = $(e.target.parentElement);
       var filterValue = el.attr("id");
       state.set({filter: filterValue});
       Parse.history.navigate(filterValue);
@@ -306,8 +337,8 @@ $(function() {
 
     filter: function() {
       var filterValue = state.get("filter");
-      this.$("ul#filters a").removeClass("selected");
-      this.$("ul#filters a#" + filterValue).addClass("selected");
+      this.$("ul#filters li").removeClass("selected");
+      this.$("ul#filters li#" + filterValue).addClass("selected");
       if (filterValue === "all") {
         this.addAll();
       } else if (filterValue === "starred") {
@@ -323,8 +354,8 @@ $(function() {
 
     // Resets the filters to display all properties
     resetFilters: function() {
-      this.$("ul#filters a").removeClass("selected");
-      this.$("ul#filters a#active").addClass("selected");
+      this.$("ul#filters li").removeClass("selected");
+      this.$("ul#filters li#active").addClass("selected");
       this.addSome(function(item) { return !item.get('hidden') });
     },
 
@@ -333,20 +364,21 @@ $(function() {
     addOne: function(property) {
       var view = new PropertyView({model: property});
       this.$("#property-list").append(view.render().el);
-      setMarker(map, property);
+      $("#" + view.el.id + " h4").text(
+        ($("#"+ view.el.id).index() + 1) +". " +$("#" + view.el.id + " h4").text());
+      
+      addMarker(view);
     },
 
      // Add all items in the Properties collection at once.
     addAll: function(collection, filter) {
       this.$("#property-list").html("");
-      initializeMap();
+      deleteMarkers();
       this.properties.each(this.addOne);
     },
 
     // Add all active items in the Properties collection at once.
     addActive: function(collection, filter) {
-      this.$("#property-list").html("");
-      initializeMap();
       this.addSome(function(item) { return !item.get('hidden') });
     },
 
@@ -354,46 +386,41 @@ $(function() {
     addSome: function(filter) {
       var self = this;
       this.$("#property-list").html("");
-      initializeMap();
+      deleteMarkers();
       this.properties.chain().filter(filter).each(function(item) { self.addOne(item) });
     },
 
     // If you hit return in the main input field, create new Property model
     createOnEnter: function(e) {
-      var self = this;
+      hook = this;
       if (e.keyCode != 13) return;
 
-      this.properties.create({
-        //TODO:
-        content:         JSON.parse(this.input.val()),
-        order:           this.properties.nextOrder(),
-        hidden:          false,
-        starred:         false,
-        viewed:          false,
-        user:            Parse.User.current(),
-        ACL:             new Parse.ACL(Parse.User.current())
-      });
+      var zooplaAPI = 'http://api.zoopla.co.uk/api/v1/property_listings.js?listing_id=' +
+                      this.input.val() +
+                      '&api_key=kwt27yfdcvd6ek4gq2bqy2z5&callback=?';
 
       this.input.val('');
-      this.resetFilters();
-    },
+      getJSONP(zooplaAPI, function(data) {
+        hook.properties.create({
+          //TODO:
+          content:         data.listing[0],
+          hidden:          false,
+          starred:         false,
+          viewed:          false,
+          user:            Parse.User.current(),
+          ACL:             new Parse.ACL(Parse.User.current())
+        });
 
-    // Clear all hidden property items, destroying their models.
-    clearHidden: function() {
-      _.each(this.properties.hidden(), function(property){ property.destroy(); });
-      return false;
-    },
-
-    toggleAllViewed: function () {
-      var viewed = this.allViewIcon.checked;
-      this.properties.each(function (property) { property.save({'viewed': viewed}); });
+        hook.resetFilters();
+      });
     }
   });
 
   var LogInView = Parse.View.extend({
     events: {
       "submit form.login-form": "logIn",
-      "submit form.signup-form": "signUp"
+      "submit form.signup-form": "signUp",
+      "click a.reset-password": "resetPassword"
     },
 
     el: ".content",
@@ -416,7 +443,8 @@ $(function() {
         },
 
         error: function(user, error) {
-          self.$(".login-form .error").html("Invalid email or password. Please try again.").show();
+          elf.$(".login-form .success").hide();  
+          self.$(".login-form .error").html("Invalid email or password. Please try again. Or, <a class='reset-password'>reset password</a>.").show();
           self.$(".login-form button").removeAttr("disabled");
         }
       });
@@ -452,6 +480,26 @@ $(function() {
       this.$(".signup-form button").attr("disabled", "disabled");
 
       return false;
+    },
+
+    resetPassword: function() {
+      var email = this.$("#login-email").val();
+
+      Parse.User.requestPasswordReset(email, {
+        success: function() {
+          self.$(".login-form .success").html("We've sent you a password reset email to " + email).show();
+          self.$(".login-form .error").hide();
+        },
+        error: function(error) {
+          self.$(".login-form .success").hide();
+          if(email.length > 0) {
+            self.$(".login-form .error").html("There is no user assigned to " + email).show();
+          } else {
+            self.$(".login-form .error").html("To reset your password enter the email you used to sign up.").show();
+          }          
+          self.$(".login-form button").removeAttr("disabled");
+        }
+      });
     },
 
     render: function() {
@@ -518,4 +566,5 @@ $(function() {
   new AppRouter;
   new AppView;
   Parse.history.start();
+  initializeMap();
 });

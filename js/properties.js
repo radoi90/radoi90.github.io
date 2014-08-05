@@ -1,4 +1,6 @@
-var dateDiff = function(date) {
+var dateDiff = function(s) {
+  var a = s.split(/[^0-9]/);
+  var date = new Date (a[0],a[1]-1,a[2],a[3],a[4],a[5] );
   var milisDiff = new Date() - date, 
         secDiff = milisDiff / 1000,
         minDiff = secDiff / 60,
@@ -18,9 +20,24 @@ var dateDiff = function(date) {
   else return "moments ago";
 }
 
-var map;
+var getJSONP = function(url, success) {
+  var ud = '_' + +new Date,
+      script = document.createElement('script'),
+      head = document.getElementsByTagName('head')[0] 
+             || document.documentElement;
 
-function initializeMap() {
+  window[ud] = function(data) {
+      head.removeChild(script);
+      success && success(data);
+  };
+
+  script.src = url.replace('callback=?', 'jsonp=' + ud);
+  head.appendChild(script);
+};
+
+var map, inputProperty, hook;
+
+var initializeMap = function() {
   var mapOptions = {
     zoom: 11,
     center: new google.maps.LatLng(51.5072, -0.1275)
@@ -30,9 +47,9 @@ function initializeMap() {
                                 mapOptions);
   var transitLayer = new google.maps.TransitLayer();
   transitLayer.setMap(map);
-}
+};
 
-function setMarker(view) {
+var setMarker = function(view) {
   var property =  view.model;
   var myLatLng = new google.maps.LatLng(property.get('content').latitude, property.get('content').longitude);
 
@@ -52,9 +69,9 @@ function setMarker(view) {
     map: map,
     icon: image,
     title: "1",
-    zIndex: $("#"+ view.el.id).index()
+    zIndex: -$("#"+ view.el.id).index()
   });
-}
+};
 
 $(function() {
 
@@ -142,7 +159,10 @@ $(function() {
 
     // Properties are sorted by their listing date.
     comparator: function(property) {
-      return -Date.parse(property.get('content').last_published_date);
+      var s = property.get('content').last_published_date;
+      var a = s.split(/[^0-9]/);
+      var date = new Date (a[0],a[1]-1,a[2],a[3],a[4],a[5] );
+      return -date;
     }
 
   });
@@ -161,11 +181,11 @@ $(function() {
 
     // The DOM events specific to an item.
     events: {
-      "click .markview"              : "toggleViewed",
+      "click .markview"          : "toggleViewed",
       "click .star"              : "toggleStar",
       "click .hide"              : "toggleHidden",
-      "click .property-destroy"   : "clear",
-      "mouseleave .listing" : "highlight"  
+      "click .property-destroy"  : "clear",
+      "mouseleave .listing"      : "highlight"  
     },
 
     // The PropertyView listens for changes to its model, re-rendering. Since there's
@@ -221,8 +241,6 @@ $(function() {
     // Delegated events for creating new items, and clearing completed ones.
     events: {
       "keypress #new-property":  "createOnEnter",
-      "click #clear-hidden": "clearHidden",
-      "click #view-all": "toggleAllViewed",
       "click .log-out": "logOut",
       "click ul#filters a": "selectFilter"
     },
@@ -235,13 +253,12 @@ $(function() {
     initialize: function() {
       var self = this;
 
-      _.bindAll(this, 'addOne', 'addAll', 'addActive', 'addSome', 'render', 'toggleAllViewed', 'logOut', 'createOnEnter');
+      _.bindAll(this, 'addOne', 'addAll', 'addActive', 'addSome', 'render', 'logOut', 'createOnEnter');
 
       // Main property management template
       this.$el.html(_.template($("#manage-properties-template").html()));
       
       this.input = this.$("#new-property");
-      this.allViewIcon = this.$("#view-all")[0];
 
       // Create our collection of Properties
       this.properties = new PropertyList;
@@ -283,13 +300,11 @@ $(function() {
       }));
 
       this.delegateEvents();
-
-      this.allViewIcon.checked = viewed;
     },
 
     // Filters the list based on which type of filter is selected
     selectFilter: function(e) {
-      var el = $(e.target);
+      var el = $(e.target.parentElement);
       var filterValue = el.attr("id");
       state.set({filter: filterValue});
       Parse.history.navigate(filterValue);
@@ -297,8 +312,8 @@ $(function() {
 
     filter: function() {
       var filterValue = state.get("filter");
-      this.$("ul#filters a").removeClass("selected");
-      this.$("ul#filters a#" + filterValue).addClass("selected");
+      this.$("ul#filters li").removeClass("selected");
+      this.$("ul#filters li#" + filterValue).addClass("selected");
       if (filterValue === "all") {
         this.addAll();
       } else if (filterValue === "starred") {
@@ -314,8 +329,8 @@ $(function() {
 
     // Resets the filters to display all properties
     resetFilters: function() {
-      this.$("ul#filters a").removeClass("selected");
-      this.$("ul#filters a#active").addClass("selected");
+      this.$("ul#filters li").removeClass("selected");
+      this.$("ul#filters li#active").addClass("selected");
       this.addSome(function(item) { return !item.get('hidden') });
     },
 
@@ -324,6 +339,8 @@ $(function() {
     addOne: function(property) {
       var view = new PropertyView({model: property});
       this.$("#property-list").append(view.render().el);
+      $("#" + view.el.id + " h4").text(
+        String.fromCharCode(65 + $("#"+ view.el.id).index()) +". " +$("#" + view.el.id + " h4").text());
       
       setMarker(view);
     },
@@ -352,38 +369,33 @@ $(function() {
 
     // If you hit return in the main input field, create new Property model
     createOnEnter: function(e) {
-      var self = this;
+      hook = this;
       if (e.keyCode != 13) return;
+      var zooplaAPI = 'http://api.zoopla.co.uk/api/v1/property_listings.js?listing_id=' +
+                      this.input.val() +
+                      '&api_key=kwt27yfdcvd6ek4gq2bqy2z5&callback=?';
+      this.input.val('');
+      getJSONP(zooplaAPI, function(data) {
+        hook.properties.create({
+          //TODO:
+          content:         data.listing[0],
+          hidden:          false,
+          starred:         false,
+          viewed:          false,
+          user:            Parse.User.current(),
+          ACL:             new Parse.ACL(Parse.User.current())
+        });
 
-      this.properties.create({
-        //TODO:
-        content:         JSON.parse(this.input.val()),
-        hidden:          false,
-        starred:         false,
-        viewed:          false,
-        user:            Parse.User.current(),
-        ACL:             new Parse.ACL(Parse.User.current())
+        hook.resetFilters();
       });
-
-      this.resetFilters();
-    },
-
-    // Clear all hidden property items, destroying their models.
-    clearHidden: function() {
-      _.each(this.properties.hidden(), function(property){ property.destroy(); });
-      return false;
-    },
-
-    toggleAllViewed: function () {
-      var viewed = this.allViewIcon.checked;
-      this.properties.each(function (property) { property.save({'viewed': viewed}); });
     }
   });
 
   var LogInView = Parse.View.extend({
     events: {
       "submit form.login-form": "logIn",
-      "submit form.signup-form": "signUp"
+      "submit form.signup-form": "signUp",
+      "click a.reset-password": "resetPassword"
     },
 
     el: ".content",
@@ -406,7 +418,8 @@ $(function() {
         },
 
         error: function(user, error) {
-          self.$(".login-form .error").html("Invalid email or password. Please try again.").show();
+          self.$(".login-form .success").hide();  
+          self.$(".login-form .error").html("Invalid email or password. Please try again. Or, <a class='reset-password'>reset password</a>.").show();
           self.$(".login-form button").removeAttr("disabled");
         }
       });
@@ -442,6 +455,26 @@ $(function() {
       this.$(".signup-form button").attr("disabled", "disabled");
 
       return false;
+    },
+
+    resetPassword: function() {
+      var email = this.$("#login-email").val();
+
+      Parse.User.requestPasswordReset(email, {
+        success: function() {
+          self.$(".login-form .success").html("We've sent you a password reset email to " + email).show();
+          self.$(".login-form .error").hide();
+        },
+        error: function(error) {
+          self.$(".login-form .success").hide();
+          if(email.length > 0) {
+            self.$(".login-form .error").html("There is no user assigned to " + email).show();
+          } else {
+            self.$(".login-form .error").html("To reset your password enter the email you used to sign up.").show();
+          }          
+          self.$(".login-form button").removeAttr("disabled");
+        }
+      });
     },
 
     render: function() {

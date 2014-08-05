@@ -22,37 +22,21 @@ var map;
 
 function initializeMap() {
   var mapOptions = {
-    zoom: 11,
-    center: new google.maps.LatLng(51.5072, -0.1275)
+    zoom: 15,
+    center: new google.maps.LatLng(51.53, -0.1)
   }
   
   map = new google.maps.Map(document.getElementById('map-canvas'),
                                 mapOptions);
-  var transitLayer = new google.maps.TransitLayer();
-  transitLayer.setMap(map);
 }
 
-function setMarker(view) {
-  var property =  view.model;
+function setMarker(map, property) {
   var myLatLng = new google.maps.LatLng(property.get('content').latitude, property.get('content').longitude);
-
-  var image = {
-    url: 'https://embed-dot-more-than-a-map.appspot.com/images/marker-' 
-    + String.fromCharCode(65 + $("#"+ view.el.id).index()) +'.png',
-    // This marker is 20 pixels wide by 32 pixels tall.
-    size: new google.maps.Size(48, 63),
-    // The origin for this image is 0,0.
-    origin: new google.maps.Point(0,0),
-    // The anchor for this image is the base of the flagpole at 0,32.
-    anchor: new google.maps.Point(23, 63)
-  };
-
   var marker = new google.maps.Marker({
-    position: myLatLng,
-    map: map,
-    icon: image,
-    title: "1",
-    zIndex: $("#"+ view.el.id).index()
+      position: myLatLng,
+      map: map,
+      title: property.get('order') + "",
+      zIndex: property.get('order')
   });
 }
 
@@ -140,7 +124,14 @@ $(function() {
       return this.filter(function(property){ return property.get('starred'); });
     },
 
-    // Properties are sorted by their listing date.
+    // We keep the Properties in sequential order, despite being saved by unordered
+    // GUID in the database. This generates the next order number for new items.
+    nextOrder: function() {
+      if (!this.length) return 1;
+      return this.last().get('order') + 1;
+    },
+
+    // Properties are sorted by their original insertion order.
     comparator: function(property) {
       return -Date.parse(property.get('content').last_published_date);
     }
@@ -164,28 +155,33 @@ $(function() {
       "click .markview"              : "toggleViewed",
       "click .star"              : "toggleStar",
       "click .hide"              : "toggleHidden",
+      "dblclick label.property-content" : "edit",
       "click .property-destroy"   : "clear",
-      "mouseleave .listing" : "highlight"  
+      "keypress .edit"      : "updateOnEnter",
+      "blur .edit"          : "close"
     },
 
     // The PropertyView listens for changes to its model, re-rendering. Since there's
     // a one-to-one correspondence between a Property and a PropertyView in this
     // app, we set a direct reference on the model for convenience.
     initialize: function() {
-      _.bindAll(this, 'render', 'remove');
+      _.bindAll(this, 'render', 'close', 'remove');
+      this.model.bind('change', this.render);
       this.model.bind('destroy', this.remove);
-      this.el.id = this.model.get("content").listing_id;
     },
 
     // Re-render the contents of the property item.
     render: function() {
       $(this.el).html(this.template(this.model.toJSON()));
+      this.input = this.$('.edit');
       return this;
     },
 
     // Toggle the `"star"` state of the model.
     toggleStar: function() {
       this.model.star();
+      var d = Date.parse("2014-07-28 07:48:27"), today = new Date();
+      console.log(dateDiff(today,d));
     },
 
     // Toggle the `"hidden"` state of the model.
@@ -198,13 +194,26 @@ $(function() {
       this.model.view();
     },
 
+    // Switch this view into `"editing"` mode, displaying the input field.
+    edit: function() {
+      $(this.el).addClass("editing");
+      this.input.focus();
+    },
+
+    //TODO: Close the `"editing"` mode, saving changes to the property.
+    close: function() {
+      this.model.save({content: JSON.parse(this.input.val())});
+      $(this.el).removeClass("editing");
+    },
+
+    // If you hit `enter`, we're through editing the item.
+    updateOnEnter: function(e) {
+      if (e.keyCode == 13) this.close();
+    },
+
     // Remove the item, destroy the model.
     clear: function() {
       this.model.destroy();
-    },
-
-    highlight: function() {
-      console.log("hover");
     }
 
   });
@@ -324,8 +333,7 @@ $(function() {
     addOne: function(property) {
       var view = new PropertyView({model: property});
       this.$("#property-list").append(view.render().el);
-      
-      setMarker(view);
+      setMarker(map, property);
     },
 
      // Add all items in the Properties collection at once.
@@ -358,6 +366,7 @@ $(function() {
       this.properties.create({
         //TODO:
         content:         JSON.parse(this.input.val()),
+        order:           this.properties.nextOrder(),
         hidden:          false,
         starred:         false,
         viewed:          false,
@@ -365,6 +374,7 @@ $(function() {
         ACL:             new Parse.ACL(Parse.User.current())
       });
 
+      this.input.val('');
       this.resetFilters();
     },
 

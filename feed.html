@@ -62,7 +62,14 @@
       <div class="section">
 
         <header id="header">
-          <input id="new-property" placeholder="Add a Zoopla link" type="text" />
+          <div class="row">
+            <div class="col-sm-6">
+              <input id="new-property" placeholder="Add a Zoopla listing ID" type="text" />
+            </div>
+            <div class="col-sm-6">
+              <div id="property-stats"></div>
+            </div>
+          </div>
         </header>
 
         <div class="row-fluid" id="main">
@@ -79,8 +86,6 @@
             </ul>
           </div>
         </div>
-
-        <div id="property-stats"></div>
       </div>
 
       <script>
@@ -170,23 +175,22 @@
     </script>
 
     <script type="text/template" id="stats-template">
-      <footer id="footer">
-      	<span id="property-count"><strong><%= viewed %></strong> <%= viewed == 1 ? 'viewing' : 'viewings' %> requested</span>
-      	<ul id="filters">
-          <li>
-            <a href="javascript:void(0)" id="active" class="selected">Active</a>
+      <div id="footer">
+      	<ul class="nav nav-pills" id="filters">
+          <li class="selected" id="active">
+            <a href="javascript:void(0)">Active<span class="badge"><%= total-hidden%></span></a>
           </li>
-          <li>
-            <a href="javascript:void(0)" id="starred">Starred</a>
+          <li id="starred">
+            <a href="javascript:void(0)">Starred<span class="badge"><%= starred%></span></a>
           </li>
-          <li>
-            <a href="javascript:void(0)" id="viewed">Viewings</a>
+          <li id="viewed">
+            <a href="javascript:void(0)">Viewings<span class="badge"><%= viewed%></span></a>
           </li>
-      	  <li>
-      	    <a href="javascript:void(0)" id="all">All</a>
+      	  <li id="all">
+      	    <a href="javascript:void(0)">All<span class="badge"><%= total%></span></a>
       	  </li>
-          <li>
-            <a href="javascript:void(0)" id="hidden">Hidden</a>
+          <li id="hidden">
+            <a href="javascript:void(0)">Hidden<span class="badge"><%= hidden%></span></a>
           </li>
           
       	</ul>

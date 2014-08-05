@@ -11,12 +11,9 @@ html,body {
     padding: 0;
 }
 
-#map-col {
-    padding-right: 0;
-}
-
 #map-canvas {
-    height: 300px;
+    height: 500px;
+    width: 100%;
     margin-top: 10px;
 }
 
@@ -292,11 +289,11 @@ a {
     height: 40px;
 }
 
-.listing_options .col-sm-8 {
+.listing_options .col-xs-8 {
     padding: 0;
 }
 
-.listing_options .col-sm-2 {
+.listing_options .col-xs-2 {
     padding-left: 8px;
     padding-right: 0;
 }
@@ -454,53 +451,11 @@ a {
 }
 
 #footer {
-    color: #777;
-    padding: 0 15px;
-    position: absolute;
-    right: 0;
-    bottom: -31px;
-    left: 0;
-    z-index: 1;
-    text-align: center;
-}
-
-#footer:before {
-    content: '';
-    position: absolute;
-    right: 0;
-    bottom: 30px;
-    left: 0;
-    height: 100px;
-    z-index: -1;
-    box-shadow:
-    0 6px 0 -3px rgba(255, 255, 255, 0.8),
-    0 7px 1px -3px rgba(0, 0, 0, 0.3),
-    0 42px 0 -6px rgba(255, 255, 255, 0.8),
-    0 43px 2px -6px rgba(0, 0, 0, 0.2);
-}
-
-#property-count {
-    float: left;
-    text-align: left;
-}
-
-#filters {
-    margin: 0;
-    padding: 0;
-    list-style: none;
-    position: absolute;
-    right: 0;
-    left: 0;
+    padding-top: 12px;
 }
 
 #filters li {
     display: inline;
-}
-
-#filters li a {
-    color: #83756f;
-    margin: 2px;
-    text-decoration: none;
 }
 
 #filters li a.selected {
@@ -548,8 +503,8 @@ a {
 }
 
 #propertyapp .content .login {
-    width: 350px;
-    margin: 45px auto 25px auto;
+    margin-top: 45px;
+    margin-bottom: 25px;
 }
 
 #propertyapp .content .login h2 {
@@ -563,7 +518,7 @@ a {
     margin-bottom: 10px;
     font-size: 20px;
     padding: 5px;
-    width: 340px;;
+    width: 100%;
 }
 
 #propertyapp .content .login .signup-form {
@@ -583,6 +538,13 @@ a {
 #propertyapp .content .login .error {
     border: 1px solid red;
     background: #FDEFF0;
+    padding: 5px 15px;
+    margin-bottom: 15px;
+}
+
+#propertyapp .content .login .success {
+    border: 1px solid green;
+    background: #F3FFF3;
     padding: 5px 15px;
     margin-bottom: 15px;
 }

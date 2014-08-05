@@ -1,4 +1,6 @@
-var dateDiff = function(date) {
+var dateDiff = function(s) {
+  var a = s.split(/[^0-9]/);
+  var date = new Date (a[0],a[1]-1,a[2],a[3],a[4],a[5] );
   var milisDiff = new Date() - date, 
         secDiff = milisDiff / 1000,
         minDiff = secDiff / 60,
@@ -157,7 +159,10 @@ $(function() {
 
     // Properties are sorted by their listing date.
     comparator: function(property) {
-      return -Date.parse(property.get('content').last_published_date);
+      var s = property.get('content').last_published_date;
+      var a = s.split(/[^0-9]/);
+      var date = new Date (a[0],a[1]-1,a[2],a[3],a[4],a[5] );
+      return -date;
     }
 
   });
@@ -176,11 +181,11 @@ $(function() {
 
     // The DOM events specific to an item.
     events: {
-      "click .markview"              : "toggleViewed",
+      "click .markview"          : "toggleViewed",
       "click .star"              : "toggleStar",
       "click .hide"              : "toggleHidden",
-      "click .property-destroy"   : "clear",
-      "mouseleave .listing" : "highlight"  
+      "click .property-destroy"  : "clear",
+      "mouseleave .listing"      : "highlight"  
     },
 
     // The PropertyView listens for changes to its model, re-rendering. Since there's
@@ -300,7 +305,6 @@ $(function() {
     // Filters the list based on which type of filter is selected
     selectFilter: function(e) {
       var el = $(e.target.parentElement);
-      console.log(el);
       var filterValue = el.attr("id");
       state.set({filter: filterValue});
       Parse.history.navigate(filterValue);

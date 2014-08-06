@@ -73,10 +73,10 @@
 
         <header id="header">
           <div class="row">
-            <div class="col-md-6">
+            <div class="col-sm-5 col-lg-7">
               <input id="new-property" placeholder="Add a Zoopla listing ID" type="text" />
             </div>
-            <div class="col-md-6">
+            <div class="col-sm-7 col-lg-5">
               <div id="property-stats"></div>
             </div>
           </div>
@@ -191,13 +191,10 @@
             <a href="javascript:void(0)">Active<span class="badge"><%= total-hidden%></span></a>
           </li>
           <li id="starred">
-            <a href="javascript:void(0)">Starred<span class="badge"><%= starred%></span></a>
+            <a href="javascript:void(0)">Favourites<span class="badge"><%= starred%></span></a>
           </li>
           <li id="viewed">
             <a href="javascript:void(0)">Viewings<span class="badge"><%= viewed%></span></a>
-          </li>
-          <li id="all">
-            <a href="javascript:void(0)">All<span class="badge"><%= total%></span></a>
           </li>
           <li id="hidden">
             <a href="javascript:void(0)">Hidden<span class="badge"><%= hidden%></span></a>

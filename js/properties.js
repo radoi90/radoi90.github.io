@@ -401,7 +401,7 @@ $(function() {
       if (e.keyCode != 13) return;
 
       var zooplaAPI = 'http://api.zoopla.co.uk/api/v1/property_listings.js?listing_id=' +
-                      this.input.val() +
+                      getZooplaID(this.input.val()) +
                       '&api_key=kwt27yfdcvd6ek4gq2bqy2z5&callback=?';
 
       this.input.val('');

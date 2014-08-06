@@ -90,7 +90,7 @@ body {
 #propertyapp h1 {
     font-family: 'molotregular';
     color: black;
-    font-size: 54px;
+    font-size: 50px;
     text-shadow: 0px 4px #fff;
     font-weight: normal;
     position: absolute;
@@ -105,7 +105,7 @@ body {
 }
 
 #propertyapp h1 span {
-    font-size: 66px;
+    font-size: 64px;
 }
 
 #header {
@@ -161,7 +161,7 @@ body {
 }
 
 #new-property {
-    padding: 16px 16px 16px 110px;
+    padding: 16px 16px 16px 26px;
     border: none;
     background: rgba(0, 0, 0, 0.02);
     z-index: 2;

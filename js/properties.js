@@ -290,6 +290,8 @@ $(function() {
       // Create our collection of Properties
       this.properties = new PropertyList;
 
+      initializeMap();
+
       // Setup the query for the collection to look for properties from the current user
       this.properties.query = new Parse.Query(Property);
       this.properties.query.equalTo("user", Parse.User.current());
@@ -569,5 +571,4 @@ $(function() {
   new AppRouter;
   new AppView;
   Parse.history.start();
-  initializeMap();
 });

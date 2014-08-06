@@ -289,13 +289,8 @@ a {
     height: 40px;
 }
 
-.listing_options .col-xs-8 {
-    padding: 0;
-}
-
-.listing_options .col-xs-2 {
-    padding-left: 8px;
-    padding-right: 0;
+.listing_options div {
+    padding: 4px;
 }
 
 .listing_age p {

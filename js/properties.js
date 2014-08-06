@@ -20,6 +20,30 @@ var dateDiff = function(s) {
   else return "moments ago";
 }
 
+//http://www.zoopla.co.uk/for-sale/details/14959841?featured=1&utm_content=featured_listing
+function getZooplaID(s) {
+  var detailsString = "details/";
+  var found = false;
+
+  while (!found && detailsString.length > 0) {
+    found = s.indexOf(detailsString) > -1;
+    if (!found) detailsString = detailsString.substring(1, detailsString.length);
+  }
+
+  if (found) {
+    s = s.substring(s.indexOf(detailsString) + detailsString.length, s.length);
+  }
+
+  var i = 0, id = "";
+  while (!isNaN(parseInt(s[i])) && i < s.length) {
+    id += s[i];
+    i += 1;
+  }
+  console.log(id);
+
+  return id;
+}
+
 var getJSONP = function(url, success) {
   var ud = '_' + +new Date,
       script = document.createElement('script'),

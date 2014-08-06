@@ -74,7 +74,7 @@
         <header id="header">
           <div class="row">
             <div class="col-sm-5 col-lg-7">
-              <input id="new-property" placeholder="Add a Zoopla listing ID" type="text" />
+              <input id="new-property" placeholder="Add a Zoopla link" type="text" />
             </div>
             <div class="col-sm-7 col-lg-5">
               <div id="property-stats"></div>
@@ -138,7 +138,7 @@
 
           <div class="listing_info col-md-7">
            <div class="row-fluid listing_location">
-              <h4><%=_.escape(content.property_type) %> for <%=_.escape(content.listing_status) %> in:</h4>
+              <h4><%=_.escape(content.property_type) == '' ? 'Property' : _.escape(content.property_type) %> for <%=_.escape(content.listing_status) %> in:</h4>
               <p><%= _.escape(content.street_name) %> <%= _.escape(content.outcode) %></p>
             </div>
            

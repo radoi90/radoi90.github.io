@@ -6,8 +6,17 @@
   font-style: normal;
 }
 
+body {
+  color: #fff;
+  font-family: 'Montserrat', sans-serif;
+}
+
 .navbar {
   background: rgb(56, 76, 99);
+  -webkit-box-shadow: inset 0 -3px rgba(0, 0, 0, 0.25);
+  box-shadow: inset 0 -3px rgba(0, 0, 0, 0.25);
+  border: none;
+  border-radius: 0;
 }
 
 .navbar-nav {
@@ -40,9 +49,6 @@
 }
 
 .navbar .navbar-header .navbar-brand {
-  margin: 0;
-  float: none;
-  line-height: 80px;
   color: #fff;
   font-family: 'molotregular';
   font-size: 29px;
@@ -52,10 +58,6 @@
 
 .navbar-brand .Q {
   font-size: 34px;
-}
-
-.navbar-toggle {
-  margin-top: 26px;
 }
 
 .navbar-default .navbar-nav>li>a {
@@ -93,4 +95,13 @@
   outline: none;
   -webkit-box-shadow: none;
   box-shadow: none;
+}
+
+.form-control {
+  border: 0;
+  border-bottom: 2px solid rgb(155, 155, 155);
+  border-radius: 6px;
+  cursor: pointer;
+  -webkit-box-shadow: inset 0 -2px rgb(155, 155, 155);
+  box-shadow: inset 0 -2px rgb(155, 155, 155);
 }

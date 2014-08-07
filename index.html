@@ -4,17 +4,15 @@
 	<meta name="viewport" content="width=device-width, initial-scale=1.0;">
 	<title>HouseQuest - The only way to find your house in London</title>
 
-	<!-- Latest compiled and minified CSS -->
 	<link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap.min.css">
-
-	<!-- Optional theme -->
-	<link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap-theme.min.css">
-
+	<link href='http://fonts.googleapis.com/css?family=Montserrat' rel='stylesheet' type='text/css'>
+	<link rel="stylesheet" href="css/jquery.vegas.min.css">
 	<link rel="stylesheet" href="css/profile.css">
 
 	<!-- Latest compiled and minified JavaScript -->
 	<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
 	<script src="http://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/js/bootstrap.min.js"></script>
+	<script src="js/jquery.vegas.min.js"></script>
 
 	<script>
 	  (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
@@ -223,10 +221,19 @@
 	</div>
 
 <script type="text/javascript">
+	$(function() {
+		$.vegas('overlay', {
+		 	src:'css/overlays/06.png',
+		 	opacity:1
+		});
+		$.vegas({
+			src:'img/bg.jpg'
+		});
+	});
+
 	var onPersonal = true;
 
 	$('#user-form').submit(function(event){
-		console.log("g");
 		if (onPersonal) {
 			event.preventDefault();
 			onPersonal = false;

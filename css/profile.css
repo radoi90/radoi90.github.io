@@ -5,55 +5,92 @@
   font-weight: normal;
   font-style: normal;
 }
-.molot {
-  font-family: 'molotregular';
+
+.navbar {
+  background: rgb(56, 76, 99);
 }
 
-.center {
-  display: block;
-  margin-left: auto;
-  margin-right: auto;
+.navbar-nav {
+  width: 100%;
   text-align: center;
 }
 
-.profile-page {
-  background: #f2f5f6;
-  /* Old browsers */
-  background: -moz-radial-gradient(center, ellipse cover, #f2f5f6 0%, #e3eaed 37%, #b6d1db 100%);
-  /* FF3.6+ */
-  background: -webkit-gradient(radial, center center, 0px, center center, 100%, color-stop(0%, #f2f5f6), color-stop(37%, #e3eaed), color-stop(100%, #b6d1db));
-  /* Chrome,Safari4+ */
-  background: -webkit-radial-gradient(center, ellipse cover, #f2f5f6 0%, #e3eaed 37%, #b6d1db 100%);
-  /* Chrome10+,Safari5.1+ */
-  background: -o-radial-gradient(center, ellipse cover, #f2f5f6 0%, #e3eaed 37%, #b6d1db 100%);
-  /* Opera 12+ */
-  background: -ms-radial-gradient(center, ellipse cover, #f2f5f6 0%, #e3eaed 37%, #b6d1db 100%);
-  /* IE10+ */
-  background: radial-gradient(ellipse at center, #f2f5f6 0%, #e3eaed 37%, #b6d1db 100%);
-  /* W3C */
-  filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#f2f5f6', endColorstr='#b6d1db',GradientType=1 );
-  /* IE6-9 fallback on horizontal gradient */
-  margin: 0;
-  margin-top: 12px;
-  background-repeat: no-repeat;
-  background-attachment: fixed;
+.navbar-nav > li {
+  float: none;
+  display: inline-block;
 }
 
-.profile-page .header-unit {
-  float: center;
-  margin-bottom: 15px;
+.navbar-header {
+    float: left;
+    padding: 15px;
+    text-align: center;
+    width: 100%;
 }
-.profile-page .header-unit h1 {
-  font-size: 54px;
-  text-shadow: 0px 4px #fff;
+
+@media (min-width: 768px) {
+  .navbar-header {
+    display: none;
+  }
+
+  .nav-login {
+    position: absolute;
+    right: 30px;
+    top: 10px;
+  }
+}
+
+.navbar .navbar-header .navbar-brand {
+  margin: 0;
+  float: none;
+  line-height: 80px;
+  color: #fff;
+  font-family: 'molotregular';
+  font-size: 29px;
+  text-shadow: 0px 4px #000;
   font-weight: normal;
 }
-.profile-page .Q {
-  font-size: 72px;
+
+.navbar-brand .Q {
+  font-size: 34px;
 }
 
-#disclaimer {
-  font-size: 11px;
-  margin: 0;
-  color: rgb(124, 120, 120);
+.navbar-toggle {
+  margin-top: 26px;
+}
+
+.navbar-default .navbar-nav>li>a {
+  color: #fff;
+  font-family: 'molotregular';
+  font-size: 50px;
+  text-shadow: 0px 4px #000;
+  font-weight: normal;
+  line-height: 80px;
+}
+
+.title .Q {
+  font-size: 60px;
+}
+
+.nav-login {
+  margin-top: 26px;
+  height: 46px;
+  width: 130px;
+  font-size: 18px;
+  color: white;
+  text-align: center;
+  text-shadow: 0 1px 2px rgba(0, 0, 0, 0.25);
+  background: #f1c40f;
+  border: 0;
+  border-bottom: 2px solid #A0861D;
+  border-radius: 6px;
+  cursor: pointer;
+  -webkit-box-shadow: inset 0 -2px #e2b607;
+  box-shadow: inset 0 -2px #A0861D;
+}
+
+.nav-login:active {
+  margin-top: 25px;
+  outline: none;
+  -webkit-box-shadow: none;
+  box-shadow: none;
 }

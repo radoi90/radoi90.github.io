@@ -62,51 +62,53 @@
 
 			<form class="form-horizontal" role="form" action="https://docs.google.com/forms/d/1RvngjKApBx-h7Z8r-xBIMWWK9H98T-oXke4fqxErvHU/formResponse" method="post"
 			target="hidden_iframe" onsubmit="submitted=true;">
-				<h3>Personal information</h3>
-				<div class="well">
+				<div class="well col-sm-6  col-sm-offset-3" id="personal-form">
+					<h3>Tell us about yourself</h3>
+
 					<div class="form-group">
-						<div class="col-sm-3">
-							<label for="entry_495151048" class="control-label">First name*</label>					
-							<input type="text" class="form-control" name="entry.495151048" id="entry_495151048" required>
-						</div>
-						
-						<div class="col-sm-3">
-							<label for="entry_1489655683" class="control-label">Last name*</label>
-							<input type="text" class="form-control" name="entry.1489655683" id="entry_1489655683" required>
-						</div>
-						
-						<div class="col-sm-3">
-							<label for="entry_1866180113" class="control-label">Email*</label>
-							<input type="email" class="form-control" name="entry.1866180113" id="entry_1866180113" required>
-						</div>
-		
-						<div class="col-sm-3">
-							<label for="entry_1066742705" class="control-label">Phone</label>
-							<input type="text" class="form-control" name="entry.1066742705" id="entry_1066742705">
-						</div>
+						<label for="entry_495151048" class="control-label">First name*</label>					
+						<input type="text" class="form-control" name="entry.495151048" id="entry_495151048" required>
+					</div>
+					
+					<div class="form-group">
+						<label for="entry_1489655683" class="control-label">Last name*</label>
+						<input type="text" class="form-control" name="entry.1489655683" id="entry_1489655683" required>
+					</div>						
+
+					<div class="form-group">
+						<label for="entry_1866180113" class="control-label">Email*</label>
+						<input type="email" class="form-control" name="entry.1866180113" id="entry_1866180113" required>
+					</div>
+	
+					<div class="form-group">
+						<label for="entry_1066742705" class="control-label">Phone</label>
+						<input type="text" class="form-control" name="entry.1066742705" id="entry_1066742705">
 					</div>
 
 					<div class="form-group">
-						<div class="col-sm-6">
-							<label for="entry_893950790" class="control-label">Current employer / school*</label>
-							<input type="text" class="form-control" name="entry.893950790" id="entry_893950790" required>
-						</div>
+						<label for="entry_893950790" class="control-label">Current employer / school*</label>
+						<input type="text" class="form-control" name="entry.893950790" id="entry_893950790" required>
+					</div>
 
-						<div class="col-sm-6">
-							<label for="entry_1534924529" class="control-label">When are you available for viewings?</label>
-						 	<input type="text" class="form-control" name="entry.1534924529" id="entry_1534924529">
-						</div>
+					<div class="form-group">
+						<label for="entry_1534924529" class="control-label">When are you available for viewings?</label>
+					 	<input type="text" class="form-control" name="entry.1534924529" id="entry_1534924529">
 					</div>
 					
 					<p id="disclaimer" class="help-block text-right">
 						Disclaimer: we don't disclose your contact information to any 3rd parties.
 					</p>
+
+					<div class="form-group text-center">
+						<button class="btn btn-success" onclick="advanceForm()">Next</button>
+					</div>
+					
 				</div>
 
-				<h3>Property search</h3>
-				<div class="well">
+				<div class="well col-sm-6  col-sm-offset-3 hidden" id="property-form">
+					<h3>What are you looking for?</h3>
 					<div class="form-group">
-						<div class="col-sm-3">
+						<div class="col-sm-6">
 							<label for="entry_935209026" class="control-label">Bedrooms</label>
 							<select class="form-control" name="entry.935209026" id="entry_935209026">
 								<option value="No min">No min</option> <option value="Studio">Studio</option>
@@ -115,7 +117,7 @@
 							</select>
 						</div>
 
-						<div class="col-sm-3">
+						<div class="col-sm-6">
 							<label for="entry_1452370776" class="control-label">Max price (per month)</label>
 							<select class="form-control" name="entry.1452370776" id="entry_1452370776">
 								<option value="0">No max</option>
@@ -162,8 +164,10 @@
 							    <option value="25000" >&pound;25,000 pcm</option>
 							</select>
 						</div>
+					</div>
 
-						<div class="col-sm-3">
+					<div class="form-group">
+						<div class="col-sm-6">
 							<label for="entry_562686023" class="control-label">Property type</label>
 							<select class="form-control" name="entry.562686023" id="entry_562686023">
 								<option value="Any">Any</option>
@@ -173,7 +177,7 @@
 						</div>
 
 						
-						<div class="col-sm-3">
+						<div class="col-sm-6">
 							<label for="entry_488055055" class="control-label">Furniture</label>
 							<select class="form-control" name="entry.488055055" id="entry_488055055">
 								<option value="Show all">Show all</option> 
@@ -185,35 +189,44 @@
 					</div>
 
 					<div class="form-group">
-						<div class="col-sm-4">
-							<label for="entry_922244654" class="control-label">Location (City, borough, street, postcode)</label>
-							<textarea class="form-control" name="entry.922244654" id="entry_922244654" rows="2" placeholder="E.g. Clerkenwell or NW1, near Northern line stations"></textarea>
-						</div>
-
-						<div class="col-sm-4">
-							<label for="entry_242663229" class="control-label">Other</label>
-							<textarea class="form-control" name="entry.242663229" id="entry_242663229" rows="2" placeholder="E.g. no council flats, bathtub a plus, off-street parking"></textarea>
-						</div>
-
-						<div class="col-sm-2">
+						<div class="col-sm-6">
 							<label for="entry_1052293236" class="control-label">Earliest move in date</label>
 							<input type="date" name="entry.1052293236" id="entry_1052293236">
 						</div>
 
-						<div class="col-sm-2">
+						<div class="col-sm-6">
 							<label for="entry_79946928" class="control-label">Latest move in date</label>
 							<input type="date" name="entry.79946928" id="entry_79946928">
 						</div>
 					</div>
-				</div>
 
-				<div class="center">
-					<button type="submit" class="btn btn-success">Contact a HouseQuest agent</button>
+					<div class="form-group">
+						<div class="col-sm-6">
+							<label for="entry_922244654" class="control-label">Location (City, borough, street, postcode)</label>
+							<textarea class="form-control" name="entry.922244654" id="entry_922244654" rows="2" placeholder="E.g. Clerkenwell or NW1, near Northern line stations"></textarea>
+						</div>
+
+						<div class="col-sm-6">
+							<label for="entry_242663229" class="control-label">Other</label>
+							<textarea class="form-control" name="entry.242663229" id="entry_242663229" rows="2" placeholder="E.g. no council flats, bathtub a plus, off-street parking"></textarea>
+						</div>
+					</div>
+
+					<div class="form-group text-center">
+						<button type="submit" class="btn btn-success">Contact a HouseQuest agent</button>
+					</div>
 				</div>
 			</form>
 			<br><br>
 		
 		</div>	
 	</div>
+
+<script type="text/javascript">
+	function advanceForm() {
+		document.getElementById("personal-form").className += " hidden";
+		document.getElementById("property-form").className = "well col-sm-6  col-sm-offset-3";
+	}
+</script>
 </body>
 </html>

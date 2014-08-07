@@ -60,7 +60,7 @@
 			style="display:none;" onload="if(submitted)
 			{window.location='http://www.housequest.co.uk/thanks';}"></iframe>
 
-			<form class="form-horizontal" role="form" action="https://docs.google.com/forms/d/1RvngjKApBx-h7Z8r-xBIMWWK9H98T-oXke4fqxErvHU/formResponse" method="post"
+			<form class="form-horizontal" id="user-form" role="form" action="https://docs.google.com/forms/d/1RvngjKApBx-h7Z8r-xBIMWWK9H98T-oXke4fqxErvHU/formResponse" method="post"
 			target="hidden_iframe" onsubmit="submitted=true;">
 				<div class="well col-sm-6  col-sm-offset-3" id="personal-form">
 					<h3>Tell us about yourself</h3>
@@ -100,7 +100,7 @@
 					</p>
 
 					<div class="form-group text-center">
-						<button class="btn btn-success" onclick="advanceForm()">Next</button>
+						<button type="submit" class="btn btn-success">Next</button>
 					</div>
 					
 				</div>
@@ -223,9 +223,20 @@
 	</div>
 
 <script type="text/javascript">
+	var onPersonal = true;
+
+	$('#user-form').submit(function(event){
+		console.log("g");
+		if (onPersonal) {
+			event.preventDefault();
+			onPersonal = false;
+			advanceForm();
+		}
+	});
+
 	function advanceForm() {
-		document.getElementById("personal-form").className += " hidden";
-		document.getElementById("property-form").className = "well col-sm-6  col-sm-offset-3";
+		$("#personal-form").addClass("hidden");
+		$("#property-form").removeClass("hidden");
 	}
 </script>
 </body>

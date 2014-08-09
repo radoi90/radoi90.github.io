@@ -166,16 +166,19 @@ $(function() {
     // Toggle the `starred` state of this property item.
     star: function() {
       this.save({starred: !this.get("starred")});
+      ga('send', 'propertyClick', 'star', Parse.User.current(), this.get("content").details_url);
     },
 
     // Toggle the `hidden` state of this property item.
     hide: function() {
       this.save({hidden: !this.get("hidden")});
+      ga('send', 'propertyClick', 'hide', Parse.User.current(), this.get("content").details_url);
     },
 
     // Toggle the `starred` state of this property item.
     view: function() {
         this.save({viewed: true});
+        ga('send', 'propertyClick', 'view', Parse.User.current(), this.get("content").details_url);
     }
   });
 

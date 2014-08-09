@@ -376,6 +376,7 @@ $(function() {
 
     filter: function() {
       var filterValue = state.get("filter");
+      ga('send', 'filter', filterValue, Parse.User.current());
       this.$("ul#filters li").removeClass("selected");
       this.$("ul#filters li#" + filterValue).addClass("selected");
       if (filterValue === "all") {

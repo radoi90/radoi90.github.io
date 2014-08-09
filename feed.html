@@ -15,6 +15,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
 
     <script>
+      var submitted = false;
       (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
       (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
       m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
@@ -96,6 +97,21 @@
             </ul>
           </div>
         </div>
+
+        <iframe name="hidden_iframe" id="hidden_iframe"
+        style="display:none;" onload="if(submitted)
+        {}">
+        </iframe>
+
+        <form id="viewing-form" action="https://docs.google.com/forms/d/1b9EaYbkaP-TF-ONZP15Jl6tclDl46WIV_a13_QAzFdU/formResponse" method="POST" target="hidden_iframe" onsubmit="submitted=true;" style="display:none;">
+          <input type="text" name="entry.1798562605" id="viewing-user" value="<%= Parse.User.current().escape('username') %>">
+          <input type="text" name="entry.1968900279" id="viewing-availability" >
+          <input type="text" name="entry.1699279349" id="viewing-number" >
+          <input type="text" name="entry.421347300" id="viewing-address" >
+          <input type="text" name="entry.1186917773" id="viewing-beds" >
+          <input type="text" name="entry.171092278" id="viewing-pcm" >
+          <input type="text" name="entry.566251407" id="viewing-link" >
+        </form> 
       </div>
 
       <script>

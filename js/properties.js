@@ -168,6 +168,14 @@ $(function() {
     // Toggle the `starred` state of this property item.
     view: function() {
         this.save({viewed: true});
+        var listing = this.get("content");
+        $("#viewing-number").val(listing.agent_phone);
+        $("#viewing-address").val(listing.displayable_address);
+        $("#viewing-beds").val(listing.num_bedrooms);
+        $("#viewing-pcm").val(listing.rental_prices.per_month+' pcm');
+        $("#viewing-link").val(listing.details_url);
+
+        $("#viewing-form").submit();
     }
   });
 

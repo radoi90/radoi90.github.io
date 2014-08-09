@@ -1,0 +1,295 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta name="viewport" content="width=device-width, initial-scale=1.0;">
+	<title>HouseQuest - The best way to find your house in London</title>
+
+	<link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap.min.css">
+	<link href='http://fonts.googleapis.com/css?family=Montserrat' rel='stylesheet' type='text/css'>
+	<link rel="stylesheet" href="css/bootstrap-tagsinput.css">
+	<link rel="stylesheet" href="css/animate.css">
+
+	<!-- Latest compiled and minified JavaScript -->
+	<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
+	<script src="http://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/js/bootstrap.min.js"></script>
+	<script src="js/jquery-1.11.1.min.js" type="text/javascript"></script>
+	<script src="js/tagmanager.js" type="text/javascript"></script>
+
+	<link rel="stylesheet" href="css/welcome.css">
+
+	<script>
+ 		$( document ).ready(function() {
+ 			jQuery(".tm-input").tagsManager({
+		        CapitalizeFirstLetter: true,
+		    });
+		}); 
+
+ 		var element = document.getElementById("#location-form");
+		element.addEventListener("webkitAnimationEnd", function(){
+		    this.style.display = "none"
+		}, false);
+		
+    </script>
+
+	<script>
+	  (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+	  (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+	  m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+	  })(window,document,'script','http://www.google-analytics.com/analytics.js','ga');
+
+	  ga('create', 'UA-37859939-3', 'auto');
+	  ga('send', 'pageview');
+	</script>
+</head>
+<body>
+	<div class="overlay">
+		<!-- Navbar -->
+		<nav class="navbar navbar-default navbar-fixed-top" role="navigation">
+		  <div class="container-fluid animated fadeInDown">
+
+		    <!-- Brand and toggle get grouped for better mobile display -->
+		    <div class="navbar-header">
+			  <div class="navbar-brand">House<span class="Q">Q</span>uest</div>
+		      <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1">
+		        <span class="sr-only">Toggle navigation</span>
+		        <span class="icon-bar"></span>
+		        <span class="icon-bar"></span>
+		        <span class="icon-bar"></span>
+		      </button>
+		    </div>
+
+		    <!-- Collect the nav links, forms, and other content for toggling -->
+		    <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+		      <ul class="nav navbar-nav">
+		      	<li><a class="title hidden-xs" href="#">House<span class="Q">Q</span>uest</a></li>
+		      	<li class="pull-right">
+		      		<button type="button" class="btn-flat btn-orange">Login</button>
+		      	</li>
+		      </ul>
+		    </div><!-- /.navbar-collapse -->
+		  </div><!-- /.container-fluid -->
+		</nav>
+
+		<!-- Main page -->
+		<div class="container location-form">
+				<div id="banner-text" class="animated fadeIn">
+					Let us do your rental search
+				</div>
+				<div id="banner-text-sub" class="animated fadeIn">
+					Curated property lists and viewing arrangements
+				</div>
+				<div id="action-box" class="centered animated fadeIn">
+					<div id="where-box" >
+						<div id="where">
+							Where?	
+						</div>					
+					  <input type="text" name="tags" placeholder="Islington, Shoreditch..." class="tm-input"/>
+					</div>
+					<div>
+						<button type="button" class="btn-green" onclick="$('.location-form').addClass('animated bounceOutLeft');$('.personal-form').addClass('animated bounceInRight'); $('.personal-form').css('display', 'block');">Find my property</button>
+					</div>
+				</div>
+		</div>
+		<div class="container personal-form">
+			<div class="row-fluid">
+				<script type="text/javascript">var submitted=false;</script>
+				<iframe name="hidden_iframe" id="hidden_iframe"
+				style="display:none;" onload="if(submitted)
+				{window.location='http://www.housequest.co.uk/thanks';}"></iframe>
+				<form class="form-horizontal" id="user-form" role="form" action="https://docs.google.com/forms/d/1RvngjKApBx-h7Z8r-xBIMWWK9H98T-oXke4fqxErvHU/formResponse" method="post"
+				target="hidden_iframe" onsubmit="submitted=true;">
+					<div class="col-sm-8  col-sm-offset-2" id="personal-form">
+						<h2 class="text-center">Tell us about yourself</h2>
+
+						<div class="form-group">
+							<div class="col-sm-6">
+								<label for="entry_495151048" class="control-label">First name*</label>					
+								<input placeholder="Bob" type="text" class="form-control" name="entry.495151048" id="entry_495151048" required>
+							</div>
+
+							<div class="col-sm-6">
+								<label for="entry_1489655683" class="control-label">Last name*</label>
+								<input placeholder="Smith" type="text" class="form-control" name="entry.1489655683" id="entry_1489655683" required>
+							</div>	
+						</div>						
+
+						<div class="form-group">
+							<div class="col-sm-6">
+								<label for="entry_1866180113" class="control-label">Email*</label>
+								<input placeholder="bob@bobsmith.com" type="email" class="form-control" name="entry.1866180113" id="entry_1866180113" required>
+							</div>
+
+							<div class="col-sm-6">
+								<label for="entry_1066742705" class="control-label">Phone</label>
+								<input placeholder="01234 567890" ype="text" class="form-control" name="entry.1066742705" id="entry_1066742705">
+							</div>						
+						</div>
+
+						<div class="form-group">
+							<div class="col-sm-6">
+								<label for="entry_893950790" class="control-label">Current employer / school*</label>
+								<input placeholder="Bob Industries Inc." type="text" class="form-control" name="entry.893950790" id="entry_893950790" required>
+							</div>
+
+							<div class="col-sm-6">
+								<label for="entry_1534924529" class="control-label">When can you attend viewings?</label>
+						 		<input placeholder="Mon-Fri 6:30-8" type="text" class="form-control" name="entry.1534924529" id="entry_1534924529">
+							</div>
+						</div>
+
+						<div class="form-group text-center">
+							<button type="submit" class="btn btn-green btn-next">Next</button>
+						</div>
+
+						<div id="progress-bar">
+							
+						</div>
+					</div>
+
+					<div class="col-sm-8  col-sm-offset-2 hidden" id="property-form">
+						<h2 class="text-center">What are you looking for?</h2>
+						<div class="form-group">
+							<div class="col-sm-6">
+								<label for="entry_935209026" class="control-label">Bedrooms</label>
+								<select class="form-control" name="entry.935209026" id="entry_935209026">
+									<option value="No min">No min</option> <option value="Studio">Studio</option>
+									<option value="1+">1+</option> <option value="2+">2+</option>
+									<option value="3+">3+</option> <option value="4+">4+</option>
+								</select>
+							</div>
+
+							<div class="col-sm-6">
+								<label for="entry_1452370776" class="control-label">Max price (per month)</label>
+								<select class="form-control" name="entry.1452370776" id="entry_1452370776">
+									<option value="0">No max</option>
+								    <option value="100" >&pound;100 pcm</option>
+								    <option value="200" >&pound;200 pcm</option>
+								    <option value="300" >&pound;300 pcm</option>
+								    <option value="400" >&pound;400 pcm</option>
+								    <option value="500" >&pound;500 pcm</option>
+								    <option value="600" >&pound;600 pcm</option>
+								    <option value="700" >&pound;700 pcm</option>
+								    <option value="800" >&pound;800 pcm</option>
+								    <option value="900" >&pound;900 pcm</option>
+								    <option value="1000" >&pound;1,000 pcm</option>
+								    <option value="1250" >&pound;1,250 pcm</option>
+								    <option value="1500" >&pound;1,500 pcm</option>
+								    <option value="1750" >&pound;1,750 pcm</option>
+								    <option value="2000" >&pound;2,000 pcm</option>
+								    <option value="2250" >&pound;2,250 pcm</option>
+								    <option value="2500" >&pound;2,500 pcm</option>
+								    <option value="2750" >&pound;2,750 pcm</option>
+								    <option value="3000" >&pound;3,000 pcm</option>
+								    <option value="3250" >&pound;3,250 pcm</option>
+								    <option value="3500" >&pound;3,500 pcm</option>
+								    <option value="3750" >&pound;3,750 pcm</option>
+								    <option value="4000" >&pound;4,000 pcm</option>
+								    <option value="4250" >&pound;4,250 pcm</option>
+								    <option value="4500" >&pound;4,500 pcm</option>
+								    <option value="4750" >&pound;4,750 pcm</option>
+								    <option value="5000" >&pound;5,000 pcm</option>
+								    <option value="5500" >&pound;5,500 pcm</option>
+								    <option value="6000" >&pound;6,000 pcm</option>
+								    <option value="6500" >&pound;6,500 pcm</option>
+								    <option value="7000" >&pound;7,000 pcm</option>
+								    <option value="7500" >&pound;7,500 pcm</option>
+								    <option value="8000" >&pound;8,000 pcm</option>
+								    <option value="8500" >&pound;8,500 pcm</option>
+								    <option value="9000" >&pound;9,000 pcm</option>
+								    <option value="9500" >&pound;9,500 pcm</option>
+								    <option value="10000" >&pound;10,000 pcm</option>
+								    <option value="12500" >&pound;12,500 pcm</option>
+								    <option value="15000" >&pound;15,000 pcm</option>
+								    <option value="17500" >&pound;17,500 pcm</option>
+								    <option value="20000" >&pound;20,000 pcm</option>
+								    <option value="25000" >&pound;25,000 pcm</option>
+								</select>
+							</div>
+						</div>
+
+						<div class="form-group">
+							<div class="col-sm-6">
+								<label for="entry_562686023" class="control-label">Property type</label>
+								<select class="form-control" name="entry.562686023" id="entry_562686023">
+									<option value="Any">Any</option>
+									<option value="Houses">Houses</option>
+									<option value="Flats">Flats</option>
+								</select>
+							</div>
+
+							
+							<div class="col-sm-6">
+								<label for="entry_488055055" class="control-label">Furniture</label>
+								<select class="form-control" name="entry.488055055" id="entry_488055055">
+									<option value="Show all">Show all</option> 
+									<option value="Furnished">Furnished</option>
+									<option value="Part furnished">Part furnished</option>
+									<option value="Unfurnished">Unfurnished</option>
+								</select>
+							</div>
+						</div>
+
+						<div class="form-group">
+							<div class="col-sm-6">
+								<label for="entry_1052293236" class="control-label">Earliest move in date</label>
+								<input type="date" name="entry.1052293236" id="entry_1052293236">
+							</div>
+
+							<div class="col-sm-6">
+								<label for="entry_79946928" class="control-label">Latest move in date</label>
+								<input type="date" name="entry.79946928" id="entry_79946928">
+							</div>
+						</div>
+
+						<div class="form-group">
+							<div class="col-sm-6">
+								<label for="entry_922244654" class="control-label">Location (City, borough, street, postcode)</label>
+								<textarea class="form-control" name="entry.922244654" id="entry_922244654" rows="2" placeholder="E.g. Clerkenwell or NW1, near Northern line stations"></textarea>
+							</div>
+
+							<div class="col-sm-6">
+								<label for="entry_242663229" class="control-label">Other</label>
+								<textarea class="form-control" name="entry.242663229" id="entry_242663229" rows="2" placeholder="E.g. no council flats, bathtub a plus, off-street parking"></textarea>
+							</div>
+						</div>
+
+						<div class="form-group text-center">
+							<button type="submit" class="btn btn-flat btn-green">Complete your profile</button>
+						</div>
+					</div>
+
+				</form>
+				<br><br>
+			</div>
+		</div>
+	</div>
+</body>
+
+<!-- Scripts -->
+<script type="text/javascript">
+	$(function() {
+		$.vegas('overlay', {
+		 	src:'css/overlays/06.png',
+		 	opacity:1
+		});
+		$.vegas({
+			src:'img/bg.jpg'
+		});
+	});
+
+	var onPersonal = true;
+
+	$('#user-form').submit(function(event){
+		if (onPersonal) {
+			event.preventDefault();
+			onPersonal = false;
+			advanceForm();
+		}
+	});
+
+	function advanceForm() {
+		$("#personal-form").addClass("hidden");
+		$("#property-form").removeClass("hidden");
+	}
+</script>
+</html>

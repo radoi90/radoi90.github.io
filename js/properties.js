@@ -319,19 +319,6 @@ $(function() {
       // Setup the query for the collection to look for properties from the current user
       this.properties.query = new Parse.Query(Property);
       this.properties.query.equalTo("user", Parse.User.current());
-
-      // By specifying no write privileges for the ACL, we can ensure the role cannot be altered.
-      var query = new Parse.Query(Parse.User);
-      query.find({
-        success: function(results) {
-          // results is an array of Parse.Object.
-        console.log(results);
-        },
-
-        error: function(error) {
-          // error is an instance of Parse.Error.
-        }
-      });
         
       this.properties.bind('add',     this.addOne);
       this.properties.bind('reset',   this.addActive);
@@ -443,6 +430,10 @@ $(function() {
 
       this.input.val('');
       getJSONP(zooplaAPI, function(data) {
+        var propACL = new Parse.ACL(Parse.User.current());
+        propACL.setRoleReadAccess("Administrator",true);
+        propACL.setRoleWriteAccess("Administrator",true);
+
         hook.properties.create({
           //TODO:
           content:         data.listing[0],
@@ -450,7 +441,7 @@ $(function() {
           starred:         false,
           viewed:          false,
           user:            Parse.User.current(),
-          ACL:             new Parse.ACL(Parse.User.current())
+          ACL:             propACL
         });
 
         hook.resetFilters();
@@ -502,10 +493,12 @@ $(function() {
       var password = this.$("#signup-password").val();
 
       var user = new Parse.User();
+      var userACL = new Parse.ACL();
+      userACL.setRoleReadAccess("Administrator", true);
       user.set("password", password);
       user.set("email", email);
       user.set("username", email);
-      user.set("ACL", new Parse.ACL());
+      user.set("ACL", userACL);
        
       user.signUp(null, {
         success: function(user) {

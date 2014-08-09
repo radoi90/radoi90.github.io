@@ -23,6 +23,11 @@
       ga('create', 'UA-37859939-3', 'auto');
       ga('require', 'displayfeatures');
       ga('send', 'pageview');
+
+      ga('send', 'pageview', {
+        'page': '/my-new-page',
+        'title': 'My New Page Title'
+      });
     </script>
   </head>
   <body>

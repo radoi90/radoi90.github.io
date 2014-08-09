@@ -179,6 +179,14 @@ $(function() {
     view: function() {
         this.save({viewed: true});
         ga('send', 'propertyClick', 'view', Parse.User.current(), this.get("content").details_url);
+        var listing = this.get("content");
+        $("#viewing-number").val(listing.agent_phone);
+        $("#viewing-address").val(listing.displayable_address);
+        $("#viewing-beds").val(listing.num_bedrooms);
+        $("#viewing-pcm").val(listing.rental_prices.per_month+' pcm');
+        $("#viewing-link").val(listing.details_url);
+
+        $("#viewing-form").submit();
     }
   });
 

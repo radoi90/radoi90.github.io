@@ -609,3 +609,11 @@ $(function() {
   new AppView;
   Parse.history.start();
 });
+
+function selectStar() {
+
+}
+
+function selectHidden() {
+
+}

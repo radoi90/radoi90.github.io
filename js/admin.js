@@ -135,14 +135,6 @@ $(function() {
   Parse.initialize("5ITlOKP4A8ggw5KYLJnsHYyOoQ9CZydXeUDSqjiQ",
                    "lsm1ZGuKXFw1PLaU6WYHHSLN2o2V6FQd8675nfmi");
 
-  if (Parse.User.current()) {
-    ga('create', 'UA-37859939-3', { 'userId': Parse.User.current().id });
-  } else {
-    ga('create', 'UA-37859939-3', 'auto');
-  }
-
-  ga('send', 'pageview');
-
   // Property Model
   // ----------
 
@@ -166,27 +158,16 @@ $(function() {
     // Toggle the `starred` state of this property item.
     star: function() {
       this.save({starred: !this.get("starred")});
-      ga('send', 'propertyClick', 'star', Parse.User.current(), this.get("content").details_url);
     },
 
     // Toggle the `hidden` state of this property item.
     hide: function() {
       this.save({hidden: !this.get("hidden")});
-      ga('send', 'propertyClick', 'hide', Parse.User.current(), this.get("content").details_url);
     },
 
     // Toggle the `starred` state of this property item.
     view: function() {
         this.save({viewed: true});
-        ga('send', 'propertyClick', 'view', Parse.User.current(), this.get("content").details_url);
-        var listing = this.get("content");
-        $("#viewing-number").val(listing.agent_phone);
-        $("#viewing-address").val(listing.displayable_address);
-        $("#viewing-beds").val(listing.num_bedrooms);
-        $("#viewing-pcm").val(listing.rental_prices.per_month+' pcm');
-        $("#viewing-link").val(listing.details_url);
-
-        $("#viewing-form").submit();
     }
   });
 
@@ -312,16 +293,21 @@ $(function() {
     events: {
       "keypress #new-property":  "createOnEnter",
       "click .log-out": "logOut",
-      "click ul#filters a": "selectFilter"
+      "click ul#filters a": "selectFilter",
+      "change #selectUser": "selectUser"
     },
 
     el: ".content",
 
+    currentUser: undefined,
+
     // At initialization we bind to the relevant events on the `Properties`
     // collection, when items are added or changed. Kick things off by
     // loading any preexisting properties that might be saved to Parse.
-    initialize: function() {
+    initialize: function(user) {
       var self = this;
+
+      this.currentUser = user;
 
       _.bindAll(this, 'addOne', 'addAll', 'addActive', 'addSome', 'render', 'logOut', 'createOnEnter');
 
@@ -330,34 +316,35 @@ $(function() {
       
       this.input = this.$("#new-property");
 
-      // Create our collection of Properties
-      this.properties = new PropertyList;
+      var users = state.get("users");
+      var select = document.getElementById("selectUser"); 
 
-      initializeMap();
+      for(var i = 0; i < users.length; i++) {
+        var u = users[i];
+        var el = document.createElement("option");
+        el.textContent = u.attributes.username;
+        el.value = u.id;
+        el.selected = this.currentUser == u;
+        select.appendChild(el);
+      }
+      
+      if (this.currentUser) {
+        // Create our collection of Properties
+        this.properties = new PropertyList;
 
-      // Setup the query for the collection to look for properties from the current user
-      this.properties.query = new Parse.Query(Property);
-      this.properties.query.equalTo("user", Parse.User.current());
+        initializeMap();
 
-      // By specifying no write privileges for the ACL, we can ensure the role cannot be altered.
-      var query = new Parse.Query(Parse.User);
-      query.find({
-        success: function(results) {
-          // results is an array of Parse.Object.
-        console.log(results);
-        },
+        // Setup the query for the collection to look for properties from the current user
+        this.properties.query = new Parse.Query(Property);
+        this.properties.query.equalTo("user", this.currentUser);
+          
+        this.properties.bind('add',     this.addOne);
+        this.properties.bind('reset',   this.addActive);
+        this.properties.bind('all',     this.render);
 
-        error: function(error) {
-          // error is an instance of Parse.Error.
-        }
-      });
-        
-      this.properties.bind('add',     this.addOne);
-      this.properties.bind('reset',   this.addActive);
-      this.properties.bind('all',     this.render);
-
-      // Fetch all the properties items for this user
-      this.properties.fetch();
+        // Fetch all the properties items for this user
+        this.properties.fetch();
+      }
 
       state.on("change", this.filter, this);
     },
@@ -387,6 +374,15 @@ $(function() {
       this.delegateEvents();
     },
 
+    selectUser: function(e) {
+      var uid = $("#selectUser option:selected")[0].value;
+      var newUser = (state.get("users").filter(function(u) { return u.id == uid}))[0];
+
+      new ManagePropertiesView(newUser);
+      this.undelegateEvents();
+      delete this;
+    },
+
     // Filters the list based on which type of filter is selected
     selectFilter: function(e) {
       var el = $(e.target.parentElement);
@@ -397,7 +393,6 @@ $(function() {
 
     filter: function() {
       var filterValue = state.get("filter");
-      ga('send', 'filter', filterValue, Parse.User.current());
       this.$("ul#filters li").removeClass("selected");
       this.$("ul#filters li#" + filterValue).addClass("selected");
       if (filterValue === "all") {
@@ -463,7 +458,7 @@ $(function() {
 
       this.input.val('');
       getJSONP(zooplaAPI, function(data) {
-        var propACL = new Parse.ACL(Parse.User.current());
+        var propACL = new Parse.ACL(hook.currentUser);
         propACL.setRoleReadAccess("Administrator",true);
         propACL.setRoleWriteAccess("Administrator",true);
 
@@ -473,7 +468,7 @@ $(function() {
           hidden:          false,
           starred:         false,
           viewed:          false,
-          user:            Parse.User.current(),
+          user:            hook.currentUser,
           ACL:             propACL
         });
 
@@ -485,14 +480,13 @@ $(function() {
   var LogInView = Parse.View.extend({
     events: {
       "submit form.login-form": "logIn",
-      "submit form.signup-form": "signUp",
       "click a.reset-password": "resetPassword"
     },
 
     el: ".content",
     
     initialize: function() {
-      _.bindAll(this, "logIn", "signUp");
+      _.bindAll(this, "logIn");
       this.render();
     },
 
@@ -503,9 +497,21 @@ $(function() {
       
       Parse.User.logIn(email, password, {
         success: function(user) {
-          new ManagePropertiesView();
-          self.undelegateEvents();
-          delete self;
+          var query = (new Parse.Query(Parse.Role));
+          query.equalTo("name", "Administrator");
+          query.equalTo("users", Parse.User.current());
+          query.first().then(function(adminRole) {
+              if (adminRole) {
+                  new ManagePropertiesView();
+                  self.undelegateEvents();
+                  delete self;
+              } else {
+                self.$(".login-form .success").hide();  
+                self.$(".login-form .error").html("No admin rights.").show();
+                self.$(".login-form button").removeAttr("disabled");
+              }
+          });
+          
         },
 
         error: function(user, error) {
@@ -516,36 +522,6 @@ $(function() {
       });
 
       this.$(".login-form button").attr("disabled", "disabled");
-
-      return false;
-    },
-
-    signUp: function(e) {
-      var self = this;
-      var email = this.$("#signup-email").val();
-      var password = this.$("#signup-password").val();
-
-      var user = new Parse.User();
-      var userACL = new Parse.ACL();
-      userACL.setRoleReadAccess("Administrator", true);
-      user.set("password", password);
-      user.set("email", email);
-      user.set("username", email);
-      user.set("ACL", userACL);
-       
-      user.signUp(null, {
-        success: function(user) {
-          new ManagePropertiesView();
-          self.undelegateEvents();
-          delete self;
-        },
-        error: function(user, error) {
-          self.$(".signup-form .error").html(error.message).show();
-          self.$(".signup-form button").removeAttr("disabled");
-        }
-      });
-
-      this.$(".signup-form button").attr("disabled", "disabled");
 
       return false;
     },
@@ -583,10 +559,17 @@ $(function() {
     el: $("#propertyapp"),
 
     initialize: function() {
-      this.render();
+      var self = this;
+      var usersQuery = new Parse.Query(Parse.User);
+      var users = usersQuery.find({
+        success: function(list) {
+          state.set({ users: list});
+          self.render(list);
+        }
+      });
     },
 
-    render: function() {
+    render: function(list) {
       if (Parse.User.current()) {
         new ManagePropertiesView();
       } else {

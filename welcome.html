@@ -311,15 +311,6 @@
 		});
 	});
 
-	var onPersonal = true;
-
-	$('#user-form').submit(function(event){
-		if (onPersonal) {
-			event.preventDefault();
-			onPersonal = false;
-		}
-	});
-
 	function loginButtonPressed() {
 		$("#login-panel").toggle();
 	}
@@ -382,6 +373,14 @@
 			$('.success-form').css('display', 'block');
 		}
 	}
+
+	$('#user-form').bind("keyup keypress", function(e) {
+		var code = e.keyCode || e.which; 
+		if (code == 13) {               
+			e.preventDefault();
+			return false;
+		}
+	});
 
 	function validateEmail(email) { 
     	var re = /^(([^<>()[\]\\.,;:\s@\"]+(\.[^<>()[\]\\.,;:\s@\"]+)*)|(\".+\"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;

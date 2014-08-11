@@ -58,13 +58,14 @@
 
     <div class="container-fluid"> 
       <div class="row" id="split-screen">
-        <div class="col-md-6" id="map-canvas">lolsauce</div>  
-        <div class="col-md-6" id="list-view">
+        <div class="col-md-7" id="map-canvas">lolsauce</div>  
+        <div class="col-md-5" id="list-view">
+          <!-- List header  -->
           <div id="list-header">
             <div class="row">
               <div class="col-md-4" id="name-title">Emil's Feed</div>  
               <div class="col-md-6 pull-right" id="toggles">
-                <button class="btn" id="btn-active">Active</button>
+                <button class="btn active" id="btn-active">Active</button>
                 <button class="btn" id="btn-viewings">Viewings</button>
                 <button class="btn" id="btn-starred" onclick=>
                   <img src="./img/star-inactive.png" width="50%" height="50%"/>
@@ -74,18 +75,250 @@
                 </button>
               </div>  
             </div>
-            
+          </div>
+
+          <div id="list">
+            <ul id="properties-list">
+              <div>
+              <li class="property">
+                <div class="row">
+                  <div class="property-image col-md-4">
+                    <img src="./img/test-image.png" />
+                  </div>
+                  <div class="property-info col-md-8">
+                    <div class="property-details">
+                      <div class="row">
+                        <div class="col-md-8 pull-left property-address">
+                          Islington N7
+                        </div>
+                        <div class="col-md-4 pull-right property-price">
+                          £2000
+                        </div>
+                      </div>
+                      <div class="row property-stats">
+                        <div class="col-md-3">
+                          <img src="./img/beds.png" width="60%" height="60%" />
+                          <span class="bed-count">2</span>
+                        </div>
+                        <div class="col-md-3">
+                          <img src="./img/baths.png" width="50%" height="50%" />
+                          <span class="bath-count">2</span>
+                        </div>
+                        <div class="col-md-3">
+                          <img src="./img/lounges.png" width="60%" height="60%" />
+                          <span class="lounge-count">1</span>
+                        </div>
+                      </div>
+                    </div>
+                    <div class="property-buttons">
+                      <button class="hide-btn">
+                        <img src="./img/cross-property.png" width="50%" height="50%"/>
+                      </button>
+                      <button class="star-btn">
+                        <img class="star-img" src="./img/star-property-inactive.png" width="60%" height="60%" />
+                      </button>
+                      <button class="btn-flat btn-green btn-view pull-right">
+                        Arrange viewing
+                      </button>
+                    </div>
+                  </div>
+                </div>
+              </li>
+              </div>
+              <div>
+              <li class="property">
+                <div class="row">
+                  <div class="property-image col-md-4">
+                    <img src="./img/test-image.png" />
+                  </div>
+                  <div class="property-info col-md-8">
+                    <div class="property-details">
+                      <div class="row">
+                        <div class="col-md-8 pull-left property-address">
+                          Islington N7
+                        </div>
+                        <div class="col-md-4 pull-right property-price">
+                          £2000
+                        </div>
+                      </div>
+                      <div class="row property-stats">
+                        <div class="col-md-3">
+                          <img src="./img/beds.png" width="60%" height="60%" />
+                          <span class="bed-count">2</span>
+                        </div>
+                        <div class="col-md-3">
+                          <img src="./img/baths.png" width="50%" height="50%" />
+                          <span class="bath-count">2</span>
+                        </div>
+                        <div class="col-md-3">
+                          <img src="./img/lounges.png" width="60%" height="60%" />
+                          <span class="lounge-count">1</span>
+                        </div>
+                      </div>
+                    </div>
+                    <div class="property-buttons">
+                      <button class="hide-btn">
+                        <img src="./img/cross-property.png" width="50%" height="50%"/>
+                      </button>
+                      <button class="star-btn">
+                        <img class="star-img" src="./img/star-property-inactive.png" width="60%" height="60%" />
+                      </button>
+                      <button class="btn-flat btn-green btn-view pull-right">
+                        Arrange viewing
+                      </button>
+                    </div>
+                  </div>
+                </div>
+              </li>
+              </div>
+              <div>
+              <li class="property">
+                <div class="row">
+                  <div class="property-image col-md-4">
+                    <img src="./img/test-image.png" />
+                  </div>
+                  <div class="property-info col-md-8">
+                    <div class="property-details">
+                      <div class="row">
+                        <div class="col-md-8 pull-left property-address">
+                          Islington N7
+                        </div>
+                        <div class="col-md-4 pull-right property-price">
+                          £2000
+                        </div>
+                      </div>
+                      <div class="row property-stats">
+                        <div class="col-md-3">
+                          <img src="./img/beds.png" width="60%" height="60%" />
+                          <span class="bed-count">2</span>
+                        </div>
+                        <div class="col-md-3">
+                          <img src="./img/baths.png" width="50%" height="50%" />
+                          <span class="bath-count">2</span>
+                        </div>
+                        <div class="col-md-3">
+                          <img src="./img/lounges.png" width="60%" height="60%" />
+                          <span class="lounge-count">1</span>
+                        </div>
+                      </div>
+                    </div>
+                    <div class="property-buttons">
+                      <button class="hide-btn">
+                        <img src="./img/cross-property.png" width="50%" height="50%"/>
+                      </button>
+                      <button class="star-btn">
+                        <img class="star-img" src="./img/star-property-inactive.png" width="60%" height="60%" />
+                      </button>
+                      <button class="btn-flat btn-green btn-view pull-right">
+                        Arrange viewing
+                      </button>
+                    </div>
+                  </div>
+                </div>
+              </li>
+              </div>
+              <div>
+              <li class="property">
+                <div class="row">
+                  <div class="property-image col-md-4">
+                    <img src="./img/test-image.png" />
+                  </div>
+                  <div class="property-info col-md-8">
+                    <div class="property-details">
+                      <div class="row">
+                        <div class="col-md-8 pull-left property-address">
+                          Islington N7
+                        </div>
+                        <div class="col-md-4 pull-right property-price">
+                          £2000
+                        </div>
+                      </div>
+                      <div class="row property-stats">
+                        <div class="col-md-3">
+                          <img src="./img/beds.png" width="60%" height="60%" />
+                          <span class="bed-count">2</span>
+                        </div>
+                        <div class="col-md-3">
+                          <img src="./img/baths.png" width="50%" height="50%" />
+                          <span class="bath-count">2</span>
+                        </div>
+                        <div class="col-md-3">
+                          <img src="./img/lounges.png" width="60%" height="60%" />
+                          <span class="lounge-count">1</span>
+                        </div>
+                      </div>
+                    </div>
+                    <div class="property-buttons">
+                      <button class="hide-btn">
+                        <img src="./img/cross-property.png" width="50%" height="50%"/>
+                      </button>
+                      <button class="star-btn">
+                        <img class="star-img" src="./img/star-property-inactive.png" width="60%" height="60%" />
+                      </button>
+                      <button class="btn-flat btn-green btn-view pull-right">
+                        Arrange viewing
+                      </button>
+                    </div>
+                  </div>
+                </div>
+              </li>
+              </div>
+              <li class="property">
+                <div class="row">
+                  <div class="property-image col-md-4">
+                    <img src="./img/test-image.png" />
+                  </div>
+                  <div class="property-info col-md-8">
+                    <div class="property-details">
+                      <div class="row">
+                        <div class="col-md-8 pull-left property-address">
+                          Islington N7
+                        </div>
+                        <div class="col-md-4 pull-right property-price">
+                          £2000
+                        </div>
+                      </div>
+                      <div class="row property-stats">
+                        <div class="col-md-3">
+                          <img src="./img/beds.png" width="60%" height="60%" />
+                          <span class="bed-count">2</span>
+                        </div>
+                        <div class="col-md-3">
+                          <img src="./img/baths.png" width="50%" height="50%" />
+                          <span class="bath-count">2</span>
+                        </div>
+                        <div class="col-md-3">
+                          <img src="./img/lounges.png" width="60%" height="60%" />
+                          <span class="lounge-count">1</span>
+                        </div>
+                      </div>
+                    </div>
+                    <div class="property-buttons">
+                      <button class="hide-btn">
+                        <img src="./img/cross-property.png" width="50%" height="50%"/>
+                      </button>
+                      <button class="star-btn">
+                        <img class="star-img" src="./img/star-property-inactive.png" width="60%" height="60%" />
+                      </button>
+                      <button class="btn-flat btn-green btn-view pull-right">
+                        Arrange viewing
+                      </button>
+                    </div>
+                  </div>
+                </div>
+              </li>
+            </ul>
           </div>
         </div>  
       </div>
       
 
-      <div id="propertyapp" class="col-sm-12">
+      <!-- <div id="propertyapp" class="col-sm-12"> -->
 
-        <div class="content">
+        <!-- <div class="content"> -->
 
-        </div>
-      </div>
+      <!-- </div> -->
+      <!-- </div> -->
     </div>
 
     <!-- Templates -->

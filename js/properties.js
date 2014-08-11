@@ -610,6 +610,7 @@ $(function() {
   Parse.history.start();
 });
 
+var starSelected = 
 function selectStar() {
 
 }

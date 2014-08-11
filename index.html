@@ -373,11 +373,6 @@
 		var code = e.keyCode || e.which; 
 		if (code == 13) {               
 			e.preventDefault();
-			if (pageIndex == 1) {
-				advancePersonalForm();
-			} else if (pageIndex == 2) {
-				advancePropertyForm();
-			}; 
 			return false;
 		}
 	});

@@ -82,7 +82,7 @@
 
 		<!-- Form -->
 		<form class="form-horizontal" id="user-form" role="form" action="https://docs.google.com/forms/d/1RvngjKApBx-h7Z8r-xBIMWWK9H98T-oXke4fqxErvHU/formResponse" method="post"
-				target="hidden_iframe" onsubmit="submitted=true;">
+				target="hidden_iframe" onsubmit="return checkSubmit();">
 			<!-- Main page -->
 			<div class="container location-form">
 					<div id="banner-text" class="animated fadeIn">
@@ -109,8 +109,8 @@
 			<div class="container personal-info-form">
 				<div class="row-fluid">
 					<script type="text/javascript">var submitted=false;</script>
-					<iframe name="hidden_iframe" id="hidden_iframe"
-					style="display:none;"></iframe>
+					<!-- <iframe name="hidden_iframe" id="hidden_iframe"
+					style="display:none;"></iframe> -->
 						<div class="col-sm-8  col-sm-offset-2" id="personal-form">
 							<h2 class="text-center">Tell us about yourself</h2>
 
@@ -169,7 +169,7 @@
 							<div class="form-group">
 								<div class="col-sm-6">
 									<label for="entry_935209026" class="control-label">Bedrooms</label>
-									<select class="form-control" name="entry.935209026" id="entry_935209026" required>
+									<select class="form-control" name="entry.935209026" id="entry_935209026" >
 										<option value="No min">No min</option> <option value="Studio">Studio</option>
 										<option value="1+">1+</option> <option value="2+">2+</option>
 										<option value="3+">3+</option> <option value="4+">4+</option>
@@ -178,7 +178,7 @@
 
 								<div class="col-sm-6">
 									<label for="entry_1452370776" class="control-label">Max price (per month)</label>
-									<select class="form-control" name="entry.1452370776" id="entry_1452370776" required>
+									<select class="form-control" name="entry.1452370776" id="entry_1452370776" >
 										<option value="0">No max</option>
 									    <option value="100" >&pound;100 pcm</option>
 									    <option value="200" >&pound;200 pcm</option>
@@ -228,7 +228,7 @@
 							<div class="form-group">
 								<div class="col-sm-6">
 									<label for="entry_562686023" class="control-label" >Property type</label>
-									<select class="form-control" name="entry.562686023" id="entry_562686023" required>
+									<select class="form-control" name="entry.562686023" id="entry_562686023" >
 										<option value="Any">Any</option>
 										<option value="Houses">Houses</option>
 										<option value="Flats">Flats</option>
@@ -238,7 +238,7 @@
 								
 								<div class="col-sm-6">
 									<label for="entry_488055055" class="control-label">Furniture</label>
-									<select class="form-control" name="entry.488055055" id="entry_488055055" required>
+									<select class="form-control" name="entry.488055055" id="entry_488055055" >
 										<option value="Show all">Show all</option> 
 										<option value="Furnished">Furnished</option>
 										<option value="Part furnished">Part furnished</option>
@@ -250,12 +250,12 @@
 							<div class="form-group">
 								<div class="col-sm-6">
 									<label for="entry_1052293236" class="control-label">Earliest move in date</label>
-									<input class="form-control" type="date" name="entry.1052293236" id="entry_1052293236" required>
+									<input class="form-control" type="date" name="entry.1052293236" id="entry_1052293236" >
 								</div>
 
 								<div class="col-sm-6">
 									<label for="entry_79946928" class="control-label">Latest move in date</label>
-									<input class="form-control" type="date" name="entry.79946928" id="entry_79946928" required>
+									<input class="form-control" type="date" name="entry.79946928" id="entry_79946928" >
 								</div>
 							</div>
 
@@ -297,19 +297,19 @@
 	var pageIndex = 0;
 	var onPersonal = true;
 
-	$('#user-form').submit(function(event){
-		if (onPersonal) {
-			event.preventDefault();
-			onPersonal = false;
-			advanceForm();
-		}
-	});
+	// $('#user-form').submit(function(event){
+	// 	if (onPersonal) {
+	// 		event.preventDefault();
+	// 		console.log("prevented!");
+	// 	}
+	// });
 
 	function loginButtonPressed() {
 		$("#login-panel").toggle();
 	}
 
 	function advanceLocationForm() {
+		onPersonal = true;
 		console.log("Checking locations");
 		var location = $("input[name='entry_922244654']");
 
@@ -355,6 +355,7 @@
 	}
 
 	function advancePropertyForm() {
+		onPersonal = false;
 		var beds = document.getElementById("entry_935209026").value;
 		var price = document.getElementById("entry_1452370776").value;
 		var proptype = document.getElementById("entry_562686023").value;
@@ -371,7 +372,8 @@
 
 	$('#user-form').bind("keyup keypress", function(e) {
 		var code = e.keyCode || e.which; 
-		if (code == 13) {               
+		if (code == 13) {      
+			console.log("preventing!!")         ;
 			e.preventDefault();
 			return false;
 		}
@@ -382,5 +384,14 @@
     	return re.test(email);
 	} 
 
+	function checkSubmit() {
+		if (onPersonal) {
+			console.log("Preventing submission");
+			return false;
+		} else {
+			console.log("allowing submission");
+			return true;
+		};
+	}
 </script>
 </html>

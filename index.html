@@ -53,12 +53,7 @@
 		    <!-- Brand and toggle get grouped for better mobile display -->
 		    <div class="navbar-header">
 			  <div class="navbar-brand">House<span class="Q">Q</span>uest</div>
-		      <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1">
-		        <span class="sr-only">Toggle navigation</span>
-		        <span class="icon-bar"></span>
-		        <span class="icon-bar"></span>
-		        <span class="icon-bar"></span>
-		      </button>
+		      <button type="button" class="btn-flat btn-login-mini btn-orange" onclick="loginButtonPressed();">Login</button>
 		    </div>
 
 		    <!-- Collect the nav links, forms, and other content for toggling -->
@@ -300,17 +295,6 @@
 <!-- Scripts -->
 <script type="text/javascript">
 	var pageIndex = 0;
-
-	$(function() {
-		$.vegas('overlay', {
-		 	src:'css/overlays/06.png',
-		 	opacity:1
-		});
-		$.vegas({
-			src:'img/bg.jpg'
-		});
-	});
-
 	var onPersonal = true;
 
 	$('#user-form').submit(function(event){

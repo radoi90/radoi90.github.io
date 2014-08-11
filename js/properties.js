@@ -338,19 +338,6 @@ $(function() {
       // Setup the query for the collection to look for properties from the current user
       this.properties.query = new Parse.Query(Property);
       this.properties.query.equalTo("user", Parse.User.current());
-
-      // By specifying no write privileges for the ACL, we can ensure the role cannot be altered.
-      var query = new Parse.Query(Parse.User);
-      query.find({
-        success: function(results) {
-          // results is an array of Parse.Object.
-        console.log(results);
-        },
-
-        error: function(error) {
-          // error is an instance of Parse.Error.
-        }
-      });
         
       this.properties.bind('add',     this.addOne);
       this.properties.bind('reset',   this.addActive);
@@ -635,12 +622,3 @@ $(function() {
   new AppView;
   Parse.history.start();
 });
-
-var starSelected = 
-function selectStar() {
-
-}
-
-function selectHidden() {
-
-}

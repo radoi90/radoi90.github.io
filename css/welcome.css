@@ -217,21 +217,36 @@ body {
 	overflow:hidden
 }
 
-#login-panel {
+#options-panel:before {
+	content: "";
+	position: absolute;
+	top: -15px;
+	right: 0;
+	
+	width: 240px;
+	height: 20px;
+
+	background-image: url("../img/options-box.png");
+	background-size: contain;
+	background-repeat: no-repeat;
+}
+
+#options-panel {
 	position: absolute;
 	right: 40px;
 	z-index: 1;
-
-	top: 85px;
-	height: 240px;
+	top: 100px;
+	/* height: 240px; */
 	width: 240px;
-
-	background-image: url("../img/login-box.png");
+	/* background-image: url("../img/login-box.png"); */
 	background-size: contain;
 	background-repeat: no-repeat;
-
 	padding: 15px;
-	padding-top: 30px;
+	/*padding-top: 30px;*/
+	background: white;
+	border: 0;
+	border-radius: 8px;
+	border-bottom: 2px solid #494949;
 }
 
 .login-control {
@@ -633,9 +648,15 @@ label .control-label {
 		margin-left: 0;
 		width: 100%;
 	}
+}
 
-	#login-panel {
-		top: 65px;
+@media only screen and (max-width: 767px) {
+	#options-panel:before {
+		background-image: url("../img/options-box-mobile.png");
+	}
+
+	#options-panel {
+		top: 85px;
 	}
 }
 

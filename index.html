@@ -13,7 +13,9 @@
 	<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
 	<script src="http://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/js/bootstrap.min.js"></script>
 	<script src="js/jquery-1.11.1.min.js" type="text/javascript"></script>
+	<script src="js/underscore.js"></script>
 	<script src="js/tagmanager.js" type="text/javascript"></script>
+	<script src="http://www.parsecdn.com/js/parse-1.2.13.min.js"></script>
 
 	<link rel="stylesheet" href="css/welcome.css" type="text/css">
 
@@ -24,13 +26,13 @@
  			jQuery(".tm-input").tagsManager({
 		        CapitalizeFirstLetter: true,
 		        hiddenTagListName: "entry_922244654",
-		        hiddenTagListId: "entry_922244654"
+		        hiddenTagListId: "entry.922244654"
 		    });
 
  			var input = $("input[name='entry_922244654']");
  			input.id = "entry.922244654"
 
-			$("#login-panel").hide();
+			$("#options-panel").hide();
 		}); 
     </script>
 
@@ -45,7 +47,7 @@
 	</script>
 </head>
 <body>
-	<div class="overlay">
+	<div id="propertyapp" class="overlay">
 		<!-- Navbar -->
 		<nav class="navbar navbar-default" role="navigation">
 		  <div class="container-fluid animated fadeInDown">
@@ -68,21 +70,12 @@
 		  </div><!-- /.container-fluid -->
 		</nav>
 
-		<div id="login-panel">
-			<form class="login-form">
-				<label class="login-label">Email</label>		
-				<input placeholder="Email" type="email" id="login-email" class="login-control">
-				<label class="login-label">Password</label>		
-				<input placeholder="Password" type="password" id="login-password" class="login-control">
-				<button id="btn-login" class="btn btn-flat btn-green">
-					Login
-				</button>
-			</form>
+		<div id="options-panel">
+			
 		</div>
 
 		<!-- Form -->
-		<form class="form-horizontal" id="user-form" role="form" action="https://docs.google.com/forms/d/1RvngjKApBx-h7Z8r-xBIMWWK9H98T-oXke4fqxErvHU/formResponse" method="post"
-				target="hidden_iframe" onsubmit="submitted=true;">
+		<form class="form-horizontal" id="user-form" role="form" action="https://docs.google.com/forms/d/1RvngjKApBx-h7Z8r-xBIMWWK9H98T-oXke4fqxErvHU/formResponse" method="post" target="hidden_iframe" onsubmit="submitted=true;">
 			<!-- Main page -->
 			<div class="container location-form">
 					<div id="banner-text" class="animated fadeIn">
@@ -293,6 +286,20 @@
 </body>
 
 <!-- Scripts -->
+<script type="text/template" id="login-template">
+	<form class="login-form">
+  		<div class="error" style="display:none"></div>
+        <div class="success" style="display:none"></div>
+		<label class="login-label">Email</label>		
+		<input placeholder="Email" type="email" id="login-email" class="login-control">
+		<label class="login-label">Password</label>		
+		<input placeholder="Password" type="password" id="login-password" class="login-control">
+		<button id="btn-login" class="btn btn-flat btn-green">
+			Login
+		</button>
+	</form>
+</script>
+
 <script type="text/javascript">
 	var pageIndex = 0;
 	var onPersonal = true;
@@ -306,7 +313,7 @@
 	});
 
 	function loginButtonPressed() {
-		$("#login-panel").toggle();
+		$("#options-panel").toggle();
 	}
 
 	function advanceLocationForm() {
@@ -385,7 +392,97 @@
 	function validateEmail(email) { 
     	var re = /^(([^<>()[\]\\.,;:\s@\"]+(\.[^<>()[\]\\.,;:\s@\"]+)*)|(\".+\"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
     	return re.test(email);
-	} 
+	}
 
+	$(function() {
+
+		Parse.$ = jQuery;
+
+		// Initialize Parse with your Parse application javascript keys
+		Parse.initialize("5ITlOKP4A8ggw5KYLJnsHYyOoQ9CZydXeUDSqjiQ",
+		               "lsm1ZGuKXFw1PLaU6WYHHSLN2o2V6FQd8675nfmi");
+
+		var LogInView = Parse.View.extend({
+		    events: {
+		      "submit form.login-form": "logIn",
+		      "click a.reset-password": "resetPassword"
+		    },
+
+		    el: "#options-panel",
+		    
+		    initialize: function() {
+		      _.bindAll(this, "logIn");
+		      this.render();
+		    },
+
+		    logIn: function(e) {
+		      var self = this;
+		      var email = this.$("#login-email").val();
+		      var password = this.$("#login-password").val();
+		      
+		      Parse.User.logIn(email, password, {
+		        success: function(user) {
+		          window.location.href = 'feed.html';
+		        },
+
+		        error: function(user, error) {
+		          self.$(".login-form .success").hide();  
+		          self.$(".login-form .error").html("Invalid email or password. Please try again. Or, <a class='reset-password'>reset password</a>.").show();
+		          self.$(".login-form button").removeAttr("disabled");
+		        }
+		      });
+
+		      this.$(".login-form button").attr("disabled", "disabled");
+
+		      return false;
+		    },
+
+		    resetPassword: function() {
+		      var email = this.$("#login-email").val();
+
+		      Parse.User.requestPasswordReset(email, {
+		        success: function() {
+		          self.$(".login-form .success").html("We've sent you a password reset email to " + email).show();
+		          self.$(".login-form .error").hide();
+		        },
+		        error: function(error) {
+		          self.$(".login-form .success").hide();
+		          if(email.length > 0) {
+		            self.$(".login-form .error").html("There is no user assigned to " + email).show();
+		          } else {
+		            self.$(".login-form .error").html("To reset your password enter the email you used to sign up.").show();
+		          }          
+		          self.$(".login-form button").removeAttr("disabled");
+		        }
+		      });
+		    },
+
+		    render: function() {
+		      this.$el.html(_.template($("#login-template").html()));
+		      this.delegateEvents();
+		    }
+		});
+
+		// The main view for the app
+		var AppView = Parse.View.extend({
+			// Instead of generating a new element, bind to the existing skeleton of
+			// the App already present in the HTML.
+			el: $("#propertyapp"),
+
+			initialize: function() {
+			  this.render();
+			},
+
+			render: function() {
+			  if (Parse.User.current()) {
+			    console.log(Parse.User.current());
+			  } else {
+			    new LogInView();
+			  }
+			}
+		});
+
+		new AppView;
+	});
 </script>
 </html>

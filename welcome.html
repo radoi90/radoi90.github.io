@@ -29,7 +29,8 @@
 
  			var input = $("input[name='entry_922244654']");
  			input.id = "entry.922244654"
- 			// $('input[name=entry_922244654]').setClass("id", "entry_922244654"); 			
+
+			$("#login-panel").hide();
 		}); 
     </script>
 
@@ -65,12 +66,24 @@
 		      <ul class="nav navbar-nav">
 		      	<li><a class="title hidden-xs" href="#">House<span class="Q">Q</span>uest</a></li>
 		      	<li class="pull-right">
-		      		<button type="button" class="btn-flat btn-orange">Login</button>
+		      		<button type="button" class="btn-flat btn-orange" onclick="loginButtonPressed();">Login</button>
 		      	</li>
 		      </ul>
 		    </div><!-- /.navbar-collapse -->
 		  </div><!-- /.container-fluid -->
 		</nav>
+
+		<div id="login-panel">
+			<form class="login-form">
+				<label class="login-label">Email</label>		
+				<input placeholder="Email" type="email" id="login-email" class="login-control">
+				<label class="login-label">Password</label>		
+				<input placeholder="Password" type="password" id="login-password" class="login-control">
+				<button id="btn-login" class="btn btn-flat btn-green">
+					Login
+				</button>
+			</form>
+		</div>
 
 		<!-- Form -->
 		<form class="form-horizontal" id="user-form" role="form" action="https://docs.google.com/forms/d/1RvngjKApBx-h7Z8r-xBIMWWK9H98T-oXke4fqxErvHU/formResponse" method="post"
@@ -146,11 +159,6 @@
 								<button class="btn-flat btn-green btn-next" onclick="advancePersonalForm();">Next</button>
 							</div>
 
-							<div>
-								<div id="progress-bar-1">
-								
-								</div>
-							</div>
 						</div>
 				</div>
 			</div>
@@ -166,7 +174,7 @@
 							<div class="form-group">
 								<div class="col-sm-6">
 									<label for="entry_935209026" class="control-label">Bedrooms</label>
-									<select class="form-control" name="entry.935209026" id="entry_935209026">
+									<select class="form-control" name="entry.935209026" id="entry_935209026" required>
 										<option value="No min">No min</option> <option value="Studio">Studio</option>
 										<option value="1+">1+</option> <option value="2+">2+</option>
 										<option value="3+">3+</option> <option value="4+">4+</option>
@@ -175,7 +183,7 @@
 
 								<div class="col-sm-6">
 									<label for="entry_1452370776" class="control-label">Max price (per month)</label>
-									<select class="form-control" name="entry.1452370776" id="entry_1452370776">
+									<select class="form-control" name="entry.1452370776" id="entry_1452370776" required>
 										<option value="0">No max</option>
 									    <option value="100" >&pound;100 pcm</option>
 									    <option value="200" >&pound;200 pcm</option>
@@ -224,8 +232,8 @@
 
 							<div class="form-group">
 								<div class="col-sm-6">
-									<label for="entry_562686023" class="control-label">Property type</label>
-									<select class="form-control" name="entry.562686023" id="entry_562686023">
+									<label for="entry_562686023" class="control-label" >Property type</label>
+									<select class="form-control" name="entry.562686023" id="entry_562686023" required>
 										<option value="Any">Any</option>
 										<option value="Houses">Houses</option>
 										<option value="Flats">Flats</option>
@@ -235,7 +243,7 @@
 								
 								<div class="col-sm-6">
 									<label for="entry_488055055" class="control-label">Furniture</label>
-									<select class="form-control" name="entry.488055055" id="entry_488055055">
+									<select class="form-control" name="entry.488055055" id="entry_488055055" required>
 										<option value="Show all">Show all</option> 
 										<option value="Furnished">Furnished</option>
 										<option value="Part furnished">Part furnished</option>
@@ -247,20 +255,19 @@
 							<div class="form-group">
 								<div class="col-sm-6">
 									<label for="entry_1052293236" class="control-label">Earliest move in date</label>
-									<input class="form-control" type="date" name="entry.1052293236" id="entry_1052293236">
+									<input class="form-control" type="date" name="entry.1052293236" id="entry_1052293236" required>
 								</div>
 
 								<div class="col-sm-6">
 									<label for="entry_79946928" class="control-label">Latest move in date</label>
-									<input class="form-control" type="date" name="entry.79946928" id="entry_79946928">
+									<input class="form-control" type="date" name="entry.79946928" id="entry_79946928" required>
 								</div>
 							</div>
 
 							<div class="form-group text-center">
 								<button type="submit" class="btn-flat btn-green btn-next" onclick="advancePropertyForm()">Submit</button>
 							</div>
-							<div id="progress-bar-2">
-							</div>
+						
 						</div>
 					<br><br>
 				</div>
@@ -285,9 +292,6 @@
 						</div>
 					</div>
 				</div>
-				<div id="progress-bar-3">
-					<img src="./img/progress-3.png" width="30%" height="30%" />
-				</div>
 			</div>
 		</form>
 	</div>
@@ -295,6 +299,8 @@
 
 <!-- Scripts -->
 <script type="text/javascript">
+	var pageIndex = 0;
+
 	$(function() {
 		$.vegas('overlay', {
 		 	src:'css/overlays/06.png',
@@ -315,11 +321,23 @@
 		}
 	});
 
+	function loginButtonPressed() {
+		$("#login-panel").toggle();
+	}
+
 	function advanceLocationForm() {
 		console.log("Checking locations");
 		var location = $("input[name='entry_922244654']");
 
+		var input = $(".tm-input").val()
+		console.log(input)
+		if (input) {
+			location.val(location.val() + ", " + input);
+			console.log(location.val())
+		};
+
 		if (!location.val() == "") {
+			pageIndex = 1;
 			$('.location-form').addClass('animated bounceOutLeft');
 			$('.personal-info-form').addClass('animated bounceInRight');
 			$('.personal-info-form').css('display', 'block');
@@ -341,17 +359,15 @@
 		var phone = document.getElementById("entry_893950790").value;
 		var employer = document.getElementById("entry_1534924529").value;
 
-		if (!(fname == "" || sname == "" || email == "" || password == "" || phone == "" || employer == "")) {
+		if (!(fname == "" || sname == "" || email == "" || validateEmail(email) || password == "" || phone == "" || employer == "")) {
 			console.log("advancing");
+			pageIndex = 2;
 			$('.personal-info-form').addClass('animated bounceOutLeft');
 			$('.property-info-form').addClass('animated bounceInRight'); 
 			$('.property-info-form').css('display', 'block');
 		} else {
 			console.log("Can't advance");
 		}
-
-		var input = $("input[name='entry_922244654']");
- 			console.log(input);
 	}
 
 	function advancePropertyForm() {
@@ -368,5 +384,24 @@
 			$('.success-form').css('display', 'block');
 		}
 	}
+
+	$('#user-form').bind("keyup keypress", function(e) {
+		var code = e.keyCode || e.which; 
+		if (code == 13) {               
+			e.preventDefault();
+			if (pageIndex == 1) {
+				advancePersonalForm();
+			} else if (pageIndex == 2) {
+				advancePropertyForm();
+			}; 
+			return false;
+		}
+	});
+
+	function validateEmail(email) { 
+    	var re = /^(([^<>()[\]\\.,;:\s@\"]+(\.[^<>()[\]\\.,;:\s@\"]+)*)|(\".+\"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
+    	return re.test(email);
+	} 
+
 </script>
 </html>

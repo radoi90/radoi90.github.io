@@ -217,6 +217,43 @@ body {
 	overflow:hidden
 }
 
+#login-panel {
+	position: absolute;
+	right: 40px;
+
+	top: 100px;
+	height: 240px;
+	width: 240px;
+
+	background-image: url("../img/login-box.png");
+	background-size: contain;
+	background-repeat: no-repeat;
+
+	padding: 15px;
+	padding-top: 30px;
+}
+
+.login-control {
+	margin-bottom: 10px;
+	border-radius: 5px;
+	/* Rectangle 11: */
+	background: #FFFFFF;
+	border: 1px solid #2C3E50;
+	width: 100%;
+
+	font-family: AvenirNext LT Pro Medium;
+	padding-left: 5px;
+	height: 30px;
+}
+
+.login-control:focus {
+	outline: none;
+}
+
+#btn-login {
+	width: 100%;
+}
+
 .tm-input {
 	border: 0;
 	outline: none;
@@ -393,7 +430,7 @@ ul.nav a:hover { color: #fff !important; }
 	height: 45px;
 	line-height: 35px;
 
-	font-family: AvenirNext-Medium;
+	font-family: AvenirNext LT Pro Medium;
 	font-size: 20px;
 }
 
@@ -409,7 +446,7 @@ ul.nav a:hover { color: #fff !important; }
 	height: 45px;
 	line-height: 35px;
 
-	font-family: AvenirNext-Medium;
+	font-family: AvenirNext LT Pro Medium;
 	font-size: 20px;
 	color: #34495e;
 }
@@ -417,7 +454,7 @@ ul.nav a:hover { color: #fff !important; }
 .form-control::-webkit-input-placeholder { color: #95a5a6; }
 
 .control-label {
-	font-family: AvenirNext-Medium;
+	font-family: AvenirNext LT Pro Medium;
 	font-size: 16px;
 	color: #FFFFFF;
 	line-height: 22px;
@@ -480,7 +517,7 @@ ul.nav a:hover { color: #fff !important; }
 }
 
 #awesome {
-	font-family: AvenirNextLTPro-Bold;
+	font-family: AvenirNext LT Pro Demi;
 font-size: 40px;
 color: #34495E;
 line-height: 48px;
@@ -489,7 +526,7 @@ text-align: center;
 }
 
 #awesome-sub-text {
-	font-family: AvenirNextLTPro-Bold;
+	font-family: AvenirNext LT Pro Demi;
 font-size: 20px;
 text-align: center;
 color: #34495E;
@@ -500,7 +537,7 @@ padding: 20px;
 
 
 label .control-label {
-	font-family: AvenirNext-Medium;
+	font-family: AvenirNext LT Pro Medium;
 	font-size: 16px;
 	color: #FFFFFF;
 	line-height: 22px;
@@ -570,6 +607,7 @@ label .control-label {
 	#success-box {
 		left: 0;
 		margin-left: 0;
+		width: 100%;
 	}
 }
 

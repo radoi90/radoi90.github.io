@@ -3,13 +3,14 @@
   <head>
     <meta charset="utf-8">
     <title>HouseQuest App</title>
-    <link href="css/bootstrap3.css" rel="stylesheet" type="text/css">
+    <link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap.min.css">
     <link href="css/properties.css" media="all" rel="stylesheet" type="text/css"/>
     <script src="http://code.jquery.com/jquery-2.0.3.min.js"></script>
     <script src="js/underscore.js"></script>
     <script src="js/json2.js"></script>
     <script src="http://www.parsecdn.com/js/parse-1.2.13.min.js"></script>
     <script src="https://maps.googleapis.com/maps/api/js?v=3.exp"></script>
+    <script src="http://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/js/bootstrap.min.js"></script>
     <script src="js/properties.js"></script>
 
     <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -28,16 +29,297 @@
   <body>
 
     <!-- Property App Interface -->
+    <nav class="navbar navbar-default" role="navigation">
+      <div class="container-fluid">
+
+        <!-- Brand and toggle get grouped for better mobile display -->
+        <div class="navbar-header">
+          <div class="navbar-brand">House<span class="Q">Q</span>uest</div>
+            <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1">
+              <span class="sr-only">Toggle navigation</span>
+              <span class="icon-bar"></span>
+              <span class="icon-bar"></span>
+              <span class="icon-bar"></span>
+            </button>
+          </div>
+        </div>
+
+        <!-- Collect the nav links, forms, and other content for toggling -->
+        <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+          <ul class="nav navbar-nav">
+            <li><a class="title hidden-xs" href="#">House<span class="Q">Q</span>uest</a></li>
+            <li class="pull-right">
+              <button type="button" class="btn btn-text" id="btn-logout">Logout</button>
+            </li>
+          </ul>
+        </div><!-- /.navbar-collapse -->
+      </div><!-- /.container-fluid -->
+    </nav>
+
 
     <div class="container-fluid"> 
-      <div id="propertyapp" class="col-sm-12">
-        <div class="title">
-          <h1>House<span>Q</span>uest</h1>
-        </div>
+      <div class="row" id="split-screen">
+        <div class="col-md-7" id="map-canvas">lolsauce</div>  
+        <div class="col-md-5" id="list-view">
+          <!-- List header  -->
+          <div id="list-header">
+            <div class="row">
+              <div class="col-md-4" id="name-title">Emil's Feed</div>  
+              <div class="col-md-6 pull-right" id="toggles">
+                <button class="btn active" id="btn-active">Active</button>
+                <button class="btn" id="btn-viewings">Viewings</button>
+                <button class="btn" id="btn-starred" onclick=>
+                  <img src="./img/star-inactive.png" width="50%" height="50%"/>
+                </button>
+                <button class="btn" id="btn-hidden">
+                  <img src="./img/cross.png" width="50%" height="50%"/>
+                </button>
+              </div>  
+            </div>
+          </div>
 
-        <div class="content">
-        </div>
+          <div id="list">
+            <ul id="properties-list">
+              <div>
+              <li class="property">
+                <div class="row">
+                  <div class="property-image col-md-4">
+                    <img src="./img/test-image.png" />
+                  </div>
+                  <div class="property-info col-md-8">
+                    <div class="property-details">
+                      <div class="row">
+                        <div class="col-md-8 pull-left property-address">
+                          Islington N7
+                        </div>
+                        <div class="col-md-4 pull-right property-price">
+                          £2000
+                        </div>
+                      </div>
+                      <div class="row property-stats">
+                        <div class="col-md-3">
+                          <img src="./img/beds.png" width="60%" height="60%" />
+                          <span class="bed-count">2</span>
+                        </div>
+                        <div class="col-md-3">
+                          <img src="./img/baths.png" width="50%" height="50%" />
+                          <span class="bath-count">2</span>
+                        </div>
+                        <div class="col-md-3">
+                          <img src="./img/lounges.png" width="60%" height="60%" />
+                          <span class="lounge-count">1</span>
+                        </div>
+                      </div>
+                    </div>
+                    <div class="property-buttons">
+                      <button class="hide-btn">
+                        <img src="./img/cross-property.png" width="50%" height="50%"/>
+                      </button>
+                      <button class="star-btn">
+                        <img class="star-img" src="./img/star-property-inactive.png" width="60%" height="60%" />
+                      </button>
+                      <button class="btn-flat btn-green btn-view pull-right">
+                        Arrange viewing
+                      </button>
+                    </div>
+                  </div>
+                </div>
+              </li>
+              </div>
+              <div>
+              <li class="property">
+                <div class="row">
+                  <div class="property-image col-md-4">
+                    <img src="./img/test-image.png" />
+                  </div>
+                  <div class="property-info col-md-8">
+                    <div class="property-details">
+                      <div class="row">
+                        <div class="col-md-8 pull-left property-address">
+                          Islington N7
+                        </div>
+                        <div class="col-md-4 pull-right property-price">
+                          £2000
+                        </div>
+                      </div>
+                      <div class="row property-stats">
+                        <div class="col-md-3">
+                          <img src="./img/beds.png" width="60%" height="60%" />
+                          <span class="bed-count">2</span>
+                        </div>
+                        <div class="col-md-3">
+                          <img src="./img/baths.png" width="50%" height="50%" />
+                          <span class="bath-count">2</span>
+                        </div>
+                        <div class="col-md-3">
+                          <img src="./img/lounges.png" width="60%" height="60%" />
+                          <span class="lounge-count">1</span>
+                        </div>
+                      </div>
+                    </div>
+                    <div class="property-buttons">
+                      <button class="hide-btn">
+                        <img src="./img/cross-property.png" width="50%" height="50%"/>
+                      </button>
+                      <button class="star-btn">
+                        <img class="star-img" src="./img/star-property-inactive.png" width="60%" height="60%" />
+                      </button>
+                      <button class="btn-flat btn-green btn-view pull-right">
+                        Arrange viewing
+                      </button>
+                    </div>
+                  </div>
+                </div>
+              </li>
+              </div>
+              <div>
+              <li class="property">
+                <div class="row">
+                  <div class="property-image col-md-4">
+                    <img src="./img/test-image.png" />
+                  </div>
+                  <div class="property-info col-md-8">
+                    <div class="property-details">
+                      <div class="row">
+                        <div class="col-md-8 pull-left property-address">
+                          Islington N7
+                        </div>
+                        <div class="col-md-4 pull-right property-price">
+                          £2000
+                        </div>
+                      </div>
+                      <div class="row property-stats">
+                        <div class="col-md-3">
+                          <img src="./img/beds.png" width="60%" height="60%" />
+                          <span class="bed-count">2</span>
+                        </div>
+                        <div class="col-md-3">
+                          <img src="./img/baths.png" width="50%" height="50%" />
+                          <span class="bath-count">2</span>
+                        </div>
+                        <div class="col-md-3">
+                          <img src="./img/lounges.png" width="60%" height="60%" />
+                          <span class="lounge-count">1</span>
+                        </div>
+                      </div>
+                    </div>
+                    <div class="property-buttons">
+                      <button class="hide-btn">
+                        <img src="./img/cross-property.png" width="50%" height="50%"/>
+                      </button>
+                      <button class="star-btn">
+                        <img class="star-img" src="./img/star-property-inactive.png" width="60%" height="60%" />
+                      </button>
+                      <button class="btn-flat btn-green btn-view pull-right">
+                        Arrange viewing
+                      </button>
+                    </div>
+                  </div>
+                </div>
+              </li>
+              </div>
+              <div>
+              <li class="property">
+                <div class="row">
+                  <div class="property-image col-md-4">
+                    <img src="./img/test-image.png" />
+                  </div>
+                  <div class="property-info col-md-8">
+                    <div class="property-details">
+                      <div class="row">
+                        <div class="col-md-8 pull-left property-address">
+                          Islington N7
+                        </div>
+                        <div class="col-md-4 pull-right property-price">
+                          £2000
+                        </div>
+                      </div>
+                      <div class="row property-stats">
+                        <div class="col-md-3">
+                          <img src="./img/beds.png" width="60%" height="60%" />
+                          <span class="bed-count">2</span>
+                        </div>
+                        <div class="col-md-3">
+                          <img src="./img/baths.png" width="50%" height="50%" />
+                          <span class="bath-count">2</span>
+                        </div>
+                        <div class="col-md-3">
+                          <img src="./img/lounges.png" width="60%" height="60%" />
+                          <span class="lounge-count">1</span>
+                        </div>
+                      </div>
+                    </div>
+                    <div class="property-buttons">
+                      <button class="hide-btn">
+                        <img src="./img/cross-property.png" width="50%" height="50%"/>
+                      </button>
+                      <button class="star-btn">
+                        <img class="star-img" src="./img/star-property-inactive.png" width="60%" height="60%" />
+                      </button>
+                      <button class="btn-flat btn-green btn-view pull-right">
+                        Arrange viewing
+                      </button>
+                    </div>
+                  </div>
+                </div>
+              </li>
+              </div>
+              <li class="property">
+                <div class="row">
+                  <div class="property-image col-md-4">
+                    <img src="./img/test-image.png" />
+                  </div>
+                  <div class="property-info col-md-8">
+                    <div class="property-details">
+                      <div class="row">
+                        <div class="col-md-8 pull-left property-address">
+                          Islington N7
+                        </div>
+                        <div class="col-md-4 pull-right property-price">
+                          £2000
+                        </div>
+                      </div>
+                      <div class="row property-stats">
+                        <div class="col-md-3">
+                          <img src="./img/beds.png" width="60%" height="60%" />
+                          <span class="bed-count">2</span>
+                        </div>
+                        <div class="col-md-3">
+                          <img src="./img/baths.png" width="50%" height="50%" />
+                          <span class="bath-count">2</span>
+                        </div>
+                        <div class="col-md-3">
+                          <img src="./img/lounges.png" width="60%" height="60%" />
+                          <span class="lounge-count">1</span>
+                        </div>
+                      </div>
+                    </div>
+                    <div class="property-buttons">
+                      <button class="hide-btn">
+                        <img src="./img/cross-property.png" width="50%" height="50%"/>
+                      </button>
+                      <button class="star-btn">
+                        <img class="star-img" src="./img/star-property-inactive.png" width="60%" height="60%" />
+                      </button>
+                      <button class="btn-flat btn-green btn-view pull-right">
+                        Arrange viewing
+                      </button>
+                    </div>
+                  </div>
+                </div>
+              </li>
+            </ul>
+          </div>
+        </div>  
       </div>
+      
+
+      <!-- <div id="propertyapp" class="col-sm-12"> -->
+
+        <!-- <div class="content"> -->
+
+      <!-- </div> -->
+      <!-- </div> -->
     </div>
 
     <!-- Templates -->
@@ -86,7 +368,9 @@
         <div class="row-fluid" id="main">          
           <div id="map-col" class="col-sm-8 col-md-6 col-lg-7 hidden-xs">
             <div id="transit-wpr" style="padding-top: 6px;">
-              <button class="btn btn-primary btn-xs" id="transit">Toggle transit layer</button>
+              <button class="btn" id="transit">
+                <img src='./img/transit-layer.png' width="50%" height="50%" id="transit" />
+              </button>
             </div>
             <div id="map-canvas"></div>
           </div>

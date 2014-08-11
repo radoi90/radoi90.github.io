@@ -635,3 +635,12 @@ $(function() {
   new AppView;
   Parse.history.start();
 });
+
+var starSelected = 
+function selectStar() {
+
+}
+
+function selectHidden() {
+
+}

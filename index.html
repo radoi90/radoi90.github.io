@@ -169,7 +169,7 @@
 							<div class="form-group">
 								<div class="col-sm-6">
 									<label for="entry_935209026" class="control-label">Bedrooms</label>
-									<select class="form-control" name="entry.935209026" id="entry_935209026" >
+									<select class="form-control" name="entry.935209026" id="entry_935209026">
 										<option value="No min">No min</option> <option value="Studio">Studio</option>
 										<option value="1+">1+</option> <option value="2+">2+</option>
 										<option value="3+">3+</option> <option value="4+">4+</option>
@@ -363,11 +363,11 @@
 		var earliestmovein = document.getElementById("entry_1052293236").value;
 		var latestmovein = document.getElementById("entry_79946928").value;
 
-		if (!(beds == "" || price == "" || proptype == "" || furniture == "" || earliestmovein == "" || latestmovein == "")) {
+		// if (!(earliestmovein == "" || latestmovein == "")) {
 			$('.property-info-form').addClass('animated bounceOutLeft');
 			$('.success-form').addClass('animated bounceInRight'); 
 			$('.success-form').css('display', 'block');
-		}
+		// }
 	}
 
 	$('#user-form').bind("keyup keypress", function(e) {

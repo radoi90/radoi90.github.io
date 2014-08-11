@@ -49,6 +49,15 @@ html,body {
     height: 100%;
 }
 
+#app-container {
+    position: absolute;
+    top: 47px
+    bottom: 0;
+    right: 0;
+    left: 0;
+    height: 100%;
+}
+
 /* Navbar */
 .navbar {
   background: transparent;
@@ -142,12 +151,18 @@ ul.nav a:hover { color: #fff !important; }
 
 #map-canvas {
     height: 100%;    
+    width: 70%;
 }
 
 /* List */
 #list-view {
+    position: fixed;
+    right: 0;
+    top: 80px;
+    bottom: 0;
     padding: 0;
     height: 100%;
+    width: 30%;
 }
 
 #list {
@@ -162,6 +177,7 @@ ul.nav a:hover { color: #fff !important; }
     background: #F1C40F;
     -moz-box-shadow:    0px 3px 0px 0px rgba(149,123,17,0.53);
     box-shadow:         0px 3px 0px 0px rgba(149,123,17,0.53);
+    overflow:hidden;
 }
 
 #list-view #list-header #name-title {
@@ -181,7 +197,7 @@ ul.nav a:hover { color: #fff !important; }
 }
 
 .btn {
-    padding-top: 0;
+    /*padding-top: 0;*/
     border:none !important;
     box-shadow:none !important;
 }
@@ -217,19 +233,86 @@ ul.nav a:hover { color: #fff !important; }
 
 #properties-list {
     margin:0;
+    margin-bottom: 120px;
     padding: 20px;
-    padding-right: 30px;
+    padding-right: 20px;
+}
+
+.property-box {
+    list-style-type: none;
+    margin-bottom: 20px;
+    height: 280px;
 }
 
 .property {
-    list-style-type: none;
-    height: 160px;
+    height: 220px;
     border-radius: 5px;
     overflow: hidden;
     background: #FFFFFF;
-    -moz-box-shadow:    0px 1px 0px 0px #8E8E8E, 0px 2px 0px 0px rgba(44,62,80,0.50);
-    box-shadow:         0px 1px 0px 0px #8E8E8E, 0px 2px 0px 0px rgba(44,62,80,0.50);
-    margin-bottom: 20px;
+    margin-bottom: 10px;
+    border-radius: 5px;
+    background-image: url("http://lc.zoocdn.com/bdcbdc86db1d64e87545693ded3796add811e170.jpg");
+    background-size: cover;
+    position: relative;
+}
+
+.property .property-info {
+    position: absolute;
+    width: 100%;
+    bottom: 0;
+    height: 40px;
+    background-color: white;
+    background: -moz-linear-gradient(left,  rgba(236,240,241,0) 0%, rgba(44,62,80,1) 100%); /* FF3.6+ */
+    background: -webkit-gradient(linear, left top, right top, color-stop(0%,rgba(236,240,241,0)), color-stop(100%,rgba(44,62,80,1))); /* Chrome,Safari4+ */
+    background: -webkit-linear-gradient(left,  rgba(236,240,241,0) 0%,rgba(44,62,80,1) 100%); /* Chrome10+,Safari5.1+ */
+    background: -o-linear-gradient(left,  rgba(236,240,241,0) 0%,rgba(44,62,80,1) 100%); /* Opera 11.10+ */
+    background: -ms-linear-gradient(left,  rgba(236,240,241,0) 0%,rgba(44,62,80,1) 100%); /* IE10+ */
+    background: linear-gradient(to right,  rgba(236,240,241,0) 0%,rgba(44,62,80,1) 100%); /* W3C */
+    filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#00ecf0f1', endColorstr='#2c3e50',GradientType=1 ); /* IE6-9 */
+
+}
+
+.heart {
+    color: rgba(44, 62, 80, 0.5);
+    float:right;
+    height: 40px;
+    width: 40px;
+    margin: 10px;
+}
+
+.property-details {
+    color: white;
+    font-family: AvenirNext LT Pro Medium;
+}
+
+.property-price {
+    padding-top: 4px;
+    text-align: right;
+    font-family: AvenirNext LT Pro Demi;
+    font-size: 25px;
+    color: white;
+    line-height: 27px;
+    font-weight: bold;
+    /* £2000: */
+}
+
+.property-footer {
+    width: 100%;
+}
+
+.property-footer .property-address {
+    padding-top: 14px;
+    margin:0;
+    color: #34495E;
+    font-family: AvenirNext LT Pro Medium;
+    font-size: 20px;
+    float:left;
+}
+
+.view-button {
+    float:right;
+    margin: 0;
+    padding:0;
 }
 
 .property .property-image {
@@ -241,14 +324,6 @@ ul.nav a:hover { color: #fff !important; }
     max-width: 200px;
 }
 
-.property .property-info {
-    position: relative;
-    height: 160px;
-    padding:5px;
-    padding-right: 20px;
-
-}
-
 .property .property-info .property-details {
     height: 70%;
     padding: 5px;
@@ -258,24 +333,14 @@ ul.nav a:hover { color: #fff !important; }
    padding: 5px; 
 }
 
-.property-address {
+/*.property-address {
     text-align: left;
     font-family: AvenirNext LT Pro Medium;
     font-size: 25px;
     color: #34495E;
     line-height: 27px;
     /* Islington N7: */
-}
-
-.property-price {
-    text-align: right;
-    font-family: AvenirNext LT Pro Demi;
-    font-size: 25px;
-    color: #34495E;
-    line-height: 27px;
-    font-weight: bold;
-    /* £2000: */
-}
+}*/
 
 .property-stats {
     padding-top: 10px;
@@ -334,7 +399,6 @@ ul.nav a:hover { color: #fff !important; }
 
 .btn-view {
     font-size: 16px;   
-    height: 40px;
     width: 150px;
 }
 
@@ -375,10 +439,8 @@ body {
     font-smoothing: antialiased;
 }
 
-body .container-fluid {
-    margin: 0;
-    padding: 0;
-
+body .container {
+    width: 100%;
     height: 100%;
 }
 

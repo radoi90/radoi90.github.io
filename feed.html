@@ -5,6 +5,8 @@
     <title>HouseQuest App</title>
     <link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap.min.css">
     <link href="css/properties.css" media="all" rel="stylesheet" type="text/css"/>
+    <link href="http://maxcdn.bootstrapcdn.com/font-awesome/4.1.0/css/font-awesome.min.css" rel="stylesheet">
+
     <script src="http://code.jquery.com/jquery-2.0.3.min.js"></script>
     <script src="js/underscore.js"></script>
     <script src="js/json2.js"></script>
@@ -55,11 +57,10 @@
       </div><!-- /.container-fluid -->
     </nav>
 
-
-    <div class="container-fluid"> 
-      <div class="row" id="split-screen">
-        <div class="col-md-7" id="map-canvas">lolsauce</div>  
-        <div class="col-md-5" id="list-view">
+    <div id="app-container"> 
+      <div class="" id="split-screen">
+        <div class="" id="map-canvas">lolsauce</div>  
+        <div class="" id="list-view">
           <!-- List header  -->
           <div id="list-header">
             <div class="row">
@@ -79,413 +80,297 @@
 
           <div id="list">
             <ul id="properties-list">
-              <div>
-              <li class="property">
-                <div class="row">
-                  <div class="property-image col-md-4">
-                    <img src="./img/test-image.png" />
-                  </div>
-                  <div class="property-info col-md-8">
-                    <div class="property-details">
-                      <div class="row">
-                        <div class="col-md-8 pull-left property-address">
-                          Islington N7
-                        </div>
-                        <div class="col-md-4 pull-right property-price">
-                          £2000
-                        </div>
-                      </div>
-                      <div class="row property-stats">
-                        <div class="col-md-3">
-                          <img src="./img/beds.png" width="60%" height="60%" />
-                          <span class="bed-count">2</span>
-                        </div>
-                        <div class="col-md-3">
-                          <img src="./img/baths.png" width="50%" height="50%" />
-                          <span class="bath-count">2</span>
-                        </div>
-                        <div class="col-md-3">
-                          <img src="./img/lounges.png" width="60%" height="60%" />
-                          <span class="lounge-count">1</span>
-                        </div>
-                      </div>
+              <li class="property-box">
+                <div class="property">
+                  <div class="property-container">
+                     <div class="heart">
+                      <i class="fa fa-heart-o fa-3x"></i>
                     </div>
-                    <div class="property-buttons">
-                      <button class="hide-btn">
-                        <img src="./img/cross-property.png" width="50%" height="50%"/>
-                      </button>
-                      <button class="star-btn">
-                        <img class="star-img" src="./img/star-property-inactive.png" width="60%" height="60%" />
-                      </button>
-                      <button class="btn-flat btn-green btn-view pull-right">
-                        Arrange viewing
-                      </button>
-                    </div>
+                    <div class="property-info">
+                        <div class="container">
+                          <div class="row property-details">
+                            <div class="col-md-8 property-rooms">
+                              lol
+                            </div>
+                            <div class="col-md-4 property-price">
+                              £2000.0
+                            </div>
+                          </div>
+                        </div>
+                    </div> 
                   </div>
                 </div>
+                <div class="property-footer">
+                      <div class="">
+                        <div class="">
+                          <div class="property-address">
+                            Islington, N1
+                          </div>
+                          <div class="view-button">
+                            <button class="btn btn-flat btn-green btn-view">
+                              Arrange viewing
+                            </button>
+                          </div>
+                        </div>
+                      </div>
+                    </div> 
+              </li><li class="property-box">
+                <div class="property">
+                  <div class="property-container">
+                    <div class="heart">
+                      <i class="fa fa-heart-o fa-3x"></i>
+                    </div>
+                    <div class="property-info">
+                        <div class="container">
+                          <div class="row property-details">
+                            <div class="col-md-8 property-rooms">
+                              lol
+                            </div>
+                            <div class="col-md-4 property-price">
+                              £2000.0
+                            </div>
+                          </div>
+                        </div>
+                    </div> 
+                  </div>
+                </div>
+                <div class="property-footer">
+                      <div class="">
+                        <div class="">
+                          <div class="property-address">
+                            Islington, N1
+                          </div>
+                          <div class="view-button">
+                            <button class="btn btn-flat btn-green btn-view">
+                              Arrange viewing
+                            </button>
+                          </div>
+                        </div>
+                      </div>
+                    </div> 
               </li>
-              </div>
-              <div>
-              <li class="property">
-                <div class="row">
-                  <div class="property-image col-md-4">
-                    <img src="./img/test-image.png" />
-                  </div>
-                  <div class="property-info col-md-8">
-                    <div class="property-details">
-                      <div class="row">
-                        <div class="col-md-8 pull-left property-address">
-                          Islington N7
+              <li class="property-box">
+                <div class="property">
+                  <div class="property-container">
+                    <div class="property-info">
+                        <div class="container">
+                          <div class="row property-details">
+                            <div class="col-md-8 property-rooms">
+                              lol
+                            </div>
+                            <div class="col-md-4 property-price">
+                              £2000.0
+                            </div>
+                          </div>
                         </div>
-                        <div class="col-md-4 pull-right property-price">
-                          £2000
-                        </div>
-                      </div>
-                      <div class="row property-stats">
-                        <div class="col-md-3">
-                          <img src="./img/beds.png" width="60%" height="60%" />
-                          <span class="bed-count">2</span>
-                        </div>
-                        <div class="col-md-3">
-                          <img src="./img/baths.png" width="50%" height="50%" />
-                          <span class="bath-count">2</span>
-                        </div>
-                        <div class="col-md-3">
-                          <img src="./img/lounges.png" width="60%" height="60%" />
-                          <span class="lounge-count">1</span>
-                        </div>
-                      </div>
-                    </div>
-                    <div class="property-buttons">
-                      <button class="hide-btn">
-                        <img src="./img/cross-property.png" width="50%" height="50%"/>
-                      </button>
-                      <button class="star-btn">
-                        <img class="star-img" src="./img/star-property-inactive.png" width="60%" height="60%" />
-                      </button>
-                      <button class="btn-flat btn-green btn-view pull-right">
-                        Arrange viewing
-                      </button>
-                    </div>
+                    </div> 
                   </div>
                 </div>
-              </li>
-              </div>
-              <div>
-              <li class="property">
-                <div class="row">
-                  <div class="property-image col-md-4">
-                    <img src="./img/test-image.png" />
-                  </div>
-                  <div class="property-info col-md-8">
-                    <div class="property-details">
-                      <div class="row">
-                        <div class="col-md-8 pull-left property-address">
-                          Islington N7
-                        </div>
-                        <div class="col-md-4 pull-right property-price">
-                          £2000
+                <div class="property-footer">
+                      <div class="">
+                        <div class="">
+                          <div class="property-address">
+                            Islington, N1
+                          </div>
+                          <div class="view-button">
+                            <button class="btn btn-flat btn-green btn-view">
+                              Arrange viewing
+                            </button>
+                          </div>
                         </div>
                       </div>
-                      <div class="row property-stats">
-                        <div class="col-md-3">
-                          <img src="./img/beds.png" width="60%" height="60%" />
-                          <span class="bed-count">2</span>
-                        </div>
-                        <div class="col-md-3">
-                          <img src="./img/baths.png" width="50%" height="50%" />
-                          <span class="bath-count">2</span>
-                        </div>
-                        <div class="col-md-3">
-                          <img src="./img/lounges.png" width="60%" height="60%" />
-                          <span class="lounge-count">1</span>
-                        </div>
-                      </div>
-                    </div>
-                    <div class="property-buttons">
-                      <button class="hide-btn">
-                        <img src="./img/cross-property.png" width="50%" height="50%"/>
-                      </button>
-                      <button class="star-btn">
-                        <img class="star-img" src="./img/star-property-inactive.png" width="60%" height="60%" />
-                      </button>
-                      <button class="btn-flat btn-green btn-view pull-right">
-                        Arrange viewing
-                      </button>
-                    </div>
-                  </div>
-                </div>
-              </li>
-              </div>
-              <div>
-              <li class="property">
-                <div class="row">
-                  <div class="property-image col-md-4">
-                    <img src="./img/test-image.png" />
-                  </div>
-                  <div class="property-info col-md-8">
-                    <div class="property-details">
-                      <div class="row">
-                        <div class="col-md-8 pull-left property-address">
-                          Islington N7
-                        </div>
-                        <div class="col-md-4 pull-right property-price">
-                          £2000
-                        </div>
-                      </div>
-                      <div class="row property-stats">
-                        <div class="col-md-3">
-                          <img src="./img/beds.png" width="60%" height="60%" />
-                          <span class="bed-count">2</span>
-                        </div>
-                        <div class="col-md-3">
-                          <img src="./img/baths.png" width="50%" height="50%" />
-                          <span class="bath-count">2</span>
-                        </div>
-                        <div class="col-md-3">
-                          <img src="./img/lounges.png" width="60%" height="60%" />
-                          <span class="lounge-count">1</span>
-                        </div>
-                      </div>
-                    </div>
-                    <div class="property-buttons">
-                      <button class="hide-btn">
-                        <img src="./img/cross-property.png" width="50%" height="50%"/>
-                      </button>
-                      <button class="star-btn">
-                        <img class="star-img" src="./img/star-property-inactive.png" width="60%" height="60%" />
-                      </button>
-                      <button class="btn-flat btn-green btn-view pull-right">
-                        Arrange viewing
-                      </button>
-                    </div>
-                  </div>
-                </div>
-              </li>
-              </div>
-              <li class="property">
-                <div class="row">
-                  <div class="property-image col-md-4">
-                    <img src="./img/test-image.png" />
-                  </div>
-                  <div class="property-info col-md-8">
-                    <div class="property-details">
-                      <div class="row">
-                        <div class="col-md-8 pull-left property-address">
-                          Islington N7
-                        </div>
-                        <div class="col-md-4 pull-right property-price">
-                          £2000
-                        </div>
-                      </div>
-                      <div class="row property-stats">
-                        <div class="col-md-3">
-                          <img src="./img/beds.png" width="60%" height="60%" />
-                          <span class="bed-count">2</span>
-                        </div>
-                        <div class="col-md-3">
-                          <img src="./img/baths.png" width="50%" height="50%" />
-                          <span class="bath-count">2</span>
-                        </div>
-                        <div class="col-md-3">
-                          <img src="./img/lounges.png" width="60%" height="60%" />
-                          <span class="lounge-count">1</span>
-                        </div>
-                      </div>
-                    </div>
-                    <div class="property-buttons">
-                      <button class="hide-btn">
-                        <img src="./img/cross-property.png" width="50%" height="50%"/>
-                      </button>
-                      <button class="star-btn">
-                        <img class="star-img" src="./img/star-property-inactive.png" width="60%" height="60%" />
-                      </button>
-                      <button class="btn-flat btn-green btn-view pull-right">
-                        Arrange viewing
-                      </button>
-                    </div>
-                  </div>
-                </div>
+                    </div> 
               </li>
             </ul>
-          </div>
-        </div>  
-      </div>
-      
+          </div>  
+        </div>
+        
 
-      <!-- <div id="propertyapp" class="col-sm-12"> -->
+        <!-- <div id="propertyapp" class="col-sm-12"> -->
 
-        <!-- <div class="content"> -->
+          <!-- <div class="content"> -->
 
-      <!-- </div> -->
-      <!-- </div> -->
-    </div>
-
-    <!-- Templates -->
-
-    <script type="text/template" id="login-template">
-      <header id="header"></header>
-      <div class="col-sm-6 col-md-4 col-sm-offset-3 col-md-offset-4 login">
-        <form class="login-form">
-          <h2>Log In</h2>
-          <div class="error" style="display:none"></div>
-          <div class="success" style="display:none"></div>
-          <input class="form-control" type="email" id="login-email" placeholder="Email" />
-          <input class="form-control" type="password" id="login-password" placeholder="Password" />
-          <button class="btn btn-default">Log In</button>
-          <a class="reset-password">reset password</a>
-        </form>
-
-        <form class="signup-form">
-          <h2>Sign Up</h2>
-          <div class="error" style="display:none"></div>
-          <input class="form-control" type="email" id="signup-email" placeholder="Email" />
-          <input class="form-control" type="password" id="signup-password" placeholder="Create a Password" />
-          <button class="btn btn-default">Sign Up</button>
-        </form>
-      </div>
-    </script>
-
-    <script type="text/template" id="manage-properties-template">
-      <div id="user-info">
-        Signed in as <%= Parse.User.current().escape("username") %> (<a href="#" class="log-out">Log out</a>)
+        <!-- </div> -->
+        <!-- </div> -->
       </div>
 
-      <div class="section">
+      <!-- Templates -->
 
-        <header id="header">
-          <div class="row">
-            <div class="col-sm-5 col-lg-7">
-              <input id="new-property" placeholder="Add a Zoopla link" type="text" />
-            </div>
-            <div class="col-sm-7 col-lg-5">
-              <div id="property-stats"></div>
-            </div>
-          </div>
-        </header>
+      <script type="text/template" id="login-template">
+        <header id="header"></header>
+        <div class="col-sm-6 col-md-4 col-sm-offset-3 col-md-offset-4 login">
+          <form class="login-form">
+            <h2>Log In</h2>
+            <div class="error" style="display:none"></div>
+            <div class="success" style="display:none"></div>
+            <input class="form-control" type="email" id="login-email" placeholder="Email" />
+            <input class="form-control" type="password" id="login-password" placeholder="Password" />
+            <button class="btn btn-default">Log In</button>
+            <a class="reset-password">reset password</a>
+          </form>
 
-        <div class="row-fluid" id="main">          
-          <div id="map-col" class="col-sm-8 col-md-6 col-lg-7 hidden-xs">
-            <div id="transit-wpr" style="padding-top: 6px;">
-              <button class="btn" id="transit">
-                <img src='./img/transit-layer.png' width="50%" height="50%" id="transit" />
-              </button>
-            </div>
-            <div id="map-canvas"></div>
-          </div>
+          <form class="signup-form">
+            <h2>Sign Up</h2>
+            <div class="error" style="display:none"></div>
+            <input class="form-control" type="email" id="signup-email" placeholder="Email" />
+            <input class="form-control" type="password" id="signup-password" placeholder="Create a Password" />
+            <button class="btn btn-default">Sign Up</button>
+          </form>
+        </div>
+      </script>
 
-          <div class="col-sm-4 col-md-6 col-lg-5">
-            <ul id="property-list">
-              <img src='img/spinner.gif' class='spinner' />
-            </ul>
+      <script type="text/template" id="manage-properties-template">
+        <div id="user-info">
+          Signed in as <%= Parse.User.current().escape("username") %> (<a href="#" class="log-out">Log out</a>)
+        </div>
+
+        <div class="section">
+
+          <header id="header">
+            <div class="row">
+              <div class="col-sm-5 col-lg-7">
+                <input id="new-property" placeholder="Add a Zoopla link" type="text" />
+              </div>
+              <div class="col-sm-7 col-lg-5">
+                <div id="property-stats"></div>
+              </div>
+            </div>
+          </header>
+
+          <div class="row-fluid" id="main">          
+            <div id="map-col" class="col-sm-8 col-md-6 col-lg-7 hidden-xs">
+              <div id="transit-wpr" style="padding-top: 6px;">
+                <button class="btn" id="transit">
+                  <img src='./img/transit-layer.png' width="50%" height="50%" id="transit" />
+                </button>
+              </div>
+              <div id="map-canvas"></div>
+            </div>
+
+            <div class="col-sm-4 col-md-6 col-lg-5">
+              <ul id="property-list">
+                <img src='img/spinner.gif' class='spinner' />
+              </ul>
+            </div>
           </div>
         </div>
-      </div>
+
+        <script>
+          $(function() {
+
+            // grab the initial top offset of the navigation 
+            var sticky_navigation_offset_top = $('#map-canvas').offset().top;
+            
+            // our function that decides weather the navigation bar should have "fixed" css position or not.
+            var sticky_navigation = function(){
+              var scroll_top = $(window).scrollTop(); // our current vertical position from the top
+              
+              // if we've scrolled more than the navigation, change its position to fixed to stick to top, otherwise change it back to relative
+              if (scroll_top > sticky_navigation_offset_top) { 
+                var width = $("#map-col").width(), left = $("#map-col").offset().left;
+                $('#map-canvas').css({ 'position': 'fixed', 'top':0, 'left':left+15, 'width': width });
+              } else {
+                $('#map-canvas').css({ 'position': 'relative', 'left':0 }); 
+              }   
+            };
+            
+            // run our function on load
+            sticky_navigation();
+            
+            // and run it again every time you scroll
+            $(window).scroll(function() {
+               sticky_navigation();
+            });
+            
+          });
+        </script>
+      </script>
+
+      <script type="text/template" id="item-template">
+        <li id="<%= _.escape(content.listing_id) %>" class="listing <%= starred ? 'starred' : '' %> <%= hidden ? 'hidden' : '' %> <%= viewed ? '' : 'unviewed' %>">
+        	<a class="view row" href="<%= _.escape(content.details_url) %>">
+            <div class="listing_image col-md-5">
+              <img src="<%= _.escape(content.image_url) %>">
+            </div>
+
+            <div class="listing_info col-md-7">
+             <div class="row-fluid listing_location">
+                <h4><%=_.escape(content.property_type) == '' ? 'Property' : _.escape(content.property_type) %> for <%=_.escape(content.listing_status) %> in:</h4>
+                <p><%= _.escape(content.street_name) %> <%= _.escape(content.outcode) %></p>
+              </div>
+             
+              <div class="row listing_headline">
+                <div class="col-xs-3 col-sm-6 col-md-3">
+                  <p>BEDS</p>
+                  <h3><%=_.escape(content.num_bedrooms) > 0 ? _.escape(content.num_bedrooms) : 'STUDIO'%></h3>
+                </div>
+
+                <div class="col-xs-3 col-sm-6 col-md-3">
+                  <p>BATHS</p>
+                  <h3><%=_.escape(content.num_bathrooms)%></h3>
+                </div>
+
+                <div class="col-xs-3 col-sm-6 col-md-3">
+                  <p>LOUNGE</p>
+                  <h3><%=_.escape(content.num_recepts)%></h3>
+                </div>
+
+                <div class="col-xs-3 col-sm-6 col-md-3">
+                  <p>PCM</p>
+                  <h3>£<%=_.escape(content.rental_prices.per_month)%></h3>
+                </div>
+              </div>
+
+              <div class="row-fluid listing_options">
+                <div class="col-xs-8 col-sm-12 col-md-8">
+                  <input class="markview btn btn-primary" type="checkbox" <%= viewed ? 'checked="checked"' : '' %>> 
+                </div>
+                <div class="col-xs-2 col-sm-6 col-md-2">
+                  <input class="star btn btn-default" type="checkbox" <%= starred ? 'checked="checked"' : '' %>>
+                </div>
+                <div class="col-xs-2 col-sm-6 col-md-2">
+                  <input class="hide btn btn-default" type="checkbox" <%= hidden ? 'checked="checked"' : '' %>> 
+                </div>
+              </div>
+
+              <div class="row-fluid listing_age">
+                <p class="help-block text-right">Added <%= _.escape(dateDiff(content.last_published_date)) %></p>
+              </div>            
+            </div>
+        	</a>
+        </li>
+      </script>
+
+      <script type="text/template" id="stats-template">
+        <div id="footer">
+          <ul class="nav nav-pills" id="filters">
+            <li class="selected" id="active">
+              <a href="javascript:void(0)">Active<span class="badge"><%= total-hidden%></span></a>
+            </li>
+            <li id="starred">
+              <a href="javascript:void(0)">Favourites<span class="badge"><%= starred%></span></a>
+            </li>
+            <li id="viewed">
+              <a href="javascript:void(0)">Viewings<span class="badge"><%= viewed%></span></a>
+            </li>
+            <li id="hidden">
+              <a href="javascript:void(0)">Hidden<span class="badge"><%= hidden%></span></a>
+            </li>
+          </ul>
+        </div>
+      </script>
 
       <script>
-        $(function() {
+      $('.heart').hover(
+        function() {
+          $(this).html("<i class=\"fa fa-heart fa-3x\"></i>");
+        },
+        function() {
+          $(this).html("<i class=\"fa fa-heart-o fa-3x\"></i>");
+        }
+      );
+      
+        </script>
+    </body>
 
-          // grab the initial top offset of the navigation 
-          var sticky_navigation_offset_top = $('#map-canvas').offset().top;
-          
-          // our function that decides weather the navigation bar should have "fixed" css position or not.
-          var sticky_navigation = function(){
-            var scroll_top = $(window).scrollTop(); // our current vertical position from the top
-            
-            // if we've scrolled more than the navigation, change its position to fixed to stick to top, otherwise change it back to relative
-            if (scroll_top > sticky_navigation_offset_top) { 
-              var width = $("#map-col").width(), left = $("#map-col").offset().left;
-              $('#map-canvas').css({ 'position': 'fixed', 'top':0, 'left':left+15, 'width': width });
-            } else {
-              $('#map-canvas').css({ 'position': 'relative', 'left':0 }); 
-            }   
-          };
-          
-          // run our function on load
-          sticky_navigation();
-          
-          // and run it again every time you scroll
-          $(window).scroll(function() {
-             sticky_navigation();
-          });
-          
-        });
-      </script>
-    </script>
-
-    <script type="text/template" id="item-template">
-      <li id="<%= _.escape(content.listing_id) %>" class="listing <%= starred ? 'starred' : '' %> <%= hidden ? 'hidden' : '' %> <%= viewed ? '' : 'unviewed' %>">
-      	<a class="view row" href="<%= _.escape(content.details_url) %>">
-          <div class="listing_image col-md-5">
-            <img src="<%= _.escape(content.image_url) %>">
-          </div>
-
-          <div class="listing_info col-md-7">
-           <div class="row-fluid listing_location">
-              <h4><%=_.escape(content.property_type) == '' ? 'Property' : _.escape(content.property_type) %> for <%=_.escape(content.listing_status) %> in:</h4>
-              <p><%= _.escape(content.street_name) %> <%= _.escape(content.outcode) %></p>
-            </div>
-           
-            <div class="row listing_headline">
-              <div class="col-xs-3 col-sm-6 col-md-3">
-                <p>BEDS</p>
-                <h3><%=_.escape(content.num_bedrooms) > 0 ? _.escape(content.num_bedrooms) : 'STUDIO'%></h3>
-              </div>
-
-              <div class="col-xs-3 col-sm-6 col-md-3">
-                <p>BATHS</p>
-                <h3><%=_.escape(content.num_bathrooms)%></h3>
-              </div>
-
-              <div class="col-xs-3 col-sm-6 col-md-3">
-                <p>LOUNGE</p>
-                <h3><%=_.escape(content.num_recepts)%></h3>
-              </div>
-
-              <div class="col-xs-3 col-sm-6 col-md-3">
-                <p>PCM</p>
-                <h3>£<%=_.escape(content.rental_prices.per_month)%></h3>
-              </div>
-            </div>
-
-            <div class="row-fluid listing_options">
-              <div class="col-xs-8 col-sm-12 col-md-8">
-                <input class="markview btn btn-primary" type="checkbox" <%= viewed ? 'checked="checked"' : '' %>> 
-              </div>
-              <div class="col-xs-2 col-sm-6 col-md-2">
-                <input class="star btn btn-default" type="checkbox" <%= starred ? 'checked="checked"' : '' %>>
-              </div>
-              <div class="col-xs-2 col-sm-6 col-md-2">
-                <input class="hide btn btn-default" type="checkbox" <%= hidden ? 'checked="checked"' : '' %>> 
-              </div>
-            </div>
-
-            <div class="row-fluid listing_age">
-              <p class="help-block text-right">Added <%= _.escape(dateDiff(content.last_published_date)) %></p>
-            </div>            
-          </div>
-      	</a>
-      </li>
-    </script>
-
-    <script type="text/template" id="stats-template">
-      <div id="footer">
-        <ul class="nav nav-pills" id="filters">
-          <li class="selected" id="active">
-            <a href="javascript:void(0)">Active<span class="badge"><%= total-hidden%></span></a>
-          </li>
-          <li id="starred">
-            <a href="javascript:void(0)">Favourites<span class="badge"><%= starred%></span></a>
-          </li>
-          <li id="viewed">
-            <a href="javascript:void(0)">Viewings<span class="badge"><%= viewed%></span></a>
-          </li>
-          <li id="hidden">
-            <a href="javascript:void(0)">Hidden<span class="badge"><%= hidden%></span></a>
-          </li>
-        </ul>
-      </div>
-    </script>
-  </body>
-
-</html>
+  </html>

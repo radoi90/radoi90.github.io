@@ -359,7 +359,7 @@
 		var phone = document.getElementById("entry_893950790").value;
 		var employer = document.getElementById("entry_1534924529").value;
 
-		if (!(fname == "" || sname == "" || email == "" || validateEmail(email) || password == "" || phone == "" || employer == "")) {
+		if (!(fname == "" || sname == "" || email == "" || !validateEmail(email) || password == "" || phone == "" || employer == "")) {
 			console.log("advancing");
 			pageIndex = 2;
 			$('.personal-info-form').addClass('animated bounceOutLeft');

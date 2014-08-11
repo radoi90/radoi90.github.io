@@ -609,5 +609,9 @@ label .control-label {
 		margin-left: 0;
 		width: 100%;
 	}
+
+	#login-panel {
+		top: 400px;
+	}
 }
 

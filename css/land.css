@@ -94,20 +94,26 @@ img {
   text-decoration: none;
   color: #5C5C5C;
 }
+
 .landing-page .header-unit {
   float: center;
-  margin-top: 40px;
-  margin-bottom: 50px;
 }
+
 .landing-page .header-unit h1 {
-  font-size: 126px;
+  font-size: 50px;
   text-shadow: 0px 4px #fff;
   font-weight: normal;
   margin-bottom: 20px;
 }
 .landing-page .Q {
-  font-size: 160px;
+  font-size: 60px;
 }
+
+#disclaimer {
+  font-size: 10px;
+  margin: 0;
+}
+
 .landing-page #subtext {
   margin-top: 0px;
   font-size: 32px;

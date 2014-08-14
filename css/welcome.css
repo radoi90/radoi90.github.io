@@ -648,6 +648,26 @@ label .control-label {
 		margin-left: 0;
 		width: 100%;
 	}
+
+	#where-box {
+		font-size: 13px;
+		line-height: 20px;
+	}
+
+	#where {
+		font-size: 20px;
+		line-height: 30px;
+	}
+	
+	.tm-tag {
+		font-size: 12px;
+		line-height: 15px;
+	}
+
+	.btn-find {
+		height: 40px;
+		font-size: 1em;
+	}
 }
 
 @media only screen and (max-width: 767px) {

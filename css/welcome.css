@@ -270,6 +270,39 @@ body {
 	width: 100%;
 }
 
+.user-icon {
+	padding: 0 10px;
+	float: left;
+}
+
+a.reset-password {
+	display: block;
+	margin-top: 10px;
+	font-size: 12px;
+}
+
+.login-form .reset-message {
+	padding-bottom: 10px;
+}
+
+.login-form .error {
+	border: 1px solid red;
+    background: #FDEFF0;
+    padding: 5px 15px;
+    margin-bottom: 10px;
+}
+
+.login-form .success {
+    border: 1px solid green;
+    background: #F3FFF3;
+    padding: 5px 15px;
+    margin-bottom: 15px;
+}
+
+.success {
+	padding-bottom: 10px;
+}
+
 .tm-input {
 	border: 0;
 	outline: none;

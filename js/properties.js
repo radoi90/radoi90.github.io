@@ -281,11 +281,19 @@ $(function() {
     // Toggle the `"star"` state of the model.
     toggleStar: function() {
       this.model.star();
+
+      var filterValue = state.get("filter");
+      if (filterValue == "starred") {
+        $(this.el).remove();
+      }
     },
 
     // Toggle the `"hidden"` state of the model.
     toggleHidden: function() {
+      var self = this;
       this.model.hide();
+
+      $(this.el).remove();
     },
 
     // Toggle the `"viewed"` state of the model.

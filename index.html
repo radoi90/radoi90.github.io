@@ -385,8 +385,32 @@
 			console.log("preventing!!")         ;
 			e.preventDefault();
 			return false;
+		if (Parse.User.current()) {
+			var reqACL = new Parse.ACL(Parse.User.current());
+      reqACL.setRoleReadAccess("Administrator",true);
+      reqACL.setRoleWriteAccess("Administrator",true);
+
+      var Requirements = Parse.Object.extend("Requirements");
+			var requirements = new Requirements();
+			 
+			requirements.set("user", Parse.User.current());
+			requirements.set("ACL", reqACL);
+			requirements.set("num_bedrooms", $("#signup-num_bedrooms").val());
+			requirements.set("pcm", $("#signup-pcm").val());
+			requirements.set("date_min", $("#signup-date_min").val());
+			requirements.set("date_max", $("#signup-date_max").val());
+			requirements.set("other", $("#signup-other").val());
+			
+			 
+			requirements.save(null, {
+			  success: function(requirements) {
+			    $('.property-info-form').addClass('animated bounceOutLeft');
+					$('.success-form').addClass('animated bounceInRight'); 
+					$('.success-form').css('display', 'block');
+			  }
+			});
 		}
-	});
+	}
 
 	function validateEmail(email) { 
     	var re = /^(([^<>()[\]\\.,;:\s@\"]+(\.[^<>()[\]\\.,;:\s@\"]+)*)|(\".+\"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;

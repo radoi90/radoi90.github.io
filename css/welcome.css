@@ -306,7 +306,7 @@ a.reset-password {
 .tm-input {
 	border: 0;
 	outline: none;
-	width: 300px;
+	width: 100%;
 	margin-bottom: 10px;
 }
 

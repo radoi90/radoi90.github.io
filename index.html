@@ -462,6 +462,59 @@
 		    }
 		});
 
+		var ResetPasswordView = Parse.View.extend({
+		    events: {
+		      "submit form.login-form": "resetPassword",
+		      "click a.reset-password": "logIn"
+		    },
+
+		    el: "#options-panel",
+		    
+		    initialize: function() {
+		      _.bindAll(this, "logIn", "resetPassword");
+		      this.render();
+		    },
+
+		    resetPassword: function(e) {
+				var self = this;
+				var email = this.$("#login-email").val();
+
+				Parse.User.requestPasswordReset(email, {
+					success: function() {
+					  self.$(".login-form .error").hide();
+					  self.$(".login-form .success").html("Check your email for instructions.").show();
+					  self.$(".reset-message").hide();
+					  self.$("#login-email").hide();
+					  self.$("#btn-login").hide();
+					},
+					error: function(error) {
+					  if(email.length > 0) {
+					    self.$(".login-form .error").html("There is no user assigned to " + email).show();
+					  }
+
+					  self.$(".login-form button").removeAttr("disabled");
+					}
+				});
+
+				this.$(".login-form button").attr("disabled", "disabled");
+
+		        return false;
+		    },
+
+		    logIn: function() {
+		    	var self = this;
+		    	
+		    	new LogInView();
+		    	self.undelegateEvents();
+          		delete self;
+		    },
+
+		    render: function() {
+		      this.$el.html(_.template($("#resetPassword-template").html()));
+		      this.delegateEvents();
+		    }
+		});
+
 		// The main view for the app
 		var AppView = Parse.View.extend({
 			// Instead of generating a new element, bind to the existing skeleton of

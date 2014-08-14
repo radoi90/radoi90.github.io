@@ -345,39 +345,52 @@
 	}
 
 	function advancePersonalForm() {
-		var fname = document.getElementById("entry_495151048").value;
-		var sname = document.getElementById("entry_1489655683").value;
-		var email = document.getElementById("entry_1866180113").value;
-		var password = document.getElementById("entry_1066742705").value;
-		var phone = document.getElementById("entry_893950790").value;
-		var employer = document.getElementById("entry_1534924529").value;
+		console.log(Parse.User.current());
+		var email 		= $("#signup-email").val();
+		var password 	= $("#signup-password").val();
+		
+		var fname 		= $("#signup-first_name").val();
+		var lname 		= $("#signup-last_name").val();
+		var employer 	= $("#signup-employer").val();
+		var availability =$("#signup-availability").val();
 
-		if (!(fname == "" || sname == "" || email == "" || !validateEmail(email) || password == "" || phone == "" || employer == "")) {
-			console.log("advancing");
-			pageIndex = 2;
-			$('.personal-info-form').addClass('animated bounceOutLeft');
-			$('.property-info-form').addClass('animated bounceInRight'); 
-			$('.property-info-form').css('display', 'block');
+		if (!(fname == "" || lname == "" || email == "" || !validateEmail(email) || availability == "" || employer == "")) {
+			var user = new Parse.User();
+	    var userACL = new Parse.ACL();
+	    userACL.setRoleReadAccess("Administrator", true);
+	    user.set("password", password);
+	    user.set("email", email);
+	    user.set("username", email);
+	    user.set("ACL", userACL);
+	    user.set("first_name", fname);
+	    user.set("last_name", lname);
+	    user.set("employer", employer);
+	    user.set("availability", availability);
+	     
+	    user.signUp(null, {
+	      success: function(user) {
+	        console.log("advancing");
+					pageIndex = 2;
+					$('.personal-info-form').addClass('animated bounceOutLeft');
+					$('.property-info-form').addClass('animated bounceInRight'); 
+					$('.property-info-form').css('display', 'block');
+	      },
+	      error: function(user, error) {
+	        $(".personal-info-form .error").html(error.message).show();
+	        $(".personal-info-form button").removeAttr("disabled");
+	        console.log("Can't advance");
+	      }
+	    });
+
+	    $(".personal-info-form button").attr("disabled", "disabled");
 		} else {
 			console.log("Can't advance");
+			$(".personal-info-form .error").html("Please fill in all fields").show();
 		}
 	}
 
 	function advancePropertyForm() {
 		onPersonal = false;
-		var beds = document.getElementById("entry_935209026").value;
-		var price = document.getElementById("entry_1452370776").value;
-		var proptype = document.getElementById("entry_562686023").value;
-		var furniture = document.getElementById("entry_488055055").value;
-		var earliestmovein = document.getElementById("entry_1052293236").value;
-		var latestmovein = document.getElementById("entry_79946928").value;
-
-		// if (!(earliestmovein == "" || latestmovein == "")) {
-			$('.property-info-form').addClass('animated bounceOutLeft');
-			$('.success-form').addClass('animated bounceInRight'); 
-			$('.success-form').css('display', 'block');
-		// }
-	}
 
 	$('#user-form').bind("keyup keypress", function(e) {
 		var code = e.keyCode || e.which; 

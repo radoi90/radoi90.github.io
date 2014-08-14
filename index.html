@@ -91,9 +91,7 @@
 							<div id="where">
 								Where?	
 							</div>					
-							<!-- <label for="entry_922244654" class="control-label">Location (City, borough, street, postcode)</label>
-									<textarea class="form-control" name="entry.922244654" id="entry_922244654" rows="2" placeholder="E.g. Clerkenwell or NW1, near Northern line stations"></textarea> -->
-						  <input type="text" placeholder="Islington, Shoreditch..." class="tm-input"/>
+						  <input type="text" placeholder="e.g. Islington, NW1, near Jubilee line..." class="tm-input"/>
 						</div>
 						<div id="btn-find-container">
 							<button type="button" class="btn-flat btn-green btn-find" onclick="advanceLocationForm();">Find my property</button>
@@ -111,37 +109,48 @@
 
 							<div class="form-group">
 								<div class="col-sm-6">
-									<label for="entry_495151048" class="control-label" style="font-weight: 0;">First name*</label>					
-									<input placeholder="Bob" type="text" class="form-control" name="entry.495151048" id="entry_495151048" required>
+									<label for="signup-email" class="control-label">
+										Email
+										<div class="glyphicon glyphicon-question-sign" data-toggle="tooltip" title="We don't share this with estate agents. Use your email to sign into your account and access the property feed. It's also the way we'll get in touch with you to confirm your viewings."></div>
+									</label>
+									<input type="email" class="form-control" name="entry.1866180113" id="signup-email" required>
 								</div>
 
 								<div class="col-sm-6">
-									<label for="entry_1489655683" class="control-label">Last name*</label>
-									<input placeholder="Smith" type="text" class="form-control" name="entry.1489655683" id="entry_1489655683" required>
-								</div>	
-							</div>						
-
-							<div class="form-group">
-								<div class="col-sm-6">
-									<label for="entry_1866180113" class="control-label">Email*</label>
-									<input placeholder="bob@bobsmith.com" type="email" class="form-control" name="entry.1866180113" id="entry_1866180113" required>
-								</div>
-
-								<div class="col-sm-6">
-									<label for="entry_1066742705" class="control-label">Phone</label>
-									<input placeholder="01234 567890" ype="text" class="form-control" name="entry.1066742705" id="entry_1066742705">
+									<label for="signup-password" class="control-label">
+										Password
+										<div class="glyphicon glyphicon-question-sign" data-toggle="tooltip" title="Set a password in order to access the feed of curated properties from any device."></div>
+									</label>
+									<input type="password" class="form-control" id="signup-password" required>
 								</div>						
 							</div>
 
 							<div class="form-group">
 								<div class="col-sm-6">
-									<label for="entry_893950790" class="control-label">Current employer / school*</label>
-									<input placeholder="Bob Industries Inc." type="text" class="form-control" name="entry.893950790" id="entry_893950790" required>
+									<label for="signup-first_name" class="control-label" style="font-weight: 0;">First name</label><input type="text" class="form-control" name="entry.495151048" id="signup-first_name" required>
 								</div>
 
 								<div class="col-sm-6">
-									<label for="entry_1534924529" class="control-label">When can you attend viewings?</label>
-							 		<input placeholder="Mon-Fri 6:30-8" type="text" class="form-control" name="entry.1534924529" id="entry_1534924529">
+									<label for="signup-last_name" class="control-label">Last name</label>
+									<input type="text" class="form-control" name="entry.1489655683" id="signup-last_name" required>
+								</div>	
+							</div>						
+
+							<div class="form-group">
+								<div class="col-sm-6">
+									<label for="signup-employer" class="control-label">
+										Employer / school during tenancy
+										<div class="glyphicon glyphicon-question-sign" data-toggle="tooltip" title="Tell us if you're employed, self employed, a student or seeking employment. Otherwise we might suggest properties that won't be suitable for you."></div>
+									</label>
+									<input type="text" class="form-control" name="entry.893950790" id="signup-employer" required>
+								</div>
+
+								<div class="col-sm-6">
+									<label for="signup-availability" class="control-label">
+										When can you attend viewings?
+										<div class="glyphicon glyphicon-question-sign" data-toggle="tooltip" title="Let us know when you can normally go to viewings. After you confirm you can attend we'll forward you the agent's details to meet with them."></div>
+									</label>
+							 		<input placeholder="e.g. Mon-Fri 6:30-8 PM" type="text" class="form-control" name="entry.1534924529" id="signup-availability" required>
 								</div>
 							</div>
 
@@ -163,8 +172,8 @@
 							<h2 class="text-center">What are you looking for?</h2>
 							<div class="form-group">
 								<div class="col-sm-6">
-									<label for="entry_935209026" class="control-label">Bedrooms</label>
-									<select class="form-control" name="entry.935209026" id="entry_935209026">
+									<label for="signup-num_bedrooms" class="control-label">Bedrooms</label>
+									<select class="form-control" name="entry.935209026" id="signup-num_bedrooms">
 										<option value="No min">No min</option> <option value="Studio">Studio</option>
 										<option value="1+">1+</option> <option value="2+">2+</option>
 										<option value="3+">3+</option> <option value="4+">4+</option>
@@ -172,8 +181,11 @@
 								</div>
 
 								<div class="col-sm-6">
-									<label for="entry_1452370776" class="control-label">Max price (per month)</label>
-									<select class="form-control" name="entry.1452370776" id="entry_1452370776" >
+									<label for="signup-pcm" class="control-label">
+										Max price (per month)
+										<div class="glyphicon glyphicon-question-sign" data-toggle="tooltip" title="Price for the entire property per month."></div>
+									</label>
+									<select class="form-control" name="entry.1452370776" id="signup-pcm" >
 										<option value="0">No max</option>
 									    <option value="100" >&pound;100 pcm</option>
 									    <option value="200" >&pound;200 pcm</option>
@@ -222,35 +234,30 @@
 
 							<div class="form-group">
 								<div class="col-sm-6">
-									<label for="entry_562686023" class="control-label" >Property type</label>
-									<select class="form-control" name="entry.562686023" id="entry_562686023" >
-										<option value="Any">Any</option>
-										<option value="Houses">Houses</option>
-										<option value="Flats">Flats</option>
-									</select>
+									<label for="signup-date_min" class="control-label">
+										Earliest move in date
+										<div class="glyphicon glyphicon-question-sign" data-toggle="tooltip" title="Range of dates that you are willing to move"></div>
+									</label>
+									<input class="form-control" type="date" name="entry.1052293236" id="signup-date_min" >
 								</div>
 
 								
 								<div class="col-sm-6">
-									<label for="entry_488055055" class="control-label">Furniture</label>
-									<select class="form-control" name="entry.488055055" id="entry_488055055" >
-										<option value="Show all">Show all</option> 
-										<option value="Furnished">Furnished</option>
-										<option value="Part furnished">Part furnished</option>
-										<option value="Unfurnished">Unfurnished</option>
-									</select>
+									<label for="signup-date_max" class="control-label">
+										Latest move in date
+										<div class="glyphicon glyphicon-question-sign" data-toggle="tooltip" title="Range of dates that you are willing to move"></div>
+									</label>
+									<input class="form-control" type="date" name="entry.79946928" id="signup-date_max" >
 								</div>
 							</div>
 
 							<div class="form-group">
-								<div class="col-sm-6">
-									<label for="entry_1052293236" class="control-label">Earliest move in date</label>
-									<input class="form-control" type="date" name="entry.1052293236" id="entry_1052293236" >
-								</div>
-
-								<div class="col-sm-6">
-									<label for="entry_79946928" class="control-label">Latest move in date</label>
-									<input class="form-control" type="date" name="entry.79946928" id="entry_79946928" >
+								<div class="col-sm-12">
+									<label for="signup-other" class="control-label" >
+										Other preferences
+										<div class="glyphicon glyphicon-question-sign" data-toggle="tooltip" title="Be super specific so we can find the absolute best properties for you personally."></div>
+									</label>
+									<textarea class="form-control" name="entry.242663229" id="signup-other" rows="2" placeholder="e.g. No council flats, unfurnished ok, only properties with lounge, at least 2 bathrooms, parking spot a plus. At most 40 minutes comute to Google HQ."></textarea>
 								</div>
 							</div>
 
@@ -305,13 +312,6 @@
 <script type="text/javascript">
 	var pageIndex = 0;
 	var onPersonal = true;
-
-	// $('#user-form').submit(function(event){
-	// 	if (onPersonal) {
-	// 		event.preventDefault();
-	// 		console.log("prevented!");
-	// 	}
-	// });
 
 	function loginButtonPressed() {
 		$("#options-panel").toggle();
@@ -583,5 +583,8 @@
 			return true;
 		};
 	}
+</script>
+<script>
+   $(function () { $("[data-toggle='tooltip']").tooltip(); });
 </script>
 </html>

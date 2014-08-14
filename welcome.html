@@ -139,7 +139,7 @@
 
 								<div class="col-sm-6">
 									<label for="entry_1066742705" class="control-label">Phone</label>
-									<input placeholder="01234 567890" ype="text" class="form-control" name="entry.1066742705" id="entry_1066742705">
+									<input placeholder="01234 567890" ype="text" class="form-control" name="entry.1066742705" id="entry_1066742705" required>
 								</div>						
 							</div>
 
@@ -151,7 +151,7 @@
 
 								<div class="col-sm-6">
 									<label for="entry_1534924529" class="control-label">When can you attend viewings?</label>
-							 		<input placeholder="Mon-Fri 6:30-8" type="text" class="form-control" name="entry.1534924529" id="entry_1534924529">
+							 		<input placeholder="Mon-Fri 6:30-8" type="text" class="form-control" name="entry.1534924529" id="entry_1534924529" required>
 								</div>
 							</div>
 
@@ -174,7 +174,7 @@
 							<div class="form-group">
 								<div class="col-sm-6">
 									<label for="entry_935209026" class="control-label">Bedrooms</label>
-									<select class="form-control" name="entry.935209026" id="entry_935209026" required>
+									<select class="form-control" name="entry.935209026" id="entry_935209026">
 										<option value="No min">No min</option> <option value="Studio">Studio</option>
 										<option value="1+">1+</option> <option value="2+">2+</option>
 										<option value="3+">3+</option> <option value="4+">4+</option>
@@ -183,7 +183,7 @@
 
 								<div class="col-sm-6">
 									<label for="entry_1452370776" class="control-label">Max price (per month)</label>
-									<select class="form-control" name="entry.1452370776" id="entry_1452370776" required>
+									<select class="form-control" name="entry.1452370776" id="entry_1452370776">
 										<option value="0">No max</option>
 									    <option value="100" >&pound;100 pcm</option>
 									    <option value="200" >&pound;200 pcm</option>
@@ -233,7 +233,7 @@
 							<div class="form-group">
 								<div class="col-sm-6">
 									<label for="entry_562686023" class="control-label" >Property type</label>
-									<select class="form-control" name="entry.562686023" id="entry_562686023" required>
+									<select class="form-control" name="entry.562686023" id="entry_562686023">
 										<option value="Any">Any</option>
 										<option value="Houses">Houses</option>
 										<option value="Flats">Flats</option>
@@ -243,7 +243,7 @@
 								
 								<div class="col-sm-6">
 									<label for="entry_488055055" class="control-label">Furniture</label>
-									<select class="form-control" name="entry.488055055" id="entry_488055055" required>
+									<select class="form-control" name="entry.488055055" id="entry_488055055">
 										<option value="Show all">Show all</option> 
 										<option value="Furnished">Furnished</option>
 										<option value="Part furnished">Part furnished</option>
@@ -255,12 +255,12 @@
 							<div class="form-group">
 								<div class="col-sm-6">
 									<label for="entry_1052293236" class="control-label">Earliest move in date</label>
-									<input class="form-control" type="date" name="entry.1052293236" id="entry_1052293236" required>
+									<input class="form-control" type="date" name="entry.1052293236" id="entry_1052293236">
 								</div>
 
 								<div class="col-sm-6">
 									<label for="entry_79946928" class="control-label">Latest move in date</label>
-									<input class="form-control" type="date" name="entry.79946928" id="entry_79946928" required>
+									<input class="form-control" type="date" name="entry.79946928" id="entry_79946928">
 								</div>
 							</div>
 
@@ -311,16 +311,6 @@
 		});
 	});
 
-	var onPersonal = true;
-
-	$('#user-form').submit(function(event){
-		if (onPersonal) {
-			event.preventDefault();
-			onPersonal = false;
-			advanceForm();
-		}
-	});
-
 	function loginButtonPressed() {
 		$("#login-panel").toggle();
 	}
@@ -359,9 +349,8 @@
 		var phone = document.getElementById("entry_893950790").value;
 		var employer = document.getElementById("entry_1534924529").value;
 
-		if (!(fname == "" || sname == "" || email == "" || validateEmail(email) || password == "" || phone == "" || employer == "")) {
+		if (!(fname == "" || sname == "" || email == "" || !validateEmail(email) || password == "" || phone == "" || employer == "")) {
 			console.log("advancing");
-			pageIndex = 2;
 			$('.personal-info-form').addClass('animated bounceOutLeft');
 			$('.property-info-form').addClass('animated bounceInRight'); 
 			$('.property-info-form').css('display', 'block');
@@ -389,11 +378,6 @@
 		var code = e.keyCode || e.which; 
 		if (code == 13) {               
 			e.preventDefault();
-			if (pageIndex == 1) {
-				advancePersonalForm();
-			} else if (pageIndex == 2) {
-				advancePropertyForm();
-			}; 
 			return false;
 		}
 	});

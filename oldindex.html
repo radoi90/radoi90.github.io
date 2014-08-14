@@ -1,11 +1,12 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
+	<meta name="viewport" content="width=device-width, initial-scale=1.0;">
 	<title>HouseQuest - The only way to find your house in London</title>
-	
-	<!-- Latest compiled and minified CSS -->
+
 	<link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap.min.css">
-	<link rel="stylesheet" href="css/land.css">
+	<link href='http://fonts.googleapis.com/css?family=Montserrat' rel='stylesheet' type='text/css'>
+	<link rel="stylesheet" href="css/profile.css">
 
 	<!-- Latest compiled and minified JavaScript -->
 	<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
@@ -22,10 +23,31 @@
 	  ga('send', 'pageview');
 	</script>
 </head>
-<body class="landing-page">
-	<div class="header-unit center">
-		<h1 class="molot ">House<span class="Q">Q</span>uest</h1>
-	</div>
+<body>
+	<nav class="navbar navbar-default navbar-fixed-top" role="navigation">
+	  <div class="container-fluid">
+	    <!-- Brand and toggle get grouped for better mobile display -->
+	    <div class="navbar-header">
+    	  <a class="navbar-brand" href="#">House<span class="Q">Q</span>uest</a>
+	      <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1">
+	        <span class="sr-only">Toggle navigation</span>
+	        <span class="icon-bar"></span>
+	        <span class="icon-bar"></span>
+	        <span class="icon-bar"></span>
+	      </button>
+	    </div>
+
+	    <!-- Collect the nav links, forms, and other content for toggling -->
+	    <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+	      <ul class="nav navbar-nav">
+	      	<li><a class="title hidden-xs" href="#">House<span class="Q">Q</span>uest</a></li>
+	      	<li class="pull-right">
+	      		<button type="button" class="btn-flat btn-orange">Login</button>
+	      	</li>
+	      </ul>
+	    </div><!-- /.navbar-collapse -->
+	  </div><!-- /.container-fluid -->
+	</nav>
 
 	<div class="container">
 		<div class="row-fluid">
@@ -35,30 +57,33 @@
 			style="display:none;" onload="if(submitted)
 			{window.location='http://www.housequest.co.uk/thanks';}"></iframe>
 
-			<form class="form-horizontal" role="form" action="https://docs.google.com/forms/d/1RvngjKApBx-h7Z8r-xBIMWWK9H98T-oXke4fqxErvHU/formResponse" method="post"
+			<form class="form-horizontal" id="user-form" role="form" action="https://docs.google.com/forms/d/1RvngjKApBx-h7Z8r-xBIMWWK9H98T-oXke4fqxErvHU/formResponse" method="post"
 			target="hidden_iframe" onsubmit="submitted=true;">
-				<h3>Personal information</h3>
-				<div class="well" style="padding-bottom:2px;">
+				<div class="col-sm-8  col-sm-offset-2" id="personal-form">
+					<h2 class="text-center">Tell us about yourself</h2>
+
 					<div class="form-group">
-						<div class="col-sm-3">
+						<div class="col-sm-6">
 							<label for="entry_495151048" class="control-label">First name*</label>					
 							<input type="text" class="form-control" name="entry.495151048" id="entry_495151048" required>
 						</div>
-						
-						<div class="col-sm-3">
+
+						<div class="col-sm-6">
 							<label for="entry_1489655683" class="control-label">Last name*</label>
 							<input type="text" class="form-control" name="entry.1489655683" id="entry_1489655683" required>
-						</div>
-						
-						<div class="col-sm-3">
+						</div>	
+					</div>						
+
+					<div class="form-group">
+						<div class="col-sm-6">
 							<label for="entry_1866180113" class="control-label">Email*</label>
 							<input type="email" class="form-control" name="entry.1866180113" id="entry_1866180113" required>
 						</div>
-		
-						<div class="col-sm-3">
+
+						<div class="col-sm-6">
 							<label for="entry_1066742705" class="control-label">Phone</label>
 							<input type="text" class="form-control" name="entry.1066742705" id="entry_1066742705">
-						</div>
+						</div>						
 					</div>
 
 					<div class="form-group">
@@ -69,19 +94,20 @@
 
 						<div class="col-sm-6">
 							<label for="entry_1534924529" class="control-label">When are you available for viewings?</label>
-						 	<input type="text" class="form-control" name="entry.1534924529" id="entry_1534924529">
+					 		<input type="text" class="form-control" name="entry.1534924529" id="entry_1534924529">
 						</div>
 					</div>
+
+					<div class="form-group text-center">
+						<button type="submit" class="btn btn-flat btn-green">Next</button>
+					</div>
 					
-					<p id="disclaimer" class="help-block text-right">
-						Disclaimer: we don't disclose your contact information to any 3rd parties.
-					</p>
 				</div>
 
-				<h3>Property search</h3>
-				<div class="well">
+				<div class="col-sm-8  col-sm-offset-2 hidden" id="property-form">
+					<h2 class="text-center">What are you looking for?</h2>
 					<div class="form-group">
-						<div class="col-sm-3">
+						<div class="col-sm-6">
 							<label for="entry_935209026" class="control-label">Bedrooms</label>
 							<select class="form-control" name="entry.935209026" id="entry_935209026">
 								<option value="No min">No min</option> <option value="Studio">Studio</option>
@@ -90,7 +116,7 @@
 							</select>
 						</div>
 
-						<div class="col-sm-3">
+						<div class="col-sm-6">
 							<label for="entry_1452370776" class="control-label">Max price (per month)</label>
 							<select class="form-control" name="entry.1452370776" id="entry_1452370776">
 								<option value="0">No max</option>
@@ -137,8 +163,10 @@
 							    <option value="25000" >&pound;25,000 pcm</option>
 							</select>
 						</div>
+					</div>
 
-						<div class="col-sm-3">
+					<div class="form-group">
+						<div class="col-sm-6">
 							<label for="entry_562686023" class="control-label">Property type</label>
 							<select class="form-control" name="entry.562686023" id="entry_562686023">
 								<option value="Any">Any</option>
@@ -148,7 +176,7 @@
 						</div>
 
 						
-						<div class="col-sm-3">
+						<div class="col-sm-6">
 							<label for="entry_488055055" class="control-label">Furniture</label>
 							<select class="form-control" name="entry.488055055" id="entry_488055055">
 								<option value="Show all">Show all</option> 
@@ -160,35 +188,64 @@
 					</div>
 
 					<div class="form-group">
-						<div class="col-sm-4">
-							<label for="entry_922244654" class="control-label">Location (City, borough, street, postcode)</label>
-							<textarea class="form-control" name="entry.922244654" id="entry_922244654" rows="2" placeholder="E.g. Clerkenwell or NW1, near Northern line stations"></textarea>
-						</div>
-
-						<div class="col-sm-4">
-							<label for="entry_242663229" class="control-label">Other</label>
-							<textarea class="form-control" name="entry.242663229" id="entry_242663229" rows="2" placeholder="E.g. no council flats, bathtub a plus, off-street parking"></textarea>
-						</div>
-
-						<div class="col-sm-2">
+						<div class="col-sm-6">
 							<label for="entry_1052293236" class="control-label">Earliest move in date</label>
 							<input type="date" name="entry.1052293236" id="entry_1052293236">
 						</div>
 
-						<div class="col-sm-2">
+						<div class="col-sm-6">
 							<label for="entry_79946928" class="control-label">Latest move in date</label>
 							<input type="date" name="entry.79946928" id="entry_79946928">
 						</div>
 					</div>
-				</div>
 
-				<div class="center">
-					<button type="submit" class="btn btn-success">Contact a HouseQuest agent</button>
+					<div class="form-group">
+						<div class="col-sm-6">
+							<label for="entry_922244654" class="control-label">Location (City, borough, street, postcode)</label>
+							<textarea class="form-control" name="entry.922244654" id="entry_922244654" rows="2" placeholder="E.g. Clerkenwell or NW1, near Northern line stations"></textarea>
+						</div>
+
+						<div class="col-sm-6">
+							<label for="entry_242663229" class="control-label">Other</label>
+							<textarea class="form-control" name="entry.242663229" id="entry_242663229" rows="2" placeholder="E.g. no council flats, bathtub a plus, off-street parking"></textarea>
+						</div>
+					</div>
+
+					<div class="form-group text-center">
+						<button type="submit" class="btn btn-flat btn-green">Complete your profile</button>
+					</div>
 				</div>
 			</form>
 			<br><br>
 		
 		</div>	
 	</div>
+
+<script type="text/javascript">
+	$(function() {
+		$.vegas('overlay', {
+		 	src:'css/overlays/06.png',
+		 	opacity:1
+		});
+		$.vegas({
+			src:'img/bg.jpg'
+		});
+	});
+
+	var onPersonal = true;
+
+	$('#user-form').submit(function(event){
+		if (onPersonal) {
+			event.preventDefault();
+			onPersonal = false;
+			advanceForm();
+		}
+	});
+
+	function advanceForm() {
+		$("#personal-form").addClass("hidden");
+		$("#property-form").removeClass("hidden");
+	}
+</script>
 </body>
 </html>

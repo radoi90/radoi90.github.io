@@ -4,17 +4,17 @@
     <meta charset="utf-8">
     <title>HouseQuest App</title>
     <link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap.min.css">
-    <link href="css/properties.css" media="all" rel="stylesheet" type="text/css"/>
     <link href="http://maxcdn.bootstrapcdn.com/font-awesome/4.1.0/css/font-awesome.min.css" rel="stylesheet">
+    <link href="css/properties.css" media="all" rel="stylesheet" type="text/css"/>
+    <link rel="stylesheet" href="css/animate.css">
 
     <script src="http://code.jquery.com/jquery-2.0.3.min.js"></script>
     <script src="js/underscore.js"></script>
     <script src="js/json2.js"></script>
     <script src="http://www.parsecdn.com/js/parse-1.2.13.min.js"></script>
-    <script src="https://maps.googleapis.com/maps/api/js?v=3.exp"></script>
     <script src="http://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/js/bootstrap.min.js"></script>
     <script src="js/properties.js"></script>
-
+    <script src="https://maps.googleapis.com/maps/api/js?v=3.exp"></script>
     <meta name="viewport" content="width=device-width, initial-scale=1">
 
     <script>
@@ -25,6 +25,15 @@
 
       ga('create', 'UA-37859939-3', 'auto');
       ga('send', 'pageview');
+
+      $(document).ready(function () {
+        initializeMap();
+      // var mapOptions = {
+      //           center: new google.maps.LatLng(-34.397, 150.644),
+      //           zoom: 8,
+      // };
+      // var map = new google.maps.Map(document.getElementById("map-canvas"), mapOptions);
+});
     </script>
   </head>
   <body>
@@ -58,21 +67,21 @@
     </nav>
 
     <div id="app-container"> 
-      <div class="" id="split-screen">
-        <div class="" id="map-canvas">lolsauce</div>  
-        <div class="" id="list-view">
+      <div id="split-screen">
+        <div id="map-canvas"></div>
+        <div id="list-view">
           <!-- List header  -->
           <div id="list-header">
             <div class="row">
-              <div class="col-md-4" id="name-title">Emil's Feed</div>  
-              <div class="col-md-6 pull-right" id="toggles">
+              <div class="col-md-6" id="name-title">Christopher's Feed</div>  
+              <div class="pull-right" id="toggles">
                 <button class="btn active" id="btn-active">Active</button>
                 <button class="btn" id="btn-viewings">Viewings</button>
                 <button class="btn" id="btn-starred" onclick=>
-                  <img src="./img/star-inactive.png" width="50%" height="50%"/>
+                  <i class="fa fa-heart"></i>  
                 </button>
                 <button class="btn" id="btn-hidden">
-                  <img src="./img/cross.png" width="50%" height="50%"/>
+                  <i class="fa fa-times"></i>
                 </button>
               </div>  
             </div>
@@ -83,50 +92,36 @@
               <li class="property-box">
                 <div class="property">
                   <div class="property-container">
-                     <div class="heart">
-                      <i class="fa fa-heart-o fa-3x"></i>
-                    </div>
-                    <div class="property-info">
-                        <div class="container">
-                          <div class="row property-details">
-                            <div class="col-md-8 property-rooms">
-                              lol
-                            </div>
-                            <div class="col-md-4 property-price">
-                              £2000.0
-                            </div>
-                          </div>
-                        </div>
-                    </div> 
-                  </div>
-                </div>
-                <div class="property-footer">
-                      <div class="">
-                        <div class="">
-                          <div class="property-address">
-                            Islington, N1
-                          </div>
-                          <div class="view-button">
-                            <button class="btn btn-flat btn-green btn-view">
-                              Arrange viewing
-                            </button>
-                          </div>
-                        </div>
+                    <div class="button-header">
+                      <div class="heart">
+                        <i class="fa fa-heart-o fa-2x"></i>
                       </div>
-                    </div> 
-              </li><li class="property-box">
-                <div class="property">
-                  <div class="property-container">
-                    <div class="heart">
-                      <i class="fa fa-heart-o fa-3x"></i>
+                      <div class="remove">
+                        <i class="fa fa-times fa-2x"></i>
+                      </div>
                     </div>
                     <div class="property-info">
-                        <div class="container">
-                          <div class="row property-details">
-                            <div class="col-md-8 property-rooms">
-                              lol
+                        <div class="">
+                          <div class="property-details">
+                            <div class="property-rooms">
+                              <div class="">
+                                <div class="property-rooms-row">
+                                  <div class="col-room">
+                                    <img src="./img/beds.png" width="30px" height="20px" class="beds"/>
+                                    <div class="bed-num">2</div>
+                                  </div>
+                                  <div class="col-room">
+                                    <img src="./img/baths.png" width="32px" height="20px" class="baths"/>
+                                    <div class="bath-num">1</div>
+                                  </div>
+                                  <div class="col-room col-room-right">
+                                    <img src="./img/sofa.png" width="34px" height="15px" class="sofa"/>
+                                    <div class="lounge-num">1</div>
+                                  </div>
+                                </div>
+                              </div>
                             </div>
-                            <div class="col-md-4 property-price">
+                            <div class=" property-price">
                               £2000.0
                             </div>
                           </div>
@@ -138,7 +133,8 @@
                       <div class="">
                         <div class="">
                           <div class="property-address">
-                            Islington, N1
+                            Islington, N1<br/>
+                            <span class="date">Added 5 days ago</span> 
                           </div>
                           <div class="view-button">
                             <button class="btn btn-flat btn-green btn-view">
@@ -149,38 +145,7 @@
                       </div>
                     </div> 
               </li>
-              <li class="property-box">
-                <div class="property">
-                  <div class="property-container">
-                    <div class="property-info">
-                        <div class="container">
-                          <div class="row property-details">
-                            <div class="col-md-8 property-rooms">
-                              lol
-                            </div>
-                            <div class="col-md-4 property-price">
-                              £2000.0
-                            </div>
-                          </div>
-                        </div>
-                    </div> 
-                  </div>
-                </div>
-                <div class="property-footer">
-                      <div class="">
-                        <div class="">
-                          <div class="property-address">
-                            Islington, N1
-                          </div>
-                          <div class="view-button">
-                            <button class="btn btn-flat btn-green btn-view">
-                              Arrange viewing
-                            </button>
-                          </div>
-                        </div>
-                      </div>
-                    </div> 
-              </li>
+              
             </ul>
           </div>  
         </div>
@@ -255,35 +220,6 @@
           </div>
         </div>
 
-        <script>
-          $(function() {
-
-            // grab the initial top offset of the navigation 
-            var sticky_navigation_offset_top = $('#map-canvas').offset().top;
-            
-            // our function that decides weather the navigation bar should have "fixed" css position or not.
-            var sticky_navigation = function(){
-              var scroll_top = $(window).scrollTop(); // our current vertical position from the top
-              
-              // if we've scrolled more than the navigation, change its position to fixed to stick to top, otherwise change it back to relative
-              if (scroll_top > sticky_navigation_offset_top) { 
-                var width = $("#map-col").width(), left = $("#map-col").offset().left;
-                $('#map-canvas').css({ 'position': 'fixed', 'top':0, 'left':left+15, 'width': width });
-              } else {
-                $('#map-canvas').css({ 'position': 'relative', 'left':0 }); 
-              }   
-            };
-            
-            // run our function on load
-            sticky_navigation();
-            
-            // and run it again every time you scroll
-            $(window).scroll(function() {
-               sticky_navigation();
-            });
-            
-          });
-        </script>
       </script>
 
       <script type="text/template" id="item-template">
@@ -363,13 +299,25 @@
       <script>
       $('.heart').hover(
         function() {
-          $(this).html("<i class=\"fa fa-heart fa-3x\"></i>");
+          $(this).css({"color" : "white"});
         },
         function() {
-          $(this).html("<i class=\"fa fa-heart-o fa-3x\"></i>");
+          $(this).css({"color": "rgba(44, 62, 80, 1"});
+        }
+      );
+
+      $('.heart').click(
+        function() {
+          $(this).css({"color": "#f1c40f"});
         }
       );
       
+      $('.remove').click(
+        function() {
+          $(this).css({"color": "#f1c40f"});
+        }
+      );
+
         </script>
     </body>
 

@@ -151,7 +151,7 @@ ul.nav a:hover { color: #fff !important; }
 
 #map-canvas {
     height: 100%;    
-    width: 70%;
+    width: calc(100% - 490px);
 }
 
 /* List */
@@ -162,7 +162,7 @@ ul.nav a:hover { color: #fff !important; }
     bottom: 0;
     padding: 0;
     height: 100%;
-    width: 30%;
+    width: 490px;
 }
 
 #list {
@@ -185,13 +185,13 @@ ul.nav a:hover { color: #fff !important; }
     font-family: AvenirNext LT Pro Demi;
     font-size: 18px;
     padding: 15px;
-    margin-left: 10px;
+    padding-left: 34px;
 }
 
 #list-view #list-header #toggles {
     font-family: AvenirNext LT Pro Regular;
     font-size: 10px;
-    padding: 15px;
+    padding-top: 10px;
     text-align: right;
     margin-right: 20px;
 }
@@ -200,6 +200,7 @@ ul.nav a:hover { color: #fff !important; }
     /*padding-top: 0;*/
     border:none !important;
     box-shadow:none !important;
+    padding: 5px;
 }
 
 .active {
@@ -212,18 +213,22 @@ ul.nav a:hover { color: #fff !important; }
 }
 
 #btn-active {
+    padding-right:10px;
 
 }
 
 #btn-viewings {
+    padding-right:10px;
 
 }
 
 #btn-starred {
+    padding-right:10px;
 
 }
 
 #btn-hidden {
+    padding-right:30px;
 
 }
 
@@ -251,7 +256,7 @@ ul.nav a:hover { color: #fff !important; }
     background: #FFFFFF;
     margin-bottom: 10px;
     border-radius: 5px;
-    background-image: url("http://lc.zoocdn.com/bdcbdc86db1d64e87545693ded3796add811e170.jpg");
+    background-image: url(" http://lc.zoocdn.com/1f507710b510d111db49df77245b2921c6c564a6.jpg");
     background-size: cover;
     position: relative;
 }
@@ -260,24 +265,43 @@ ul.nav a:hover { color: #fff !important; }
     position: absolute;
     width: 100%;
     bottom: 0;
-    height: 40px;
-    background-color: white;
-    background: -moz-linear-gradient(left,  rgba(236,240,241,0) 0%, rgba(44,62,80,1) 100%); /* FF3.6+ */
-    background: -webkit-gradient(linear, left top, right top, color-stop(0%,rgba(236,240,241,0)), color-stop(100%,rgba(44,62,80,1))); /* Chrome,Safari4+ */
-    background: -webkit-linear-gradient(left,  rgba(236,240,241,0) 0%,rgba(44,62,80,1) 100%); /* Chrome10+,Safari5.1+ */
-    background: -o-linear-gradient(left,  rgba(236,240,241,0) 0%,rgba(44,62,80,1) 100%); /* Opera 11.10+ */
-    background: -ms-linear-gradient(left,  rgba(236,240,241,0) 0%,rgba(44,62,80,1) 100%); /* IE10+ */
-    background: linear-gradient(to right,  rgba(236,240,241,0) 0%,rgba(44,62,80,1) 100%); /* W3C */
-    filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#00ecf0f1', endColorstr='#2c3e50',GradientType=1 ); /* IE6-9 */
+    height: 60px;
+    padding-top:20px;
+    /*background-color: rgba(44,62,80,);*/
+    background: -moz-linear-gradient(top,  rgba(52,73,94,0) 0%, rgba(44,62,80,1) 100%); /* FF3.6+ */
+background: -webkit-gradient(linear, left top, left bottom, color-stop(0%,rgba(52,73,94,0)), color-stop(100%,rgba(44,62,80,1))); /* Chrome,Safari4+ */
+background: -webkit-linear-gradient(top,  rgba(52,73,94,0) 0%,rgba(44,62,80,1) 100%); /* Chrome10+,Safari5.1+ */
+background: -o-linear-gradient(top,  rgba(52,73,94,0) 0%,rgba(44,62,80,1) 100%); /* Opera 11.10+ */
+background: -ms-linear-gradient(top,  rgba(52,73,94,0) 0%,rgba(44,62,80,1) 100%); /* IE10+ */
+background: linear-gradient(to bottom,  rgba(52,73,94,0) 0%,rgba(44,62,80,1) 100%); /* W3C */
+filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#0034495e', endColorstr='#2c3e50',GradientType=0 ); /* IE6-9 */
 
 }
 
+.button-header {
+    width: 100%;
+}
+
 .heart {
-    color: rgba(44, 62, 80, 0.5);
-    float:right;
+    color: rgba(44, 62, 80, 1);
     height: 40px;
     width: 40px;
     margin: 10px;
+    float:left;
+}
+
+.heart:hover {
+    cursor: pointer;
+}
+
+.remove {
+    float:right;
+    color: rgba(44, 62, 80, 1);
+    margin: 8px;
+}
+
+.remove:hover {
+    cursor: pointer;
 }
 
 .property-details {
@@ -286,14 +310,12 @@ ul.nav a:hover { color: #fff !important; }
 }
 
 .property-price {
-    padding-top: 4px;
+    padding-top: 6px;
+    padding-right: 0;
     text-align: right;
     font-family: AvenirNext LT Pro Demi;
-    font-size: 25px;
-    color: white;
-    line-height: 27px;
-    font-weight: bold;
-    /* £2000: */
+    font-size: 30px;
+    float:right;
 }
 
 .property-footer {
@@ -301,7 +323,7 @@ ul.nav a:hover { color: #fff !important; }
 }
 
 .property-footer .property-address {
-    padding-top: 14px;
+    padding-top: 8px;
     margin:0;
     color: #34495E;
     font-family: AvenirNext LT Pro Medium;
@@ -400,6 +422,18 @@ ul.nav a:hover { color: #fff !important; }
 .btn-view {
     font-size: 16px;   
     width: 150px;
+}
+
+.btn-view-pend {
+    font-size: 16px;   
+    width: 150px;
+    background-color: #e67e22;
+}
+
+.btn-view-confirm {
+    font-size: 16px;   
+    width: 150px;
+    background-color: #f1c40f;
 }
 
 button {
@@ -549,6 +583,10 @@ body .container {
     position: relative;
     z-index: 2;
     border-top: 1px dotted #adadad;
+}
+
+.date {
+    font-size: 10px;
 }
 
 label[for='view-all'] {
@@ -959,6 +997,31 @@ a {
     outline: none;
 }
 
+.col-room {
+    padding-left: 0px;
+    /*padding-bottom: 4400px;*/
+    float:left;
+    width:72px;
+    margin-right: 10px;
+}
+
+.col-room-right {
+    margin-right: 0px;
+}
+
+.property-rooms {
+    padding-left: 0;
+    margin-left: 0;
+    font-family: AvenirNext LT Pro Medium;
+    font-size: 22px;
+    width: 250px;
+}
+
+.property-rooms-row {
+    margin-left: 10px;
+    margin-top: 2px;
+}
+
 .btn-text {
     color: white;
 }
@@ -967,4 +1030,38 @@ a {
     color: #f1c40f;
 }
 
+.beds {
+    margin-top: 4px;
+}
 
+.baths {
+    margin-top: 3px;
+}
+
+.sofa {
+    margin-top: 6px;
+}
+
+.bed-num {
+    /*padding-top:10px;*/
+    float: right;
+    padding: 6px;
+    padding-right:12px;
+}
+
+.bath-num {
+    /*padding-top: 12px;*/
+    float: right;
+    padding: 6px;
+    padding-right:12px;
+}
+
+.lounge-num {
+    float:right;
+    padding: 6px;
+    padding-right:12px;
+}
+
+@media(max-width:993px){
+        
+}

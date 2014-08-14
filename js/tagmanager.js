@@ -78,7 +78,7 @@
             }
 
             if (opts.CapitalizeFirstLetter && tag.length > 1) {
-                tag = tag.charAt(0).toUpperCase() + tag.slice(1).toLowerCase();
+                tag = tag.charAt(0).toUpperCase() + tag.slice(1);
             }
 
             // call the validator (if any) and do not let the tag pass if invalid
@@ -421,7 +421,7 @@
                 $self.on('keydown', function(e) {
                     // disable ENTER
                     if (e.which === 13) {
-                        if (opts.preventSubmitOnEnter) {
+                        if (opts.preventSubmitOnEnter && $(this).val().length > 0) {
                             privateMethods.killEvent(e);
                         }
                     }

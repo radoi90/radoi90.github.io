@@ -335,10 +335,14 @@
 		console.log("Checking locations");
 		var location = $("input[name='entry_922244654']");
 
-		var input = $(".tm-input").val()
-		console.log(input)
+		var input = $(".tm-input").val();
+
 		if (input) {
-			location.val(location.val() + ", " + input);
+			if (location.val().length > 0) {
+				location.val(location.val() + ", ");
+			}
+
+			location.val(location.val() + input);
 			console.log(location.val())
 		};
 

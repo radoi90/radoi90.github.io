@@ -241,7 +241,6 @@
 									<input class="form-control" type="date" name="entry.1052293236" id="signup-date_min" >
 								</div>
 
-								
 								<div class="col-sm-6">
 									<label for="signup-date_max" class="control-label">
 										Latest move in date
@@ -298,14 +297,27 @@
 <script type="text/template" id="login-template">
 	<form class="login-form">
   		<div class="error" style="display:none"></div>
-        <div class="success" style="display:none"></div>
-		<label class="login-label">Email</label>		
-		<input placeholder="Email" type="email" id="login-email" class="login-control">
-		<label class="login-label">Password</label>		
-		<input placeholder="Password" type="password" id="login-password" class="login-control">
+		<input type="email" id="login-email" class="login-control" placeholder="Email">
+		<input type="password" id="login-password" class="login-control" placeholder="Password">
 		<button id="btn-login" class="btn btn-flat btn-green">
-			Login
+			Log in
 		</button>
+		<a class="reset-password">Trouble logging in?</a>
+	</form>
+</script>
+
+<script type="text/template" id="resetPassword-template">
+	<form class="login-form">
+		<div class="reset-message">
+			Type in the email you used to sign up and we&#39;ll send you instructions to reset your password.
+		</div>
+  		<div class="success" style="display:none"></div>
+  		<div class="error" style="display:none"></div>
+		<input type="email" id="login-email" class="login-control" placeholder="Email">
+		<button id="btn-login" class="btn btn-flat btn-green">
+			Send
+		</button>
+		<a class="reset-password">Back to log in</a>
 	</form>
 </script>
 
@@ -315,6 +327,10 @@
 
 	function loginButtonPressed() {
 		$("#options-panel").toggle();
+	}
+
+	function feedButtonPressed() {
+		window.location.href = 'feed.html';
 	}
 
 	function advanceLocationForm() {
@@ -447,7 +463,7 @@
 		    el: "#options-panel",
 		    
 		    initialize: function() {
-		      _.bindAll(this, "logIn");
+		      _.bindAll(this, "logIn", "resetPassword");
 		      this.render();
 		    },
 
@@ -461,9 +477,8 @@
 		          window.location.href = 'feed.html';
 		        },
 
-		        error: function(user, error) {
-		          self.$(".login-form .success").hide();  
-		          self.$(".login-form .error").html("Invalid email or password. Please try again. Or, <a class='reset-password'>reset password</a>.").show();
+		        error: function(user, error) {  
+		          self.$(".login-form .error").html("Invalid email or password, please try again.").show();
 		          self.$(".login-form button").removeAttr("disabled");
 		        }
 		      });
@@ -474,23 +489,11 @@
 		    },
 
 		    resetPassword: function() {
-		      var email = this.$("#login-email").val();
-
-		      Parse.User.requestPasswordReset(email, {
-		        success: function() {
-		          self.$(".login-form .success").html("We've sent you a password reset email to " + email).show();
-		          self.$(".login-form .error").hide();
-		        },
-		        error: function(error) {
-		          self.$(".login-form .success").hide();
-		          if(email.length > 0) {
-		            self.$(".login-form .error").html("There is no user assigned to " + email).show();
-		          } else {
-		            self.$(".login-form .error").html("To reset your password enter the email you used to sign up.").show();
-		          }          
-		          self.$(".login-form button").removeAttr("disabled");
-		        }
-		      });
+		    	var self = this;
+		    	
+		    	new ResetPasswordView();
+		    	self.undelegateEvents();
+          		delete self;
 		    },
 
 		    render: function() {
@@ -564,8 +567,11 @@
 
 			render: function() {
 			  if (Parse.User.current()) {
-			    console.log(Parse.User.current());
+			  	$("button.btn-orange").html('<span class="user-icon glyphicon glyphicon-user"></span>My feed');
+			    $("#nav-button").attr("onclick","feedButtonPressed()");
+			    $("#nav-button-mini").attr("onclick","feedButtonPressed()");
 			  } else {
+			  	$("button.btn-orange").html("Log in");
 			    new LogInView();
 			  }
 			}

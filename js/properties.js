@@ -76,9 +76,9 @@ function initializeMap() {
   var control = document.getElementById('transit-wpr');
   map.controls[google.maps.ControlPosition.TOP_RIGHT].push(control);
 
-  google.maps.event.addDomListener(control, 'click', function() {
-    transitLayer.setMap(transitLayer.getMap() ? null : map);
-  });
+  //google.maps.event.addDomListener(control, 'click', function() {
+  //  transitLayer.setMap(transitLayer.getMap() ? null : map);
+  //});
 };
 
 // Add a marker to the map and push to the array.
@@ -153,7 +153,7 @@ $(function() {
       content: "empty listing",
       hidden: false,
       starred: false,
-      viewed: false,
+      booked: false,
     },
 
     // Ensure that each property created has `content`.
@@ -175,10 +175,10 @@ $(function() {
       ga('send', 'propertyClick', 'hide', Parse.User.current(), this.get("content").details_url);
     },
 
-    // Toggle the `starred` state of this property item.
-    view: function() {
-        this.save({viewed: true});
-        ga('send', 'propertyClick', 'view', Parse.User.current(), this.get("content").details_url);
+    // Toggle the `booked` state of this property item.
+    book: function() {
+        this.save({booked: true});
+        ga('send', 'propertyClick', 'book', Parse.User.current(), this.get("content").details_url);
         var listing = this.get("content");
         $("#viewing-number").val(listing.agent_phone);
         $("#viewing-address").val(listing.displayable_address);
@@ -205,14 +205,9 @@ $(function() {
     // Reference to this collection's model.
     model: Property,
 
-    // Filter down the list of all property items that have been viewed.
-    viewed: function() {
-      return this.filter(function(property){ return property.get('viewed'); });
-    },
-
-    // Filter down the list to only property items that are still not viewed.
-    unviewed: function() {
-      return this.without.apply(this, this.viewed());
+    // Filter down the list of all property items that have been booked.
+    booked: function() {
+      return this.filter(function(property){ return property.get('booked'); });
     },
 
      // Filter down the list of all property items that are hidden.
@@ -221,7 +216,7 @@ $(function() {
     },
 
     // Filter down the list to only property items that are not hidden.
-    potential: function() {
+    active: function() {
       return this.without.apply(this, this.hidden());
     },
 
@@ -254,7 +249,7 @@ $(function() {
 
     // The DOM events specific to an item.
     events: {
-      "click .markview"          : "toggleViewed",
+      "click .book"              : "toggleBooked",
       "click .star"              : "toggleStar",
       "click .hide"              : "toggleHidden",
       "mouseleave .listing"      : "highlight"
@@ -296,9 +291,9 @@ $(function() {
       $(this.el).remove();
     },
 
-    // Toggle the `"viewed"` state of the model.
-    toggleViewed: function() {
-      this.model.view();
+    // Toggle the `"booked"` state of the model.
+    toggleBooked: function() {
+      this.model.book();
     },
 
     highlight: function() {
@@ -313,14 +308,11 @@ $(function() {
   // The main view that lets a user manage their property items
   var ManagePropertiesView = Parse.View.extend({
 
-    // Our template for the line of statistics at the bottom of the app.
-    statsTemplate: _.template($('#stats-template').html()),
-
     // Delegated events for creating new items, and clearing completed ones.
     events: {
       "keypress #new-property":  "createOnEnter",
-      "click .log-out": "logOut",
-      "click ul#filters a": "selectFilter"
+      "click button.btn-logout": "logOut",
+      "click div#filters button": "selectFilter"
     },
 
     el: ".content",
@@ -330,13 +322,10 @@ $(function() {
     // loading any preexisting properties that might be saved to Parse.
     initialize: function() {
       var self = this;
-
       _.bindAll(this, 'addOne', 'addAll', 'addActive', 'addSome', 'render', 'logOut', 'createOnEnter');
 
       // Main property management template
       this.$el.html(_.template($("#manage-properties-template").html()));
-      
-      this.input = this.$("#new-property");
 
       // Create our collection of Properties
       this.properties = new PropertyList;
@@ -359,6 +348,7 @@ $(function() {
 
     // Logs out the user and shows the login view
     logOut: function(e) {
+      console.log("point");
       Parse.User.logOut();
       new LogInView();
       this.undelegateEvents();
@@ -368,24 +358,14 @@ $(function() {
     // Re-rendering the App just means refreshing the statistics -- the rest
     // of the app doesn't change.
     render: function() {
-      var starred = this.properties.starred().length;
-      var hidden = this.properties.hidden().length;
-      var viewed = this.properties.viewed().length;
-
-      this.$('#property-stats').html(this.statsTemplate({
-        total:      this.properties.length,
-        starred:    starred, 
-        hidden:     hidden,
-        viewed:   viewed
-      }));
-
       this.delegateEvents();
     },
 
     // Filters the list based on which type of filter is selected
     selectFilter: function(e) {
-      var el = $(e.target.parentElement);
+      var el = $(e.target);
       var filterValue = el.attr("id");
+      
       state.set({filter: filterValue});
       Parse.history.navigate(filterValue);
     },
@@ -393,16 +373,16 @@ $(function() {
     filter: function() {
       var filterValue = state.get("filter");
       ga('send', 'filter', filterValue, Parse.User.current());
-      this.$("ul#filters li").removeClass("selected");
-      this.$("ul#filters li#" + filterValue).addClass("selected");
+      this.$("div#filters button").removeClass("selected");
+      this.$("div#filters button#" + filterValue).addClass("selected");
       if (filterValue === "all") {
         this.addAll();
       } else if (filterValue === "starred") {
         this.addSome(function(item) { return item.get('starred') });
       } else if (filterValue === "hidden") {
         this.addSome(function(item) { return item.get('hidden') });
-      } else if (filterValue === "viewed") {
-        this.addSome(function(item) { return item.get('viewed') });
+      } else if (filterValue === "booked") {
+        this.addSome(function(item) { return item.get('booked') });
       } else {
         this.addSome(function(item) { return !item.get('hidden') });
       }
@@ -410,8 +390,8 @@ $(function() {
 
     // Resets the filters to display all properties
     resetFilters: function() {
-      this.$("ul#filters li").removeClass("selected");
-      this.$("ul#filters li#active").addClass("selected");
+      this.$("div#filters button").removeClass("selected");
+      this.$("div#filters button#active").addClass("selected");
       this.addSome(function(item) { return !item.get('hidden') });
     },
 
@@ -467,7 +447,7 @@ $(function() {
           content:         data.listing[0],
           hidden:          false,
           starred:         false,
-          viewed:          false,
+          booked:          false,
           user:            Parse.User.current(),
           ACL:             propACL
         });
@@ -476,7 +456,7 @@ $(function() {
       });
     }
   });
-
+/*
   var LogInView = Parse.View.extend({
     events: {
       "submit form.login-form": "logIn",
@@ -570,12 +550,12 @@ $(function() {
       this.delegateEvents();
     }
   });
-
+*/
   // The main view for the app
   var AppView = Parse.View.extend({
     // Instead of generating a new element, bind to the existing skeleton of
     // the App already present in the HTML.
-    el: $("#propertyapp"),
+    el: $("#app-container"),
 
     initialize: function() {
       this.render();
@@ -585,7 +565,7 @@ $(function() {
       if (Parse.User.current()) {
         new ManagePropertiesView();
       } else {
-        new LogInView();
+        //new LogInView();
       }
     }
   });
@@ -596,7 +576,7 @@ $(function() {
       "all": "all",
       "starred": "starred",
       "hidden": "hidden",
-      "viewed": "viewed"
+      "booked": "booked"
     },
 
     initialize: function(options) {
@@ -619,8 +599,8 @@ $(function() {
       state.set({ filter: "hidden" });
     },
 
-    viewed: function() {
-      state.set({ filter: "viewed" });
+    booked: function() {
+      state.set({ filter: "booked" });
     }
   });
 

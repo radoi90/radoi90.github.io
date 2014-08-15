@@ -40,21 +40,20 @@
 
     <!-- Property App Interface -->
     <nav class="navbar navbar-default" role="navigation">
-      <div class="">
 
         <!-- Brand and toggle get grouped for better mobile display -->
         <div class="navbar-header">
           <div class="navbar-brand">House<span class="Q">Q</span>uest</div>
-            <button type="button" class="btn btn-text" id="btn-logout">Logout</button>
+            <button type="button" class="btn btn-text btn-logout">Logout</button>
           </div>
-        </div>
+        </div>  
 
         <!-- Collect the nav links, forms, and other content for toggling -->
         <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
           <ul class="nav navbar-nav">
             <li><a class="title hidden-xs" href="#">House<span class="Q">Q</span>uest</a></li>
             <li class="pull-right">
-              <button type="button" class="btn btn-text" id="btn-logout">Logout</button>
+              <button type="button" class="btn btn-text btn-logout">Logout</button>
             </li>
           </ul>
         </div><!-- /.navbar-collapse -->
@@ -64,95 +63,11 @@
     <div id="app-container"> 
       <div id="split-screen">
         <div id="map-canvas"></div>
-        <div id="list-view">
-          <!-- List header  -->
-          <div id="list-header">
-            <div >
-              <div  id="name-title">Christopher's Feed</div>  
-              <div id="toggles">
-                <button class="btn active" id="btn-active">Active</button>
-                <button class="btn" id="btn-viewings">Viewings</button>
-                <button class="btn" id="btn-starred" onclick=>
-                  <i class="fa fa-heart"></i>  
-                </button>
-                <button class="btn" id="btn-hidden">
-                  <i class="fa fa-times"></i>
-                </button>
-              </div>  
-            </div>
-          </div>
+        <div id="list-view" class="content">
 
-          <div id="list">
-            <ul id="properties-list">
-              <li class="property-box">
-                <div class="property">
-                  <div class="property-container">
-                    <div class="button-header">
-                      <div class="heart">
-                        <i class="fa fa-heart-o fa-2x"></i>
-                      </div>
-                      <div class="remove">
-                        <i class="fa fa-times fa-2x"></i>
-                      </div>
-                    </div>
-                    <div class="property-info">
-                        <div class="">
-                          <div class="property-details">
-                            <div class="property-rooms">
-                              <div class="">
-                                <div class="property-rooms-row">
-                                  <div class="col-room">
-                                    <img src="./img/beds.png" width="30px" height="20px" class="beds"/>
-                                    <div class="bed-num">2</div>
-                                  </div>
-                                  <div class="col-room">
-                                    <img src="./img/baths.png" width="32px" height="20px" class="baths"/>
-                                    <div class="bath-num">1</div>
-                                  </div>
-                                  <div class="col-room col-room-right">
-                                    <img src="./img/sofa.png" width="34px" height="15px" class="sofa"/>
-                                    <div class="lounge-num">1</div>
-                                  </div>
-                                </div>
-                              </div>
-                            </div>
-                            <div class=" property-price">
-                              £2000.0
-                            </div>
-                          </div>
-                        </div>
-                    </div> 
-                  </div>
-                </div>
-                <div class="property-footer">
-                      <div class="">
-                        <div class="">
-                          <div class="property-address">
-                            Islington, N1<br/>
-                            <span class="date">Added 5 days ago</span> 
-                          </div>
-                          <div class="view-button">
-                            <button class="btn btn-flat btn-green btn-view">
-                              Arrange viewing
-                            </button>
-                          </div>
-                        </div>
-                      </div>
-                    </div> 
-              </li>
-              
-            </ul>
-          </div>  
         </div>
-        
-
-        <!-- <div id="propertyapp" class="col-sm-12"> -->
-
-          <!-- <div class="content"> -->
-
-        <!-- </div> -->
-        <!-- </div> -->
       </div>
+    </div>
 
       <!-- Templates -->
 
@@ -180,44 +95,85 @@
       </script>
 
       <script type="text/template" id="manage-properties-template">
-        <div id="user-info">
-          Signed in as <%= Parse.User.current().escape("username") %> (<a href="#" class="log-out">Log out</a>)
-        </div>
-
-        <div class="section">
-
-          <header id="header">
-            <div class="row">
-              <div class="col-sm-5 col-lg-7">
-                <input id="new-property" placeholder="Add a Zoopla link" type="text" />
-              </div>
-              <div class="col-sm-7 col-lg-5">
-                <div id="property-stats"></div>
-              </div>
-            </div>
-          </header>
-
-          <div class="row-fluid" id="main">          
-            <div id="map-col" class="col-sm-8 col-md-6 col-lg-7 hidden-xs">
-              <div id="transit-wpr" style="padding-top: 6px;">
-                <button class="btn" id="transit">
-                  <img src='./img/transit-layer.png' width="50%" height="50%" id="transit" />
-                </button>
-              </div>
-              <div id="map-canvas"></div>
-            </div>
-
-            <div class="col-sm-4 col-md-6 col-lg-5">
-              <ul id="property-list">
-                <img src='img/spinner.gif' class='spinner' />
-              </ul>
-            </div>
+        <!-- List header  -->
+        <div id="list-header">
+          <div >
+            <div  id="name-title"><%= Parse.User.current().attributes.first_name%>&#39;s Feed</div>  
+            <div id="filters">
+              <button class="btn selected" id="active">Active</button>
+              <button class="btn" id="booked">Viewings</button>
+              <button class="btn" id="starred">
+                <i class="fa fa-heart"></i>  
+              </button>
+              <button class="btn" id="hidden">
+                <i class="fa fa-times"></i>
+              </button>
+            </div>  
           </div>
         </div>
 
+        <div id="list">
+          <ul id="property-list">            
+          </ul>
+        </div>  
       </script>
 
       <script type="text/template" id="item-template">
+        <li class="property-box">
+          <div class="property" style="background-image: url('<%= _.escape(content.image_url)%>')">
+            <div class="property-container">
+              <div class="button-header">
+                <div class="heart">
+                  <i class="fa fa-heart-o fa-2x"></i>
+                </div>
+                <div class="remove">
+                  <i class="fa fa-times fa-2x"></i>
+                </div>
+              </div>
+              <div class="property-info">
+                  <div class="">
+                    <div class="property-details">
+                      <div class="property-rooms">
+                        <div class="">
+                          <div class="property-rooms-row">
+                            <div class="col-room">
+                              <img src="./img/beds.png" width="30px" height="20px" class="beds"/>
+                              <div class="bed-num"><%=_.escape(content.num_bedrooms) > 0 ? _.escape(content.num_bedrooms) : 'STUDIO'%></div>
+                            </div>
+                            <div class="col-room">
+                              <img src="./img/baths.png" width="32px" height="20px" class="baths"/>
+                              <div class="bath-num"><%=_.escape(content.num_bathrooms) > 0 ? _.escape(content.num_bathrooms) : 1%></div>
+                            </div>
+                            <div class="col-room col-room-right">
+                              <img src="./img/sofa.png" width="34px" height="15px" class="sofa"/>
+                              <div class="lounge-num"><%=_.escape(content.num_recepts)%></div>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                      <div class="property-price">
+                        £<%=_.escape(content.rental_prices.per_month)%>
+                      </div>
+                    </div>
+                  </div>
+              </div> 
+            </div>
+          </div>
+          <div class="property-footer">
+            <div class="property-address">
+              <%= _.escape(content.displayable_address) %><br/>
+              <span class="date">Added <%= _.escape(dateDiff(content.last_published_date)) %></span> 
+            </div>
+            <div class="view-button">
+              <button class="btn btn-flat btn-green btn-view">
+                Arrange viewing
+              </button>
+            </div>
+          </div> 
+        </li>
+      </script>
+
+<!--      <script type="text/template" id="item-template">
         <li id="<%= _.escape(content.listing_id) %>" class="listing <%= starred ? 'starred' : '' %> <%= hidden ? 'hidden' : '' %> <%= viewed ? '' : 'unviewed' %>">
         	<a class="view row" href="<%= _.escape(content.details_url) %>">
             <div class="listing_image col-md-5">
@@ -270,50 +226,30 @@
             </div>
         	</a>
         </li>
-      </script>
-
-      <script type="text/template" id="stats-template">
-        <div id="footer">
-          <ul class="nav nav-pills" id="filters">
-            <li class="selected" id="active">
-              <a href="javascript:void(0)">Active<span class="badge"><%= total-hidden%></span></a>
-            </li>
-            <li id="starred">
-              <a href="javascript:void(0)">Favourites<span class="badge"><%= starred%></span></a>
-            </li>
-            <li id="viewed">
-              <a href="javascript:void(0)">Viewings<span class="badge"><%= viewed%></span></a>
-            </li>
-            <li id="hidden">
-              <a href="javascript:void(0)">Hidden<span class="badge"><%= hidden%></span></a>
-            </li>
-          </ul>
-        </div>
-      </script>
+      </script>-->
 
       <script>
-      $('.heart').hover(
-        function() {
-          $(this).css({"color" : "white"});
-        },
-        function() {
-          $(this).css({"color": "rgba(44, 62, 80, 1"});
-        }
-      );
+        $('.heart').hover(
+          function() {
+            $(this).css({"color" : "white"});
+          },
+          function() {
+            $(this).css({"color": "rgba(44, 62, 80, 1"});
+          }
+        );
 
-      $('.heart').click(
-        function() {
-          $(this).css({"color": "#f1c40f"});
-        }
-      );
-      
-      $('.remove').click(
-        function() {
-          $(this).css({"color": "#f1c40f"});
-        }
-      );
-
-        </script>
+        $('.heart').click(
+          function() {
+            $(this).css({"color": "#f1c40f"});
+          }
+        );
+        
+        $('.remove').click(
+          function() {
+            $(this).css({"color": "#f1c40f"});
+          }
+        );
+      </script>
     </body>
 
   </html>

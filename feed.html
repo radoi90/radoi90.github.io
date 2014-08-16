@@ -84,45 +84,19 @@
 
       <!-- Templates -->
 
-      <script type="text/template" id="login-template">
-        <header id="header"></header>
-        <div class="col-sm-6 col-md-4 col-sm-offset-3 col-md-offset-4 login">
-          <form class="login-form">
-            <h2>Log In</h2>
-            <div class="error" style="display:none"></div>
-            <div class="success" style="display:none"></div>
-            <input class="form-control" type="email" id="login-email" placeholder="Email" />
-            <input class="form-control" type="password" id="login-password" placeholder="Password" />
-            <button class="btn btn-default">Log In</button>
-            <a class="reset-password">reset password</a>
-          </form>
-
-          <form class="signup-form">
-            <h2>Sign Up</h2>
-            <div class="error" style="display:none"></div>
-            <input class="form-control" type="email" id="signup-email" placeholder="Email" />
-            <input class="form-control" type="password" id="signup-password" placeholder="Create a Password" />
-            <button class="btn btn-default">Sign Up</button>
-          </form>
-        </div>
-      </script>
-
       <script type="text/template" id="manage-properties-template">
         <!-- List header  -->
         <div id="list-header">
-          <div >
-            <div  id="name-title"><%= Parse.User.current().attributes.first_name%>&#39;s Feed</div>  
-            <div id="filters">
-              <button class="btn selected" id="active">Active</button>
-              <button class="btn" id="booked">Viewings</button>
-              <button class="btn" id="starred">
-                <i class="fa fa-heart"></i>  
-              </button>
-              <button class="btn" id="hidden">
-                <i class="fa fa-times"></i>
-              </button>
-            </div>  
-          </div>
+          <div id="filters">
+            <button class="btn selected" id="active">Active</button>
+            <button class="btn" id="booked">Viewings</button>
+            <button class="btn" id="starred">
+              <i class="fa fa-heart"></i>
+            </button>
+            <button class="btn" id="hidden">
+              <i class="fa fa-times"></i>
+            </button>
+          </div>  
         </div>
 
         <div id="list">
@@ -147,20 +121,18 @@
                   <div class="">
                     <div class="property-details">
                       <div class="property-rooms">
-                        <div class="">
-                          <div class="property-rooms-row">
-                            <div class="col-room">
-                              <img src="./img/beds.png" width="30px" height="20px" class="beds"/>
-                              <div class="bed-num"><%=_.escape(content.num_bedrooms) > 0 ? _.escape(content.num_bedrooms) : 'STUDIO'%></div>
-                            </div>
-                            <div class="col-room">
-                              <img src="./img/baths.png" width="32px" height="20px" class="baths"/>
-                              <div class="bath-num"><%=_.escape(content.num_bathrooms) > 0 ? _.escape(content.num_bathrooms) : 1%></div>
-                            </div>
-                            <div class="col-room col-room-right">
-                              <img src="./img/sofa.png" width="34px" height="15px" class="sofa"/>
-                              <div class="lounge-num"><%=_.escape(content.num_recepts)%></div>
-                            </div>
+                        <div class="property-rooms-row">
+                          <div class="col-room">
+                            <img src="./img/beds.png" width="30px" height="20px" class="beds"/>
+                            <div class="bed-num"><%=_.escape(content.num_bedrooms) > 0 ? _.escape(content.num_bedrooms) : 'STUDIO'%></div>
+                          </div>
+                          <div class="col-room">
+                            <img src="./img/baths.png" width="32px" height="20px" class="baths"/>
+                            <div class="bath-num"><%=_.escape(content.num_bathrooms) > 0 ? _.escape(content.num_bathrooms) : 1%></div>
+                          </div>
+                          <div class="col-room col-room-right">
+                            <img src="./img/sofa.png" width="34px" height="15px" class="sofa"/>
+                            <div class="lounge-num"><%=_.escape(content.num_recepts)%></div>
                           </div>
                         </div>
                       </div>
@@ -174,12 +146,12 @@
           </div>
           <div class="property-footer">
             <div class="property-address">
-              <%= _.escape(content.displayable_address) %><br/>
+              <span class="address"><%= _.escape(content.displayable_address) %></span></br>
               <span class="date">Added <%= _.escape(dateDiff(content.last_published_date)) %></span> 
             </div>
             <div class="view-button">
-              <button class="btn btn-flat btn-green btn-view">
-                Arrange viewing
+              <button class="btn btn-flat btn-green <%= booked ? 'btn-view-pend' : 'btn-view'%> book">
+                <%= booked ? 'Viewing pending' : 'Arrange viewing' %>
               </button>
             </div>
           </div> 

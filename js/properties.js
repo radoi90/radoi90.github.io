@@ -39,6 +39,7 @@ function getZooplaID(s) {
     id += s[i];
     i += 1;
   }
+  console.log(id);
 
   return id;
 }
@@ -63,7 +64,7 @@ var map, inputProperty, hook, markers = [];
 function initializeMap() {
   var mapOptions = {
     zoom: 11,
-    center: new google.maps.LatLng(51.5070, -0.1275)
+    center: new google.maps.LatLng(51.5072, -0.1275)
   }
   
   map = new google.maps.Map(document.getElementById('map-canvas'),
@@ -152,7 +153,7 @@ $(function() {
       content: "empty listing",
       hidden: false,
       starred: false,
-      booked: false,
+      viewed: false,
     },
 
     // Ensure that each property created has `content`.
@@ -174,10 +175,10 @@ $(function() {
       ga('send', 'propertyClick', 'hide', Parse.User.current(), this.get("content").details_url);
     },
 
-    // Toggle the `booked` state of this property item.
-    book: function() {
-        this.save({booked: true});
-        ga('send', 'propertyClick', 'book', Parse.User.current(), this.get("content").details_url);
+    // Toggle the `starred` state of this property item.
+    view: function() {
+        this.save({viewed: true});
+        ga('send', 'propertyClick', 'view', Parse.User.current(), this.get("content").details_url);
         var listing = this.get("content");
         $("#viewing-number").val(listing.agent_phone);
         $("#viewing-address").val(listing.displayable_address);
@@ -204,9 +205,14 @@ $(function() {
     // Reference to this collection's model.
     model: Property,
 
-    // Filter down the list of all property items that have been booked.
-    booked: function() {
-      return this.filter(function(property){ return property.get('booked'); });
+    // Filter down the list of all property items that have been viewed.
+    viewed: function() {
+      return this.filter(function(property){ return property.get('viewed'); });
+    },
+
+    // Filter down the list to only property items that are still not viewed.
+    unviewed: function() {
+      return this.without.apply(this, this.viewed());
     },
 
      // Filter down the list of all property items that are hidden.
@@ -215,7 +221,7 @@ $(function() {
     },
 
     // Filter down the list to only property items that are not hidden.
-    active: function() {
+    potential: function() {
       return this.without.apply(this, this.hidden());
     },
 
@@ -248,11 +254,10 @@ $(function() {
 
     // The DOM events specific to an item.
     events: {
-      "click .property-box"    : "showDetails",
-      "click .book"            : "toggleBooked",
-      "click .heart"           : "toggleStar",
-      "click .remove"          : "toggleHidden",
-      "mouseleave .property"   : "highlight"
+      "click .markview"          : "toggleViewed",
+      "click .star"              : "toggleStar",
+      "click .hide"              : "toggleHidden",
+      "mouseleave .listing"      : "highlight"
     },
 
     // The PropertyView listens for changes to its model, re-rendering. Since there's
@@ -291,21 +296,15 @@ $(function() {
       $(this.el).remove();
     },
 
-    // Toggle the `"booked"` state of the model.
-    toggleBooked: function() {
-      this.model.book();
+    // Toggle the `"viewed"` state of the model.
+    toggleViewed: function() {
+      this.model.view();
     },
 
     highlight: function() {
-      //console.log("hover");
-    },
-
-    showDetails: function(e) {
-      var el = $(e.target);
-      if (el[0].className == "property") {
-        window.location.href = this.model.get("content").details_url;
-      }
+      console.log("hover");
     }
+
   });
 
   // The Application
@@ -314,10 +313,14 @@ $(function() {
   // The main view that lets a user manage their property items
   var ManagePropertiesView = Parse.View.extend({
 
+    // Our template for the line of statistics at the bottom of the app.
+    statsTemplate: _.template($('#stats-template').html()),
+
     // Delegated events for creating new items, and clearing completed ones.
     events: {
-      "click button.btn-logout": "logOut",
-      "click div#filters button": "selectFilter"
+      "keypress #new-property":  "createOnEnter",
+      "click .log-out": "logOut",
+      "click ul#filters a": "selectFilter"
     },
 
     el: ".content",
@@ -327,10 +330,13 @@ $(function() {
     // loading any preexisting properties that might be saved to Parse.
     initialize: function() {
       var self = this;
-      _.bindAll(this, 'addOne', 'addAll', 'addActive', 'addSome', 'render', 'logOut');
+
+      _.bindAll(this, 'addOne', 'addAll', 'addActive', 'addSome', 'render', 'logOut', 'createOnEnter');
 
       // Main property management template
       this.$el.html(_.template($("#manage-properties-template").html()));
+      
+      this.input = this.$("#new-property");
 
       // Create our collection of Properties
       this.properties = new PropertyList;
@@ -362,19 +368,24 @@ $(function() {
     // Re-rendering the App just means refreshing the statistics -- the rest
     // of the app doesn't change.
     render: function() {
+      var starred = this.properties.starred().length;
+      var hidden = this.properties.hidden().length;
+      var viewed = this.properties.viewed().length;
+
+      this.$('#property-stats').html(this.statsTemplate({
+        total:      this.properties.length,
+        starred:    starred, 
+        hidden:     hidden,
+        viewed:   viewed
+      }));
+
       this.delegateEvents();
     },
 
     // Filters the list based on which type of filter is selected
     selectFilter: function(e) {
-      var el = $(e.target);
+      var el = $(e.target.parentElement);
       var filterValue = el.attr("id");
-      
-      if (!filterValue) {
-        el = $(e.target.parentElement);
-        filterValue = el.attr("id");
-      }
-      
       state.set({filter: filterValue});
       Parse.history.navigate(filterValue);
     },
@@ -382,18 +393,16 @@ $(function() {
     filter: function() {
       var filterValue = state.get("filter");
       ga('send', 'filter', filterValue, Parse.User.current());
-
-      this.$("div#filters button").removeClass("selected");
-      this.$("div#filters button#" + filterValue).addClass("selected");
-
+      this.$("ul#filters li").removeClass("selected");
+      this.$("ul#filters li#" + filterValue).addClass("selected");
       if (filterValue === "all") {
         this.addAll();
       } else if (filterValue === "starred") {
         this.addSome(function(item) { return item.get('starred') });
       } else if (filterValue === "hidden") {
         this.addSome(function(item) { return item.get('hidden') });
-      } else if (filterValue === "booked") {
-        this.addSome(function(item) { return item.get('booked') });
+      } else if (filterValue === "viewed") {
+        this.addSome(function(item) { return item.get('viewed') });
       } else {
         this.addSome(function(item) { return !item.get('hidden') });
       }
@@ -401,8 +410,8 @@ $(function() {
 
     // Resets the filters to display all properties
     resetFilters: function() {
-      this.$("div#filters button").removeClass("selected");
-      this.$("div#filters button#active").addClass("selected");
+      this.$("ul#filters li").removeClass("selected");
+      this.$("ul#filters li#active").addClass("selected");
       this.addSome(function(item) { return !item.get('hidden') });
     },
 
@@ -436,6 +445,129 @@ $(function() {
       this.$("#property-list").html("");
       deleteMarkers();
       this.properties.chain().filter(filter).each(function(item) { self.addOne(item) });
+    },
+
+    // If you hit return in the main input field, create new Property model
+    createOnEnter: function(e) {
+      hook = this;
+      if (e.keyCode != 13) return;
+
+      var zooplaAPI = 'http://api.zoopla.co.uk/api/v1/property_listings.js?listing_id=' +
+                      getZooplaID(this.input.val()) +
+                      '&api_key=kwt27yfdcvd6ek4gq2bqy2z5&callback=?';
+
+      this.input.val('');
+      getJSONP(zooplaAPI, function(data) {
+        var propACL = new Parse.ACL(Parse.User.current());
+        propACL.setRoleReadAccess("Administrator",true);
+        propACL.setRoleWriteAccess("Administrator",true);
+
+        hook.properties.create({
+          //TODO:
+          content:         data.listing[0],
+          hidden:          false,
+          starred:         false,
+          viewed:          false,
+          user:            Parse.User.current(),
+          ACL:             propACL
+        });
+
+        hook.resetFilters();
+      });
+    }
+  });
+
+  var LogInView = Parse.View.extend({
+    events: {
+      "submit form.login-form": "logIn",
+      "submit form.signup-form": "signUp",
+      "click a.reset-password": "resetPassword"
+    },
+
+    el: ".content",
+    
+    initialize: function() {
+      _.bindAll(this, "logIn", "signUp");
+      this.render();
+    },
+
+    logIn: function(e) {
+      var self = this;
+      var email = this.$("#login-email").val();
+      var password = this.$("#login-password").val();
+      
+      Parse.User.logIn(email, password, {
+        success: function(user) {
+          new ManagePropertiesView();
+          self.undelegateEvents();
+          delete self;
+        },
+
+        error: function(user, error) {
+          self.$(".login-form .success").hide();  
+          self.$(".login-form .error").html("Invalid email or password. Please try again. Or, <a class='reset-password'>reset password</a>.").show();
+          self.$(".login-form button").removeAttr("disabled");
+        }
+      });
+
+      this.$(".login-form button").attr("disabled", "disabled");
+
+      return false;
+    },
+
+    signUp: function(e) {
+      var self = this;
+      var email = this.$("#signup-email").val();
+      var password = this.$("#signup-password").val();
+
+      var user = new Parse.User();
+      var userACL = new Parse.ACL();
+      userACL.setRoleReadAccess("Administrator", true);
+      user.set("password", password);
+      user.set("email", email);
+      user.set("username", email);
+      user.set("ACL", userACL);
+       
+      user.signUp(null, {
+        success: function(user) {
+          new ManagePropertiesView();
+          self.undelegateEvents();
+          delete self;
+        },
+        error: function(user, error) {
+          self.$(".signup-form .error").html(error.message).show();
+          self.$(".signup-form button").removeAttr("disabled");
+        }
+      });
+
+      this.$(".signup-form button").attr("disabled", "disabled");
+
+      return false;
+    },
+
+    resetPassword: function() {
+      var email = this.$("#login-email").val();
+
+      Parse.User.requestPasswordReset(email, {
+        success: function() {
+          self.$(".login-form .success").html("We've sent you a password reset email to " + email).show();
+          self.$(".login-form .error").hide();
+        },
+        error: function(error) {
+          self.$(".login-form .success").hide();
+          if(email.length > 0) {
+            self.$(".login-form .error").html("There is no user assigned to " + email).show();
+          } else {
+            self.$(".login-form .error").html("To reset your password enter the email you used to sign up.").show();
+          }          
+          self.$(".login-form button").removeAttr("disabled");
+        }
+      });
+    },
+
+    render: function() {
+      this.$el.html(_.template($("#login-template").html()));
+      this.delegateEvents();
     }
   });
 
@@ -443,7 +575,7 @@ $(function() {
   var AppView = Parse.View.extend({
     // Instead of generating a new element, bind to the existing skeleton of
     // the App already present in the HTML.
-    el: $("#app-container"),
+    el: $("#propertyapp"),
 
     initialize: function() {
       this.render();
@@ -451,11 +583,9 @@ $(function() {
 
     render: function() {
       if (Parse.User.current()) {
-        $("#user-name").html("<span class='user-icon glyphicon glyphicon-user'></span>"+ Parse.User.current().get("first_name") +"'s feed");
-        $("#options-panel").hide();
         new ManagePropertiesView();
       } else {
-        window.location.href ="index.html";
+        new LogInView();
       }
     }
   });
@@ -466,7 +596,7 @@ $(function() {
       "all": "all",
       "starred": "starred",
       "hidden": "hidden",
-      "booked": "booked"
+      "viewed": "viewed"
     },
 
     initialize: function(options) {
@@ -489,8 +619,8 @@ $(function() {
       state.set({ filter: "hidden" });
     },
 
-    booked: function() {
-      state.set({ filter: "booked" });
+    viewed: function() {
+      state.set({ filter: "viewed" });
     }
   });
 

@@ -39,7 +39,6 @@ function getZooplaID(s) {
     id += s[i];
     i += 1;
   }
-  console.log(id);
 
   return id;
 }
@@ -298,8 +297,8 @@ $(function() {
     },
 
     highlight: function() {
-      console.log("hover");
-    }
+      //console.log("hover");
+    },
 
     showDetails: function(e) {
       var el = $(e.target);
@@ -354,7 +353,6 @@ $(function() {
 
     // Logs out the user and shows the login view
     logOut: function(e) {
-      console.log("point");
       Parse.User.logOut();
       new LogInView();
       this.undelegateEvents();

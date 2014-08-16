@@ -438,35 +438,6 @@ $(function() {
       this.$("#property-list").html("");
       deleteMarkers();
       this.properties.chain().filter(filter).each(function(item) { self.addOne(item) });
-    },
-
-    // If you hit return in the main input field, create new Property model
-    createOnEnter: function(e) {
-      hook = this;
-      if (e.keyCode != 13) return;
-
-      var zooplaAPI = 'http://api.zoopla.co.uk/api/v1/property_listings.js?listing_id=' +
-                      getZooplaID(this.input.val()) +
-                      '&api_key=kwt27yfdcvd6ek4gq2bqy2z5&callback=?';
-
-      this.input.val('');
-      getJSONP(zooplaAPI, function(data) {
-        var propACL = new Parse.ACL(Parse.User.current());
-        propACL.setRoleReadAccess("Administrator",true);
-        propACL.setRoleWriteAccess("Administrator",true);
-
-        hook.properties.create({
-          //TODO:
-          content:         data.listing[0],
-          hidden:          false,
-          starred:         false,
-          booked:          false,
-          user:            Parse.User.current(),
-          ACL:             propACL
-        });
-
-        hook.resetFilters();
-      });
     }
   });
 

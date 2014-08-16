@@ -249,10 +249,11 @@ $(function() {
 
     // The DOM events specific to an item.
     events: {
-      "click .book"              : "toggleBooked",
-      "click .star"              : "toggleStar",
-      "click .hide"              : "toggleHidden",
-      "mouseleave .listing"      : "highlight"
+      "click .property-box"    : "showDetails",
+      "click .book"            : "toggleBooked",
+      "click .heart"           : "toggleStar",
+      "click .remove"          : "toggleHidden",
+      "mouseleave .property"   : "highlight"
     },
 
     // The PropertyView listens for changes to its model, re-rendering. Since there's
@@ -300,6 +301,12 @@ $(function() {
       console.log("hover");
     }
 
+    showDetails: function(e) {
+      var el = $(e.target);
+      if (el[0].className == "property") {
+        window.location.href = this.model.get("content").details_url;
+      }
+    }
   });
 
   // The Application
@@ -310,7 +317,6 @@ $(function() {
 
     // Delegated events for creating new items, and clearing completed ones.
     events: {
-      "keypress #new-property":  "createOnEnter",
       "click button.btn-logout": "logOut",
       "click div#filters button": "selectFilter"
     },
@@ -322,7 +328,7 @@ $(function() {
     // loading any preexisting properties that might be saved to Parse.
     initialize: function() {
       var self = this;
-      _.bindAll(this, 'addOne', 'addAll', 'addActive', 'addSome', 'render', 'logOut', 'createOnEnter');
+      _.bindAll(this, 'addOne', 'addAll', 'addActive', 'addSome', 'render', 'logOut');
 
       // Main property management template
       this.$el.html(_.template($("#manage-properties-template").html()));
@@ -366,6 +372,11 @@ $(function() {
       var el = $(e.target);
       var filterValue = el.attr("id");
       
+      if (!filterValue) {
+        el = $(e.target.parentElement);
+        filterValue = el.attr("id");
+      }
+      
       state.set({filter: filterValue});
       Parse.history.navigate(filterValue);
     },
@@ -373,8 +384,10 @@ $(function() {
     filter: function() {
       var filterValue = state.get("filter");
       ga('send', 'filter', filterValue, Parse.User.current());
+
       this.$("div#filters button").removeClass("selected");
       this.$("div#filters button#" + filterValue).addClass("selected");
+
       if (filterValue === "all") {
         this.addAll();
       } else if (filterValue === "starred") {
@@ -469,9 +482,10 @@ $(function() {
 
     render: function() {
       if (Parse.User.current()) {
+        $("#user-name").html("<span class='user-icon glyphicon glyphicon-user'></span>"+ Parse.User.current().get("first_name") +"'s feed");
         new ManagePropertiesView();
       } else {
-        //new LogInView();
+        window.location.href ="index.html";
       }
     }
   });

@@ -64,7 +64,7 @@ var map, inputProperty, hook, markers = [];
 function initializeMap() {
   var mapOptions = {
     zoom: 11,
-    center: new google.maps.LatLng(51.5072, -0.1275)
+    center: new google.maps.LatLng(51.5070, -0.1275)
   }
   
   map = new google.maps.Map(document.getElementById('map-canvas'),
@@ -76,9 +76,9 @@ function initializeMap() {
   var control = document.getElementById('transit-wpr');
   map.controls[google.maps.ControlPosition.TOP_RIGHT].push(control);
 
-  //google.maps.event.addDomListener(control, 'click', function() {
-  //  transitLayer.setMap(transitLayer.getMap() ? null : map);
-  //});
+  google.maps.event.addDomListener(control, 'click', function() {
+    transitLayer.setMap(transitLayer.getMap() ? null : map);
+  });
 };
 
 // Add a marker to the map and push to the array.

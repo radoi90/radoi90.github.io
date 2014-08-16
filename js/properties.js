@@ -452,6 +452,7 @@ $(function() {
     render: function() {
       if (Parse.User.current()) {
         $("#user-name").html("<span class='user-icon glyphicon glyphicon-user'></span>"+ Parse.User.current().get("first_name") +"'s feed");
+        $("#options-panel").hide();
         new ManagePropertiesView();
       } else {
         window.location.href ="index.html";

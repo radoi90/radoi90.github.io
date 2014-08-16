@@ -25,7 +25,34 @@
 
       ga('create', 'UA-37859939-3', 'auto');
       ga('send', 'pageview');
+    </script>
 
+    <script>
+      function navButtonPressed() {
+        $("#options-panel").toggle();
+      }
+
+      $('.heart').hover(
+        function() {
+          $(this).css({"color" : "white"});
+        },
+        function() {
+          $(this).css({"color": "rgba(44, 62, 80, 1"});
+        }
+      );
+      
+      $('.remove').click(
+        function() {
+          $(this).css({"color": "#f1c40f"});
+        }
+      );
+
+      function logOut() {
+        if (Parse.User.current()) {
+          Parse.User.logOut();
+          window.location.href = "index.html";
+        }
+      }
     </script>
   </head>
   <body>

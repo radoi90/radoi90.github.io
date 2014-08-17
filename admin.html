@@ -126,7 +126,7 @@
     </script>
 
     <script type="text/template" id="item-template">
-      <li id="<%= _.escape(content.listing_id) %>" class="listing <%= starred ? 'starred' : '' %> <%= hidden ? 'hidden' : '' %> <%= viewed ? '' : 'unviewed' %>">
+      <li id="<%= _.escape(content.listing_id) %>" class="listing <%= starred ? 'starred' : '' %> <%= hidden ? 'hidden' : '' %> <%= booked ? 'booked' : '' %>">
       	<a class="view row" href="<%= _.escape(content.details_url) %>">
           <div class="listing_image col-md-5">
             <img src="<%= _.escape(content.image_url) %>">
@@ -162,7 +162,7 @@
 
             <div class="row-fluid listing_options">
               <div class="col-xs-8 col-sm-12 col-md-8">
-                <input class="markview btn btn-primary" type="checkbox" <%= viewed ? 'checked="checked"' : '' %>> 
+                <input class="book btn btn-primary" type="checkbox" <%= booked ? 'checked="checked"' : '' %>> 
               </div>
               <div class="col-xs-2 col-sm-6 col-md-2">
                 <input class="star btn btn-default" type="checkbox" <%= starred ? 'checked="checked"' : '' %>>
@@ -189,8 +189,8 @@
           <li id="starred">
             <a href="javascript:void(0)">Favourites<span class="badge"><%= starred%></span></a>
           </li>
-          <li id="viewed">
-            <a href="javascript:void(0)">Viewings<span class="badge"><%= viewed%></span></a>
+          <li id="booked">
+            <a href="javascript:void(0)">Viewings<span class="badge"><%= booked%></span></a>
           </li>
           <li id="hidden">
             <a href="javascript:void(0)">Hidden<span class="badge"><%= hidden%></span></a>

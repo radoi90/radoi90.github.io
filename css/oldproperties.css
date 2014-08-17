@@ -314,7 +314,7 @@ a {
     display: none;
 }
 
-#property-list li .markview {
+#property-list li .book {
     margin: auto 0;
     border: none; /* Mobile Safari */
     -webkit-appearance: none;
@@ -341,7 +341,7 @@ a {
     appearance: none;
 }
 
-#property-list li .markview:after {
+#property-list li .book:after {
     content: 'ARRANGE VIEWING';
     line-height: 41px; /* 40 + a couple of pixels visual adjustment */
     text-shadow: 0 -1px 0 #bfbfbf;
@@ -365,11 +365,11 @@ a {
     text-shadow: 0 -1px 0 #bfbfbf;
 }
 
-#property-list li .markview:checked {
+#property-list li .book:checked {
     background-color: rgba(79, 130, 146, 0.69);
 }
 
-#property-list li .markview:checked:after {
+#property-list li .book:checked:after {
     content: 'VIEWING PENDING';
     text-shadow: 0 1px 0 #669991;
     bottom: 1px;

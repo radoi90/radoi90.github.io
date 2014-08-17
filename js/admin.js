@@ -145,7 +145,7 @@ $(function() {
       content: "empty listing",
       hidden: false,
       starred: false,
-      viewed: false,
+      booked: false,
     },
 
     // Ensure that each property created has `content`.
@@ -166,8 +166,8 @@ $(function() {
     },
 
     // Toggle the `starred` state of this property item.
-    view: function() {
-        this.save({viewed: true});
+    book: function() {
+        this.save({booked: true});
     }
   });
 
@@ -186,17 +186,12 @@ $(function() {
     // Reference to this collection's model.
     model: Property,
 
-    // Filter down the list of all property items that have been viewed.
-    viewed: function() {
-      return this.filter(function(property){ return property.get('viewed'); });
+    // Filter down the list of all property items that have been booked.
+    booked: function() {
+      return this.filter(function(property){ return property.get('booked'); });
     },
 
-    // Filter down the list to only property items that are still not viewed.
-    unviewed: function() {
-      return this.without.apply(this, this.viewed());
-    },
-
-     // Filter down the list of all property items that are hidden.
+    // Filter down the list of all property items that are hidden.
     hidden: function() {
       return this.filter(function(property){ return property.get('hidden'); });
     },
@@ -235,7 +230,7 @@ $(function() {
 
     // The DOM events specific to an item.
     events: {
-      "click .markview"          : "toggleViewed",
+      "click .book"          : "toggleBooked",
       "click .star"              : "toggleStar",
       "click .hide"              : "toggleHidden",
       "mouseleave .listing"      : "highlight"
@@ -269,9 +264,9 @@ $(function() {
       this.model.hide();
     },
 
-    // Toggle the `"viewed"` state of the model.
-    toggleViewed: function() {
-      this.model.view();
+    // Toggle the `"booked"` state of the model.
+    toggleBooked: function() {
+      this.model.book();
     },
 
     highlight: function() {
@@ -362,13 +357,13 @@ $(function() {
     render: function() {
       var starred = this.properties.starred().length;
       var hidden = this.properties.hidden().length;
-      var viewed = this.properties.viewed().length;
+      var booked = this.properties.booked().length;
 
       this.$('#property-stats').html(this.statsTemplate({
         total:      this.properties.length,
         starred:    starred, 
         hidden:     hidden,
-        viewed:   viewed
+        booked:   booked
       }));
 
       this.delegateEvents();
@@ -401,8 +396,8 @@ $(function() {
         this.addSome(function(item) { return item.get('starred') });
       } else if (filterValue === "hidden") {
         this.addSome(function(item) { return item.get('hidden') });
-      } else if (filterValue === "viewed") {
-        this.addSome(function(item) { return item.get('viewed') });
+      } else if (filterValue === "booked") {
+        this.addSome(function(item) { return item.get('booked') });
       } else {
         this.addSome(function(item) { return !item.get('hidden') });
       }
@@ -467,7 +462,7 @@ $(function() {
           content:         data.listing[0],
           hidden:          false,
           starred:         false,
-          viewed:          false,
+          booked:          false,
           user:            hook.currentUser,
           ACL:             propACL
         });
@@ -584,7 +579,7 @@ $(function() {
       "all": "all",
       "starred": "starred",
       "hidden": "hidden",
-      "viewed": "viewed"
+      "booked": "booked"
     },
 
     initialize: function(options) {
@@ -607,8 +602,8 @@ $(function() {
       state.set({ filter: "hidden" });
     },
 
-    viewed: function() {
-      state.set({ filter: "viewed" });
+    booked: function() {
+      state.set({ filter: "booked" });
     }
   });
 

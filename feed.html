@@ -147,7 +147,7 @@
       </script>
 
       <script type="text/template" id="item-template">
-        <li id="<%= _.escape(content.listing_id) %>" class="property-box <%= starred ? 'hearted' : '' %> <%= hidden ? 'removed' : '' %> <%= booked ? 'booked' : '' %>">
+        <div id="<%= _.escape(content.listing_id) %>" class="property-box <%= starred ? 'hearted' : '' %> <%= hidden ? 'removed' : '' %> <%= booked ? 'booked' : '' %>">
           <div class="property" style="background-image: url('<%= _.escape(content.image_url)%>')">
             <div class="property-container">
               <div class="button-header">
@@ -197,7 +197,7 @@
               </button>
             </div>
           </div> 
-        </li>
+        </div>
       </script>
     </body>
 

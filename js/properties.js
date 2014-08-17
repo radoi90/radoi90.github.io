@@ -80,52 +80,6 @@ function initializeMap() {
   });
 };
 
-// Add a marker to the map and push to the array.
-function addMarker(view) {
-  var property =  view.model;
-  var myLatLng = new google.maps.LatLng(property.get('content').latitude, property.get('content').longitude);
-
-  var image = {
-    url: 'http://chart.apis.google.com/chart?chst=d_map_pin_letter&chld=' +
-    ($("#"+ view.el.id).index() + 1 ) +
-    '|428bca|FFFFFF',
-    // This marker is 20 pixels wide by 32 pixels tall.
-    size: new google.maps.Size(21, 34),
-    // The origin for this image is 0,0.
-    origin: new google.maps.Point(0,0),
-    // The anchor for this image is the base of the flagpole at 0,32.
-    anchor: new google.maps.Point(11, 34)
-  };
-
-  var marker = new google.maps.Marker({
-    position: myLatLng,
-    map: map,
-    icon: image,
-    title: "" + $("#"+ view.el.id).index(),
-    zIndex: -$("#"+ view.el.id).index()
-  });
-
-  markers.push(marker);
-}
-
-// Sets the map on all markers in the array.
-function setAllMap(map) {
-  for (var i = 0; i < markers.length; i++) {
-    markers[i].setMap(map);
-  }
-}
-
-// Removes the markers from the map, but keeps them in the array.
-function clearMarkers() {
-  setAllMap(null);
-}
-
-// Deletes all markers in the array by removing references to them.
-function deleteMarkers() {
-  clearMarkers();
-  markers = [];
-}
-
 $(function() {
 
   Parse.$ = jQuery;
@@ -252,16 +206,20 @@ $(function() {
       "click .book"            : "toggleBooked",
       "click .heart"           : "toggleStar",
       "click .remove"          : "toggleHidden",
-      "mouseleave .property"   : "highlight"
+      "mouseenter .property-box"   : "highlightOn",
+      "mouseleave .property-box"   : "highlightOff",
     },
+
+    marker: google.maps.Marker,
 
     // The PropertyView listens for changes to its model, re-rendering. Since there's
     // a one-to-one correspondence between a Property and a PropertyView in this
     // app, we set a direct reference on the model for convenience.
     initialize: function() {
-      _.bindAll(this, 'render');
+      _.bindAll(this, 'render', 'remove');
       this.model.bind('change', this.render);
       this.el.id = this.model.get("content").listing_id;
+      this.renderMarker();
     },
 
     // Re-render the contents of the property item.
@@ -273,13 +231,24 @@ $(function() {
       return this;
     },
 
+    renderMarker: function() {
+      var myLatLng = new google.maps.LatLng(this.model.get('content').latitude, this.model.get('content').longitude);
+
+      this.marker = new google.maps.Marker({
+        position: myLatLng,
+        map: map,
+        title: "" + $("#"+ this.el.id).index(),
+        zIndex: -$("#"+ this.el.id).index()
+      });
+    },
+
     // Toggle the `"star"` state of the model.
     toggleStar: function() {
       this.model.star();
 
       var filterValue = state.get("filter");
       if (filterValue == "starred") {
-        $(this.el).remove();
+        this.remove();
       }
     },
 
@@ -288,7 +257,7 @@ $(function() {
       var self = this;
       this.model.hide();
 
-      $(this.el).remove();
+      this.remove();
     },
 
     // Toggle the `"booked"` state of the model.
@@ -296,8 +265,23 @@ $(function() {
       this.model.book();
     },
 
-    highlight: function() {
-      //console.log("hover");
+    highlightOn: function() {
+      this.marker.setAnimation(google.maps.Animation.BOUNCE);
+    },
+
+    highlightOff: function() {
+      this.marker.setAnimation(null);
+    },
+
+    remove: function() {
+      this.trigger('remove', this);
+    },
+
+    removeView: function() {
+      this.marker.setMap(null);
+      this.marker = null;
+
+      $(this.el).remove();
     },
 
     showDetails: function(e) {
@@ -321,6 +305,8 @@ $(function() {
     },
 
     el: ".content",
+
+    views: [],
 
     // At initialization we bind to the relevant events on the `Properties`
     // collection, when items are added or changed. Kick things off by
@@ -410,18 +396,15 @@ $(function() {
     // appending its element to the `<ul>`.
     addOne: function(property) {
       var view = new PropertyView({model: property});
+      this.views.push(view);
       this.$("#property-list").append(view.render().el);
-
-      $("#" + view.el.id + " h4").text(
-        ($("#"+ view.el.id).index() + 1) +". " +$("#" + view.el.id + " h4").text());
       
-      addMarker(view);
+      view.on('remove', this.removeOne, this);
     },
 
      // Add all items in the Properties collection at once.
     addAll: function(collection, filter) {
-      this.$("#property-list").html("");
-      deleteMarkers();
+      this.removeAll();
       this.properties.each(this.addOne);
     },
 
@@ -433,9 +416,24 @@ $(function() {
     // Only adds some properties, based on a filtering function that is passed in
     addSome: function(filter) {
       var self = this;
-      this.$("#property-list").html("");
-      deleteMarkers();
+      this.removeAll();
+
       this.properties.chain().filter(filter).each(function(item) { self.addOne(item) });
+    },
+
+    removeOne: function(view) {
+      var index = this.views.indexOf(view);
+
+      if (index > -1) {
+        view.removeView();
+        this.views.splice(index,1);
+      }
+    },
+
+    removeAll: function() {
+      while (this.views.length > 0) {
+        this.removeOne(this.views[0]);
+      }
     }
   });
 

@@ -62,7 +62,7 @@ var map, hook, CHARING_CROSS = new google.maps.LatLng(51.507222,-0.1275);
 
 function initializeMap() {
   var mapOptions = {
-    zoom: 20,
+    zoom: 14,
     center: CHARING_CROSS
   }
   
@@ -235,10 +235,12 @@ $(function() {
       var myLatLng = new google.maps.LatLng(this.model.get('content').latitude, this.model.get('content').longitude);
       var bounds = map.getBounds();
       
+      //if map bounds are on default center map at current marker
       if (map.getCenter() == CHARING_CROSS) {
-        console.log("charing");
         map.setCenter(myLatLng);
-      } else if (!bounds.contains(myLatLng)) {
+      } 
+      //if markers present check if bounds need altering
+      else if (!bounds.contains(myLatLng)) {
         bounds.extend(myLatLng);
         map.fitBounds(bounds);
       }
@@ -447,7 +449,7 @@ $(function() {
       //if no properties are present reset map center to Charing Cross
       if (this.views.length == 0) {
         map.setCenter(CHARING_CROSS);
-        map.setZoom(15);
+        map.setZoom(14);
       }
     },
 
@@ -457,7 +459,7 @@ $(function() {
       }
 
       map.setCenter(CHARING_CROSS);
-      map.setZoom(15);
+      map.setZoom(14);
     }
   });
 

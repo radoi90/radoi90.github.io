@@ -304,7 +304,7 @@ $(function() {
     showDetails: function(e) {
       var el = $(e.target);
       if (el[0].className == "property") {
-        window.location.href = this.model.get("content").details_url;
+        window.open(this.model.get("content").details_url,'_blank');
       }
     }
   });

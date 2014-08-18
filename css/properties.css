@@ -225,15 +225,6 @@ ul.nav a:hover { color: #fff !important; }
   overflow:hidden;
 }
 
-#list-view #list-header #name-title {
-  float: left;
-  color: white;
-  font-family: AvenirNext LT Pro Demi;
-  font-size: 18px;
-  padding: 15px;
-  padding-left: 34px;
-}
-
 #list-view #list-header #filters {
   font-family: AvenirNext LT Pro Regular;
   font-size: 10px;
@@ -656,14 +647,6 @@ button {
     height: 30px;
   }
 
-  #list-view #list-header #name-title {
-    float: left;
-    padding-left: 20px;
-    font-size: 15px;
-    width: 100%;
-    padding-bottom: 0px;
-  }
-
   #list-view #list-header #filters {
     font-size: 10px;
     padding-top: 0px;
@@ -690,4 +673,3 @@ button {
     width: 159px;
   }
 }
-

@@ -232,6 +232,7 @@ $(function() {
     },
 
     renderMarker: function() {
+      var self = this;
       var myLatLng = new google.maps.LatLng(this.model.get('content').latitude, this.model.get('content').longitude);
       var bounds = map.getBounds();
       
@@ -250,6 +251,12 @@ $(function() {
         map: map,
         title: "" + $("#"+ this.el.id).index(),
         zIndex: -$("#"+ this.el.id).index()
+      });
+
+      google.maps.event.addListener(this.marker, 'click', function() {
+        $('#list').animate({
+          scrollTop: $('#list').scrollTop() + -45 + $(self.el).position().top
+        }, 1000);
       });
     },
 

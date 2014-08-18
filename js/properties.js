@@ -58,12 +58,12 @@ var getJSONP = function(url, success) {
   head.appendChild(script);
 };
 
-var map, inputProperty, hook, markers = [];
+var map, hook, CHARING_CROSS = new google.maps.LatLng(51.507222,-0.1275);
 
 function initializeMap() {
   var mapOptions = {
-    zoom: 11,
-    center: new google.maps.LatLng(51.5070, -0.1275)
+    zoom: 20,
+    center: CHARING_CROSS
   }
   
   map = new google.maps.Map(document.getElementById('map-canvas'),
@@ -233,6 +233,15 @@ $(function() {
 
     renderMarker: function() {
       var myLatLng = new google.maps.LatLng(this.model.get('content').latitude, this.model.get('content').longitude);
+      var bounds = map.getBounds();
+      
+      if (map.getCenter() == CHARING_CROSS) {
+        console.log("charing");
+        map.setCenter(myLatLng);
+      } else if (!bounds.contains(myLatLng)) {
+        bounds.extend(myLatLng);
+        map.fitBounds(bounds);
+      }
 
       this.marker = new google.maps.Marker({
         position: myLatLng,
@@ -266,6 +275,12 @@ $(function() {
     },
 
     highlightOn: function() {
+      if (!map.getBounds().contains(this.marker.getPosition())) {
+        var bounds = map.getBounds();
+        bounds.extend(this.marker.getPosition());
+
+        map.fitBounds(bounds);
+      }
       this.marker.setAnimation(google.maps.Animation.BOUNCE);
     },
 
@@ -428,12 +443,21 @@ $(function() {
         view.removeView();
         this.views.splice(index,1);
       }
+
+      //if no properties are present reset map center to Charing Cross
+      if (this.views.length == 0) {
+        map.setCenter(CHARING_CROSS);
+        map.setZoom(15);
+      }
     },
 
     removeAll: function() {
       while (this.views.length > 0) {
         this.removeOne(this.views[0]);
       }
+
+      map.setCenter(CHARING_CROSS);
+      map.setZoom(15);
     }
   });
 

@@ -78,22 +78,30 @@
 				target="hidden_iframe" onsubmit="return checkSubmit();">
 
 			<!-- Main page -->
-			<div class="container location-form">
-					<div id="banner-text" class="animated fadeIn">
-						Let us do your rental search
+			<div class="container email-form">
+					<div id="banner-text" class="animated fadeIn" style="margin-bottom: 30px">
+						The easiest way to rent in London.
 					</div>
-					<div id="banner-text-sub" class="animated fadeIn">
-						Curated property lists and viewing arrangements
+					<div id="action-box" class="centered row animated fadeIn">
+							<input type="email" name="entry.1866180113" id="signup-email" placeholder="Email. No spam, pinky promise" class="form-control" required>
+
+							<button type="button" class="btn-flat btn-green btn-find" onclick="advanceEmailForm();">Find me properties</button>
 					</div>
-					<div id="action-box" class="centered animated fadeIn">
-						<div id="where-box" >
-							<div id="where">
-								Where?	
-							</div>					
-						  <input type="text" placeholder="e.g. Islington, NW1, near Jubilee line..." class="tm-input"/>
+
+					<div class="row">
+						<div class="col-md-4 banner-text-sub animated fadeIn">
+							<p>No more calls to or from estate agents. Ever.</p>
+							<a href="#no-calls">No way, really?</a>
 						</div>
-						<div id="btn-find-container">
-							<button type="button" class="btn-flat btn-green btn-find" onclick="advanceLocationForm();">Find my property</button>
+
+						<div class="col-md-4 banner-text-sub animated fadeIn">
+							<p>Properties curated for you, always available.</p>
+							<a href="#curation">Interesting, how so?</a>
+						</div>
+						
+						<div class="col-md-4 banner-text-sub animated fadeIn">
+							<p>Discrete interface, always with you.</p>
+							<a href="#interface">Show me what you mean.<a>
 						</div>
 					</div>
 			</div>
@@ -107,11 +115,11 @@
 
 							<div class="form-group">
 								<div class="col-sm-6">
-									<label for="signup-email" class="control-label">
+									<label for="" class="control-label">
 										Email
 										<div class="glyphicon glyphicon-question-sign" data-toggle="tooltip" title="We don't share this with estate agents. Use your email to sign into your account and access the property feed. It's also the way we'll get in touch with you to confirm your viewings."></div>
 									</label>
-									<input type="email" class="form-control" name="entry.1866180113" id="signup-email" required>
+									<input type="email" class="form-control" name="entry.1866180113" id="" required>
 								</div>
 
 								<div class="col-sm-6">
@@ -321,7 +329,7 @@
 
 <script type="text/javascript">
 	var pageIndex = 0;
-	var onPersonal = true;
+	var onEmail = true;
 
 	function loginButtonPressed() {
 		$("#options-panel").toggle();
@@ -331,32 +339,21 @@
 		window.location.href = 'feed.html';
 	}
 
-	function advanceLocationForm() {
-		onPersonal = true;
-		console.log("Checking locations");
-		var location = $("input[name='entry_922244654']");
+	function advanceEmailForm() {
+		onEmail = true;
 
-		var input = $(".tm-input").val();
+		var email = $("#signup-email").val();
 
-		if (input) {
-			if (location.val().length > 0) {
-				location.val(location.val() + ", ");
-			}
-
-			location.val(location.val() + input);
-			console.log(location.val())
-		};
-
-		if (!location.val() == "") {
+		if (validateEmail(email)) {
 			pageIndex = 1;
-			$('.location-form').addClass('animated bounceOutLeft');
+			$('.email-form').addClass('animated bounceOutLeft');
 			$('.personal-info-form').addClass('animated bounceInRight');
 			$('.personal-info-form').css('display', 'block');
 		} else {
 			$("#action-box").css("overflow", "visible");
-			$("#where-box").addClass('animated tada');
+			$("#signup-email").addClass('animated tada');
 			setTimeout(function() {
-		        $("#where-box").removeClass('animated tada');
+		        $("#signup-email").removeClass('animated tada');
 		        $("#action-box").css("overflow", "hidden");
 		    }, 1000);
 		}

@@ -54,38 +54,9 @@ html {
 
 body {
 	background-color:rgba(255,0,0,0);
-  /*color: #fff;
-  font-family: 'Montserrat', sans-serif;
-  /*padding-top: 110px;*/
-  /*background-image: url("../img/bg.png");*/
-  /*background-color: #34495e;*/
-  /*-webkit-background-size: cover;
-  -moz-background-size: cover;
-  -o-background-size: cover;
-  background-size: cover;
-  background-position: center;
-  background-repeat: no-repeat;*/
-  /*height: 100%;*/
-}
-
-.overlay {
-	/*height: 100%;*/
-	/*background-color: rgba(0, 0, 0, 0.2);*/
-}
-
-.container {
-	/*margin-top: 114px;*/
-	/*position: relative;*/
-}
-
-.location-form {
-	/*display:none;*/
-	/*display:none;*/
 }
 
 .personal-info-form {
-	/*margin-top: 150px;*/
-	/*margin-top: -350px;*/
 	position:absolute;
 	top:114px;
 	display: none;
@@ -99,7 +70,6 @@ body {
 }
 
 .property-info-form {
-	/*margin-top: -650px;*/
 	display: none;
 	position:absolute;
 	top:114px;
@@ -161,7 +131,7 @@ body {
 	margin-top: 40px;
 }
 
-#banner-text-sub {
+.banner-text-sub {
 	font-family: AvenirNext LT Pro Regular;
 	font-size: 25px;
 	color: #FFFFFF;
@@ -177,12 +147,12 @@ body {
 	/* Rectangle 8: */
 	background: rgba(255,255,255,0.33);
 
-	width:500px;
+	width:510px;
 	height:50%;
 
 	position: relative;
 	left: 50%;
-	margin-left: -250px;
+	margin-left: -255px;
 	margin-top: 80px;
 	margin-bottom: 50px;
 	overflow:hidden;
@@ -435,7 +405,7 @@ ul.nav a:hover { color: #fff !important; }
 
 .btn-orange {
   background: #f1c40f;
-  border-bottom: 2px solid #A0861D;
+  border-bottom: 1px solid #A0861D;
   -webkit-box-shadow: inset 0 -2px #A0861D;
   box-shadow: inset 0 -2px #A0861D;
   outline: none;
@@ -443,7 +413,7 @@ ul.nav a:hover { color: #fff !important; }
 
 .btn-green {
 	background: #2ECC71;
-	border-bottom: 2px solid #1B7240;
+	border-bottom: 1px solid #1B7240;
 	-webkit-box-shadow: inset 0 -2px #1B7240;
 	box-shadow: inset 0 -2px #1B7240;
 	outline: none;
@@ -467,10 +437,10 @@ ul.nav a:hover { color: #fff !important; }
 }
 
 .btn-find {
-	position:relative;
-	height: 60px;
-	width: 480px;
-	font-size: 1.6em;
+	font-size: 18px;
+	height: 42px;
+	width: 35%;
+	float: right;
 }
 
 .btn-next {
@@ -489,8 +459,11 @@ ul.nav a:hover { color: #fff !important; }
 
 	border: none;
 
+	display: inline;
+	width: 63%;
 	height: 38px;
 	line-height: 30px;
+	margin-bottom: 15px;
 
 	font-family: AvenirNext LT Pro Medium;
 	font-size: 18px;
@@ -639,7 +612,7 @@ label .control-label {
 		margin-top: 20px;
 	}
 
-	#banner-text-sub {
+	.banner-text-sub {
 		font-size: 20px;
 	}
 
@@ -651,17 +624,8 @@ label .control-label {
 		width: 100%;
 	}
 
-	.btn-find {
-		margin: 0px;
-		width: 100%;
-	}
-
 	.personal-info-form {
 		top: none;
-	}
-
-	.form-control {
-		margin-bottom: 15px;
 	}
 
 	#progress-bar-1 {
@@ -711,6 +675,9 @@ label .control-label {
 	.btn-find {
 		height: 40px;
 		font-size: 1em;
+		margin: 0px;
+		width: 100%;
+	}
 	}
 }
 

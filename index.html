@@ -21,21 +21,6 @@
 	<link href='http://fonts.googleapis.com/css?family=Nunito:400,300,700' rel='stylesheet' type='text/css'>
 
 	<script>
- 		$( document ).ready(function() {
- 			jQuery(".tm-input").tagsManager({
-		        CapitalizeFirstLetter: true,
-		        hiddenTagListName: "entry_922244654",
-		        hiddenTagListId: "entry.922244654"
-		    });
-
- 			var input = $("input[name='entry_922244654']");
- 			input.id = "entry.922244654"
-
-			$("#options-panel").hide();
-		}); 
-    </script>
-
-	<script>
 	  (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
 	  (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
 	  m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
@@ -46,186 +31,187 @@
 	</script>
 </head>
 <body>
-	<div id="propertyapp" class="overlay">
-		<!-- Navbar -->
-		<nav class="navbar navbar-default" role="navigation">
-		  <div class="container-fluid animated fadeInDown">
+	<!-- Navbar -->
+	<nav class="navbar navbar-default" role="navigation">
+	  <div class="container-fluid animated fadeInDown">
 
-		    <!-- Brand and toggle get grouped for better mobile display -->
-		    <div class="navbar-header">
-			  <div class="navbar-brand">House<span class="Q">Q</span>uest</div>
-		      <button type="button" id="nav-button-mini" class="btn-flat btn-login-mini btn-orange" onclick="loginButtonPressed();"></button>
-		    </div>
+	    <!-- Brand and toggle get grouped for better mobile display -->
+	    <div class="navbar-header">
+		  <div class="navbar-brand">House<span class="Q">Q</span>uest</div>
+	      <button type="button" id="nav-button-mini" class="btn-flat btn-login-mini btn-orange" onclick="loginButtonPressed();"></button>
+	    </div>
 
-		    <!-- Collect the nav links, forms, and other content for toggling -->
-		    <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
-		      <ul class="nav navbar-nav">
-		      	<li><a class="title hidden-xs" href="#">House<span class="Q">Q</span>uest</a></li>
-		      	<li class="pull-right">
-		      		<button type="button" id="nav-button" class="btn-flat btn-orange" onclick="loginButtonPressed();"></button>
-		      	</li>
-		      </ul>
-		    </div><!-- /.navbar-collapse -->
-		  </div><!-- /.container-fluid -->
-		</nav>
+	    <!-- Collect the nav links, forms, and other content for toggling -->
+	    <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+	      <ul class="nav navbar-nav">
+	      	<li><a class="title hidden-xs" href="#">House<span class="Q">Q</span>uest</a></li>
+	      	<li class="pull-right">
+	      		<button type="button" id="nav-button" class="btn-flat btn-orange" onclick="loginButtonPressed();"></button>
+	      	</li>
+	      </ul>
+	    </div><!-- /.navbar-collapse -->
+	  </div><!-- /.container-fluid -->
+	</nav>
 
-		<div id="options-panel">
-			
-		</div>
+	<div id="options-panel">
+	</div>
 
+	<div class="overlay">
+		<script type="text/javascript">var submitted=false;</script>
+		<iframe name="hidden_iframe" id="hidden_iframe"
+		style="display:none;" onload="if(submitted)
+		{window.location='feed.html';}"></iframe>
+		
 		<!-- Form -->
-		<form class="form-horizontal" id="user-form" role="form" action="https://docs.google.com/forms/d/1RvngjKApBx-h7Z8r-xBIMWWK9H98T-oXke4fqxErvHU/formResponse" method="post"
-				target="hidden_iframe" onsubmit="return checkSubmit();">
+		<form class="form-horizontal" id="signup-form" role="form" action="https://docs.google.com/forms/d/1RvngjKApBx-h7Z8r-xBIMWWK9H98T-oXke4fqxErvHU/formResponse" method="post"
+				target="hidden_iframe">
 
 			<!-- Main page -->
-			<div class="container location-form">
-					<div id="banner-text" class="animated fadeIn">
-						Let us do your rental search
+			<div class="container email-form">
+				<div id="banner-text" class="animated fadeIn">
+					Find rentals in London, easy.
+				</div>
+				<div class="row">
+					<div class="col-md-4 banner-text-sub animated fadeIn">
+						<p>Keep your day free. No more calls to or from estate agents.</p>
 					</div>
-					<div id="banner-text-sub" class="animated fadeIn">
-						Curated property lists and viewing arrangements
+
+					<div class="col-md-4 banner-text-sub animated fadeIn">
+						<p>Never miss the best properties. We pre-book you while you're at work.</p>
 					</div>
-					<div id="action-box" class="centered animated fadeIn">
-						<div id="where-box" >
-							<div id="where">
-								Where?	
-							</div>					
-						  <input type="text" placeholder="e.g. Islington, NW1, near Jubilee line..." class="tm-input"/>
+
+					<div class="col-md-4 banner-text-sub animated fadeIn">
+						<p>Properties curated for you. Always checked for availability.</p>
+					</div>
+					
+				</div>
+
+				<div id="action-box" class="centered row animated fadeIn">
+					<div class="row">
+						<div class="email-container">
+							<input type="email" name="entry.1866180113" id="signup-email" placeholder="Email. No spam, pinky promise" class="form-control">
 						</div>
-						<div id="btn-find-container">
-							<button type="button" class="btn-flat btn-green btn-find" onclick="advanceLocationForm();">Find my property</button>
+						<div class="btn-find-container">
+							<button type="button" class="btn-flat btn-green btn-find" onclick="advanceEmailForm();">Let's get started</button>
 						</div>
 					</div>
-			</div>
-
-			<div class="container personal-info-form">
-				<div class="row-fluid">
-					<script type="text/javascript">var submitted=false;</script>
-						<div class="col-sm-8  col-sm-offset-2" id="personal-form">
-							<h2 class="text-center">Your profile</h2>
-							<div class="error" style="display:none"></div> 
-
-							<div class="form-group">
-								<div class="col-sm-6">
-									<label for="signup-email" class="control-label">
-										Email
-										<div class="glyphicon glyphicon-question-sign" data-toggle="tooltip" title="We don't share this with estate agents. Use your email to sign into your account and access the property feed. It's also the way we'll get in touch with you to confirm your viewings."></div>
-									</label>
-									<input type="email" class="form-control" name="entry.1866180113" id="signup-email" required>
-								</div>
-
-								<div class="col-sm-6">
-									<label for="signup-password" class="control-label">
-										Password
-										<div class="glyphicon glyphicon-question-sign" data-toggle="tooltip" title="Set a password in order to access the feed of curated properties from any device."></div>
-									</label>
-									<input type="password" class="form-control" id="signup-password" required>
-								</div>						
-							</div>
-
-							<div class="form-group">
-								<div class="col-sm-6">
-									<label for="signup-first_name" class="control-label" style="font-weight: 0;">First name</label><input type="text" class="form-control" name="entry.495151048" id="signup-first_name" required>
-								</div>
-
-								<div class="col-sm-6">
-									<label for="signup-last_name" class="control-label">Last name</label>
-									<input type="text" class="form-control" name="entry.1489655683" id="signup-last_name" required>
-								</div>	
-							</div>						
-
-							<div class="form-group">
-								<div class="col-sm-6">
-									<label for="signup-employer" class="control-label">
-										Employer / school during tenancy
-										<div class="glyphicon glyphicon-question-sign" data-toggle="tooltip" title="Tell us if you're employed, self employed, a student or seeking employment. Otherwise we might suggest properties that won't be suitable for you."></div>
-									</label>
-									<input type="text" class="form-control" name="entry.893950790" id="signup-employer" required>
-								</div>
-
-								<div class="col-sm-6">
-									<label for="signup-availability" class="control-label">
-										When can you attend viewings?
-										<div class="glyphicon glyphicon-question-sign" data-toggle="tooltip" title="Let us know when you can normally go to viewings. After you confirm you can attend we'll forward you the agent's details to meet with them."></div>
-									</label>
-							 		<input placeholder="e.g. Mon-Fri 6:30-8 PM" type="text" class="form-control" name="entry.1534924529" id="signup-availability" required>
-								</div>
-							</div>
-
-							<div class="form-group text-center">
-								<button class="btn-flat btn-green btn-next" onclick="advancePersonalForm();">Next</button>
-							</div>
-
-						</div>
 				</div>
 			</div>
 
-			<div class="container property-info-form">
+			<div class="container info-form">
 				<div class="row-fluid">
-					<script type="text/javascript">var submitted=false;</script>
-					<iframe name="hidden_iframe" id="hidden_iframe"
-					style="display:none;"></iframe>
-					
-						<div class="col-sm-8  col-sm-offset-2" id="property-form">
-							<h2 class="text-center">What are you looking for?</h2>
+					<div class="col-sm-8  col-sm-offset-2">
+						<h2 class="text-center">Let's set up your account</h2>
+						<div class="error" style="display:none"></div> 
+
+						<div class="form-group">
+							<div class="col-sm-6">
+								<label for="signup-name" class="control-label" style="font-weight: 0;">What's your name?</label><input type="text" class="form-control" name="entry.495151048" id="signup-name" placeholder="Alex Alexanderson" required>
+							</div>
+
+							<div class="col-sm-6">
+								<label for="signup-password" class="control-label">
+									Set a password
+									<div class="glyphicon glyphicon-question-sign" data-toggle="tooltip" title="Set a password in order to access the feed of curated properties from any device."></div>
+								</label>
+								<input type="password" class="form-control" id="signup-password" required>
+							</div>						
+						</div>					
+
+						<div class="form-group">
+							<div class="col-sm-6">
+								<label for="signup-num_bedrooms" class="control-label">Bedrooms</label>
+								<select class="form-control" name="entry.935209026" id="signup-num_bedrooms" required>
+									<option value="">Number of bedrooms</option> <option value="Studio">Studio</option>
+									<option value="1+">1+</option> <option value="2+">2+</option>
+									<option value="3+">3+</option> <option value="4+">4+</option>
+								</select>
+							</div>
+
+							<div class="col-sm-6">
+								<label for="signup-pcm" class="control-label">
+									Max price (per month)
+								</label>
+								<select class="form-control" name="entry.1452370776" id="signup-pcm" required>
+									<option value="">Select budget</option>
+							    <option value="100" >&pound;100 pcm</option>
+							    <option value="200" >&pound;200 pcm</option>
+							    <option value="300" >&pound;300 pcm</option>
+							    <option value="400" >&pound;400 pcm</option>
+							    <option value="500" >&pound;500 pcm</option>
+							    <option value="600" >&pound;600 pcm</option>
+							    <option value="700" >&pound;700 pcm</option>
+							    <option value="800" >&pound;800 pcm</option>
+							    <option value="900" >&pound;900 pcm</option>
+							    <option value="1000" >&pound;1,000 pcm</option>
+							    <option value="1250" >&pound;1,250 pcm</option>
+							    <option value="1500" >&pound;1,500 pcm</option>
+							    <option value="1750" >&pound;1,750 pcm</option>
+							    <option value="2000" >&pound;2,000 pcm</option>
+							    <option value="2250" >&pound;2,250 pcm</option>
+							    <option value="2500" >&pound;2,500 pcm</option>
+							    <option value="2750" >&pound;2,750 pcm</option>
+							    <option value="3000" >&pound;3,000 pcm</option>
+							    <option value="3250" >&pound;3,250 pcm</option>
+							    <option value="3500" >&pound;3,500 pcm</option>
+							    <option value="3750" >&pound;3,750 pcm</option>
+							    <option value="4000" >&pound;4,000 pcm</option>
+							    <option value="4250" >&pound;4,250 pcm</option>
+							    <option value="4500" >&pound;4,500 pcm</option>
+							    <option value="4750" >&pound;4,750 pcm</option>
+							    <option value="5000" >&pound;5,000 pcm</option>
+							    <option value="5500" >&pound;5,500 pcm</option>
+							    <option value="6000" >&pound;6,000 pcm</option>
+							    <option value="6500" >&pound;6,500 pcm</option>
+							    <option value="7000" >&pound;7,000 pcm</option>
+							    <option value="7500" >&pound;7,500 pcm</option>
+							    <option value="8000" >&pound;8,000 pcm</option>
+							    <option value="8500" >&pound;8,500 pcm</option>
+							    <option value="9000" >&pound;9,000 pcm</option>
+							    <option value="9500" >&pound;9,500 pcm</option>
+							    <option value="10000" >&pound;10,000 pcm</option>
+							    <option value="12500" >&pound;12,500 pcm</option>
+							    <option value="15000" >&pound;15,000 pcm</option>
+							    <option value="17500" >&pound;17,500 pcm</option>
+							    <option value="20000" >&pound;20,000 pcm</option>
+							    <option value="25000" >&pound;25,000 pcm</option>
+								</select>
+							</div>
+						</div>
+
+						<div class="form-group">
+							<div class="col-sm-12">
+								<label for="signup-location" class="control-label" >
+									Where do you want to live?
+									<div class="glyphicon glyphicon-question-sign" data-toggle="tooltip" title="Be super specific so we can find the absolute best properties for you personally."></div>
+								</label>
+								<textarea class="form-control" name="entry.922244654" id="signup-location" rows="2" placeholder="Tell us your preferred boroughs/districts/postcodes/travel zones/stations/tube lines. If you comute tell us your destination and max travel time."></textarea>
+							</div>
+						</div>
+
+						<div id="additional-form" style="display:none;">
+							<h2 class="text-center">Extra information</h2>
 							<div class="form-group">
 								<div class="col-sm-6">
-									<label for="signup-num_bedrooms" class="control-label">Bedrooms</label>
-									<select class="form-control" name="entry.935209026" id="signup-num_bedrooms">
-										<option value="No min">No min</option> <option value="Studio">Studio</option>
-										<option value="1+">1+</option> <option value="2+">2+</option>
-										<option value="3+">3+</option> <option value="4+">4+</option>
+									<label for="signup-employer" class="control-label">
+										Employment status during tenancy
+										<div class="glyphicon glyphicon-question-sign" data-toggle="tooltip" title="Tell us if you're employed, self employed, a student or seeking employment. Otherwise we might suggest properties that won't be suitable for you."></div>
+									</label>
+									<select class="form-control" name="entry.893950790" id="signup-employer" >
+										<option value="">Select status</option>
+										<option value="employed">Employed</option>
+										<option value="self employed">Self employed/Contractor</option>
+										<option value="student">Student</option>
+										<option value="unemployed">Seeking employment</option>
 									</select>
 								</div>
 
 								<div class="col-sm-6">
-									<label for="signup-pcm" class="control-label">
-										Max price (per month)
-										<div class="glyphicon glyphicon-question-sign" data-toggle="tooltip" title="Price for the entire property per month."></div>
-									</label>
-									<select class="form-control" name="entry.1452370776" id="signup-pcm" >
-										<option value="0">No max</option>
-									    <option value="100" >&pound;100 pcm</option>
-									    <option value="200" >&pound;200 pcm</option>
-									    <option value="300" >&pound;300 pcm</option>
-									    <option value="400" >&pound;400 pcm</option>
-									    <option value="500" >&pound;500 pcm</option>
-									    <option value="600" >&pound;600 pcm</option>
-									    <option value="700" >&pound;700 pcm</option>
-									    <option value="800" >&pound;800 pcm</option>
-									    <option value="900" >&pound;900 pcm</option>
-									    <option value="1000" >&pound;1,000 pcm</option>
-									    <option value="1250" >&pound;1,250 pcm</option>
-									    <option value="1500" >&pound;1,500 pcm</option>
-									    <option value="1750" >&pound;1,750 pcm</option>
-									    <option value="2000" >&pound;2,000 pcm</option>
-									    <option value="2250" >&pound;2,250 pcm</option>
-									    <option value="2500" >&pound;2,500 pcm</option>
-									    <option value="2750" >&pound;2,750 pcm</option>
-									    <option value="3000" >&pound;3,000 pcm</option>
-									    <option value="3250" >&pound;3,250 pcm</option>
-									    <option value="3500" >&pound;3,500 pcm</option>
-									    <option value="3750" >&pound;3,750 pcm</option>
-									    <option value="4000" >&pound;4,000 pcm</option>
-									    <option value="4250" >&pound;4,250 pcm</option>
-									    <option value="4500" >&pound;4,500 pcm</option>
-									    <option value="4750" >&pound;4,750 pcm</option>
-									    <option value="5000" >&pound;5,000 pcm</option>
-									    <option value="5500" >&pound;5,500 pcm</option>
-									    <option value="6000" >&pound;6,000 pcm</option>
-									    <option value="6500" >&pound;6,500 pcm</option>
-									    <option value="7000" >&pound;7,000 pcm</option>
-									    <option value="7500" >&pound;7,500 pcm</option>
-									    <option value="8000" >&pound;8,000 pcm</option>
-									    <option value="8500" >&pound;8,500 pcm</option>
-									    <option value="9000" >&pound;9,000 pcm</option>
-									    <option value="9500" >&pound;9,500 pcm</option>
-									    <option value="10000" >&pound;10,000 pcm</option>
-									    <option value="12500" >&pound;12,500 pcm</option>
-									    <option value="15000" >&pound;15,000 pcm</option>
-									    <option value="17500" >&pound;17,500 pcm</option>
-									    <option value="20000" >&pound;20,000 pcm</option>
-									    <option value="25000" >&pound;25,000 pcm</option>
+									<label for="signup-furniture" class="control-label">Furniture</label>
+									<select class="form-control" name="entry.1101325436" id="signup-furniture">
+										<option value="Show all">Show all</option> 
+										<option value="Furnished">Furnished</option>
+										<option value="Unfurnished">Unfurnished</option>
 									</select>
 								</div>
 							</div>
@@ -251,24 +237,27 @@
 							<div class="form-group">
 								<div class="col-sm-12">
 									<label for="signup-other" class="control-label" >
-										Other preferences
+										Tell us any other requirements you have
 										<div class="glyphicon glyphicon-question-sign" data-toggle="tooltip" title="Be super specific so we can find the absolute best properties for you personally."></div>
 									</label>
-									<textarea class="form-control" name="entry.242663229" id="signup-other" rows="2" placeholder="e.g. No council flats, unfurnished ok, only properties with lounge, at least 2 bathrooms, parking spot a plus. At most 40 minutes comute to Google HQ."></textarea>
+									<textarea class="form-control" name="entry.242663229" id="signup-other" rows="2" placeholder="e.g. No council flats, only properties with lounge, at least 2 bathrooms, parking spot a plus."></textarea>
 								</div>
 							</div>
-
-							<div class="form-group text-center">
-								<button type="submit" class="btn-flat btn-green btn-next" onclick="advancePropertyForm()">Submit</button>
-							</div>
-						
 						</div>
-					<br><br>
+						
+						<div class="fluid-container">
+							<p class="bg-info" style="text-align: center;">More options <a onclick="$('#additional-form').show();">here</a> for better curation.</p>
+						</div>
+
+						<div class="form-group text-center">
+							<button class="btn-flat btn-green btn-next" onclick="submitForm()">Submit</button>
+						</div>
+
+					</div>
 				</div>
 			</div>
 
 			<div class="container success-form">
-				<script type="text/javascript">var submitted=true;</script>
 				<div id="success-box">
 					<div id="success-box-solid">
 						<div id="thumb">
@@ -288,6 +277,41 @@
 				</div>
 			</div>
 		</form>
+	</div>
+
+	<div class="outside-form">
+		<div class="greywrap">
+			<div class="container">
+		    <a name="how" id="how" style="position: relative; top: -82px;"></a>
+		    <div class="row white">
+		      <h1 class="centered">HOW IT WORKS</h1>
+		      <hr>
+		      <div class="col-sm-4 callout">
+		        <h2>No more calls</h2>
+		        <p>You can't be that person at work on the phone for ages with estate agents, especially if you're paid by the hour. We'll book you in for viewings and enquire about any property you like.</p>
+		      </div><!-- col-lg-4 -->
+
+		      <div class="col-sm-4 callout">
+		        <h2>Listings curated for you</h2>
+		        <p>Save time by leting us do the searching for you. We're on it 24/7 and all the properties we show you are available and match every specific requirement you might have.</p>
+		      </div><!-- col-lg-4 -->
+
+		      <div class="col-sm-4 callout">
+		        <h2>Simple, discrete interface</h2>
+		        <p>See all the properties we find for you in a centralized feed available from all devices. Mobile first design so you can check updates quickly at work or while comuting. One click to set up a viewing.</p>
+		      </div><!-- col-lg-4 -->
+		    </div><!-- row -->
+		  </div><!-- container -->
+	  </div><!-- greywrap -->
+
+		<div class="copyright">
+			<div class="container">
+		    <p>
+		        <span class="clerkenwell"></span>
+		        HouseQuest Ltd. &copy;2014 | Crafted in Clerkenwell, LDN
+		    </p>
+		  </div>
+	  </div>
 	</div>
 </body>
 
@@ -320,8 +344,8 @@
 </script>
 
 <script type="text/javascript">
-	var pageIndex = 0;
-	var onPersonal = true;
+	$("#options-panel").hide();
+	var onEmail = true;
 
 	function loginButtonPressed() {
 		$("#options-panel").toggle();
@@ -331,48 +355,35 @@
 		window.location.href = 'feed.html';
 	}
 
-	function advanceLocationForm() {
-		onPersonal = true;
-		console.log("Checking locations");
-		var location = $("input[name='entry_922244654']");
+	function advanceEmailForm() {
+		onEmail = true;
 
-		var input = $(".tm-input").val();
+		var email = $("#signup-email").val();
 
-		if (input) {
-			if (location.val().length > 0) {
-				location.val(location.val() + ", ");
-			}
-
-			location.val(location.val() + input);
-			console.log(location.val())
-		};
-
-		if (!location.val() == "") {
-			pageIndex = 1;
-			$('.location-form').addClass('animated bounceOutLeft');
-			$('.personal-info-form').addClass('animated bounceInRight');
-			$('.personal-info-form').css('display', 'block');
+		if (validateEmail(email)) {
+			$('.email-form').addClass('animated bounceOutLeft');
+			$('.info-form').addClass('animated bounceInRight');
+			$('.info-form').css('display', 'block');
+			$('.outside-form').hide();
 		} else {
 			$("#action-box").css("overflow", "visible");
-			$("#where-box").addClass('animated tada');
+			$("#signup-email").addClass('animated tada');
 			setTimeout(function() {
-		        $("#where-box").removeClass('animated tada');
+		        $("#signup-email").removeClass('animated tada');
 		        $("#action-box").css("overflow", "hidden");
 		    }, 1000);
 		}
 	}
 
-	function advancePersonalForm() {
-		console.log(Parse.User.current());
+	function submitForm() {
 		var email 		= $("#signup-email").val();
 		var password 	= $("#signup-password").val();
+		console.log(password);
 		
-		var fname 		= $("#signup-first_name").val();
-		var lname 		= $("#signup-last_name").val();
+		var name 		= $("#signup-name").val();
 		var employer 	= $("#signup-employer").val();
-		var availability =$("#signup-availability").val();
 
-		if (!(fname == "" || lname == "" || email == "" || !validateEmail(email) || availability == "" || employer == "")) {
+		if (!(name == "" || email == "" || !validateEmail(email) || $("#signup-num_bedrooms").val() == "" || $("#signup-pcm").val() == "")) {
 			var user = new Parse.User();
 	    var userACL = new Parse.ACL();
 	    userACL.setRoleReadAccess("Administrator", true);
@@ -380,60 +391,45 @@
 	    user.set("email", email);
 	    user.set("username", email);
 	    user.set("ACL", userACL);
-	    user.set("first_name", fname);
-	    user.set("last_name", lname);
+	    user.set("first_name", name);
 	    user.set("employer", employer);
-	    user.set("availability", availability);
 	     
 	    user.signUp(null, {
 	      success: function(user) {
-	        console.log("advancing");
-					pageIndex = 2;
-					$('.personal-info-form').addClass('animated bounceOutLeft');
-					$('.property-info-form').addClass('animated bounceInRight'); 
-					$('.property-info-form').css('display', 'block');
+					var reqACL = new Parse.ACL(Parse.User.current());
+		      reqACL.setRoleReadAccess("Administrator",true);
+		      reqACL.setRoleWriteAccess("Administrator",true);
+
+		      var Requirements = Parse.Object.extend("Requirements");
+					var requirements = new Requirements();
+					 
+					requirements.set("user", Parse.User.current());
+					requirements.set("ACL", reqACL);
+					requirements.set("num_bedrooms", $("#signup-num_bedrooms").val());
+					requirements.set("pcm", $("#signup-pcm").val());
+					requirements.set("date_min", $("#signup-date_min").val());
+					requirements.set("date_max", $("#signup-date_max").val());
+					requirements.set("furniture", $("#signup-furniture").val());
+					requirements.set("other", $("#signup-other").val());
+					
+					 
+					requirements.save(null, {
+						success: function (requirements) {
+							submitted=true;
+							$("#signup-form").submit();
+						}
+					});
 	      },
 	      error: function(user, error) {
-	        $(".personal-info-form .error").html(error.message).show();
-	        $(".personal-info-form button").removeAttr("disabled");
-	        console.log("Can't advance");
+	        $(".info-form .error").html(error.message).show();
+	        $(".info-form button").removeAttr("disabled");
 	      }
 	    });
 
-	    $(".personal-info-form button").attr("disabled", "disabled");
+	    $(".info-form button").attr("disabled", "disabled");
 		} else {
 			console.log("Can't advance");
-			$(".personal-info-form .error").html("Please fill in all fields").show();
-		}
-	}
-
-	function advancePropertyForm() {
-		onPersonal = false;
-
-		if (Parse.User.current()) {
-			var reqACL = new Parse.ACL(Parse.User.current());
-      reqACL.setRoleReadAccess("Administrator",true);
-      reqACL.setRoleWriteAccess("Administrator",true);
-
-      var Requirements = Parse.Object.extend("Requirements");
-			var requirements = new Requirements();
-			 
-			requirements.set("user", Parse.User.current());
-			requirements.set("ACL", reqACL);
-			requirements.set("num_bedrooms", $("#signup-num_bedrooms").val());
-			requirements.set("pcm", $("#signup-pcm").val());
-			requirements.set("date_min", $("#signup-date_min").val());
-			requirements.set("date_max", $("#signup-date_max").val());
-			requirements.set("other", $("#signup-other").val());
-			
-			 
-			requirements.save(null, {
-			  success: function(requirements) {
-			    $('.property-info-form').addClass('animated bounceOutLeft');
-					$('.success-form').addClass('animated bounceInRight'); 
-					$('.success-form').css('display', 'block');
-			  }
-			});
+			$(".info-form .error").html("Please fill in all fields").show();
 		}
 	}
 
@@ -575,16 +571,6 @@
 
 		new AppView;
 	});
-
-	function checkSubmit() {
-		if (onPersonal) {
-			console.log("Preventing submission");
-			return false;
-		} else {
-			console.log("allowing submission");
-			return true;
-		};
-	}
 </script>
 <script>
    $(function () { $("[data-toggle='tooltip']").tooltip(); });

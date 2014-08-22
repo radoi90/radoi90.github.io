@@ -356,7 +356,11 @@ $(function() {
       this.properties.bind('all',     this.render);
 
       // Fetch all the properties items for this user
-      this.properties.fetch();
+      this.properties.fetch({
+        success: function(list) {
+          if (list.length) $("#list-placeholder").remove();
+        }
+      });
 
       state.on("change", this.filter, this);
     },

@@ -45,18 +45,20 @@
 html {
 	height: 100%;
 	overflow-x: hidden;
-	background: url("../img/bg2.png") no-repeat center center fixed; 
-  -webkit-background-size: cover;
-  -moz-background-size: cover;
-  -o-background-size: cover;
-  background-size: cover;
+	background: url("../img/lmap-fade.min.png") no-repeat center center fixed; 
+	-webkit-background-size: cover;
+	-moz-background-size: cover;
+	-o-background-size: cover;
+	background-size: cover;
 }
 
 body {
 	background-color:rgba(255,0,0,0);
+	height: 100%;
+	font-family: AvenirNext LT Pro Regular;
 }
 
-.personal-info-form {
+.info-form {
 	position:absolute;
 	top:114px;
 	display: none;
@@ -69,7 +71,7 @@ body {
     width: 100%;
 }
 
-.property-info-form {
+.info-form {
 	display: none;
 	position:absolute;
 	top:114px;
@@ -112,10 +114,6 @@ body {
 	padding: 10px;
 }
 
-#property-form {
-}
-
-
 #content {
 	margin-top: 100px;
 }
@@ -129,13 +127,14 @@ body {
 	text-shadow: 0px 2px 0px rgba(0,0,0,0.50);
 	text-align: center;
 	margin-top: 40px;
+	margin-bottom: 30px
 }
 
 .banner-text-sub {
 	font-family: AvenirNext LT Pro Regular;
 	font-size: 25px;
 	color: #FFFFFF;
-	line-height: 24px;
+	line-height: 30px;
 	/* Curated property lis: */
 	text-shadow: 0px 2px 3px rgba(0,0,0,0.50);
 	text-align: center;
@@ -147,16 +146,20 @@ body {
 	/* Rectangle 8: */
 	background: rgba(255,255,255,0.33);
 
-	width:510px;
+	width:520px;
 	height:50%;
 
 	position: relative;
 	left: 50%;
-	margin-left: -255px;
+	margin-left: -260px;
 	margin-top: 80px;
 	margin-bottom: 50px;
 	overflow:hidden;
-	padding: 10px;
+	padding: 10px 28px;
+}
+
+#action-box .form-control {
+	margin-bottom: 0;
 }
 
 #where-box {
@@ -185,6 +188,11 @@ body {
 	outline: none;
 	position: relative;
 	overflow:hidden
+}
+
+p.cost-disclaimer {
+	color: #f1c40f;
+	font-size: 13px;
 }
 
 #options-panel:before {
@@ -273,31 +281,8 @@ a.reset-password {
 	padding-bottom: 10px;
 }
 
-.tm-input {
-	border: 0;
-	outline: none;
-	width: 100%;
-	margin-bottom: 10px;
-}
-
-.tm-tag {
-	float:left;
-	border-radius: 5px;
-	background: #3498DB;
-	font-family: AvenirNext LT Pro Medium;
-	font-size: 22px;
-	color: #FFFFFF;
-	line-height: 25px;
-	padding: 5px;
-	padding-left: 10px;
-	padding-right: 10px;
-	margin-right: 10px;
-	margin-bottom: 10px;
-}
-
-.tm-tag-remove {
-	margin-left: 5px;
-	color: #FFFFFF;
+.form-group {
+	margin-bottom: 0;
 }
 
 .navbar {
@@ -320,10 +305,10 @@ a.reset-password {
 	font-family: AvenirNext LT Pro Demi;
 	font-size: 40px;
 	color: #FFFFFF;
-	line-height: 30px;
+	line-height: 15px;
 	/* A bit about you: */
 	text-shadow: 0px 2px 0px rgba(0,0,0,0.50);
-	margin-bottom: 40px;
+	margin-bottom: 35px;
 }
 
 .navbar-header {
@@ -356,6 +341,8 @@ a.reset-password {
 }
 
 .navbar .navbar-header .navbar-brand {
+	padding: 0 5px;
+	height: 0;
   color: #fff;
   font-family: 'molotregular';
   font-size: 29px;
@@ -421,12 +408,11 @@ ul.nav a:hover { color: #fff !important; }
 
 .btn-login-mini {
 	float: right;
-	top: 7px;
-	margin-right: -15px;
-	padding: 5px 10px;
-	padding-right: 15px;
+	margin-right: -30px;
+	padding-right: 10px;
 	min-width: 0;
-	height: 40px;
+	font-size: 14px;
+	height: 30px;
 }
 
 .btn-green:active {
@@ -436,18 +422,27 @@ ul.nav a:hover { color: #fff !important; }
 	box-shadow: none;
 }
 
+.btn-find-container {
+	width: 35%;
+	float: right;
+}
+
 .btn-find {
 	font-size: 18px;
 	height: 42px;
-	width: 35%;
 	float: right;
 }
 
 .btn-next {
 	width: 160px;
 	padding-left: -5px;
-	margin-top: 40px;
+	margin-top: 30px;
 	font-size: 0.6em;
+}
+
+.email-container {
+	width: 65%;
+	float: left;
 }
 
 /* Personal form */
@@ -459,8 +454,6 @@ ul.nav a:hover { color: #fff !important; }
 
 	border: none;
 
-	display: inline;
-	width: 63%;
 	height: 38px;
 	line-height: 30px;
 	margin-bottom: 15px;
@@ -492,11 +485,11 @@ input.form-control:focus, select.form-control:focus{
 	font-family: AvenirNext LT Pro Medium;
 	font-size: 16px;
 	color: #FFFFFF;
-	line-height: 22px;
+	line-height: 25px;
 	/* First name: */
 	text-shadow: 0px 1px 0px #34495E;
 	margin-bottom: 5px !important;
-	font-size: 20px !important;
+	font-size: 18px !important;
 	font-weight: 20 !important;
 }
 
@@ -590,13 +583,32 @@ label .control-label {
 	font-weight: 20 !important;
 }
 
+.overlay {
+	min-height: 80%;
+}
+
+.greywrap {
+	background: #f5f5f5;
+	padding-top: 40px;
+	padding-bottom: 40px;
+	border-bottom: 1px solid #ddd;
+	text-align: center;
+}
+
+.copyright {
+	background: #f5f5f5;
+	padding-top: 20px;
+}
+
+.copyright p {
+	width: 100%;
+	text-align: center;
+}
 
 /* Mobile */
 /* Smartphones (portrait) ----------- */
 @media only screen and (max-width : 520px) {
 	.container {
-		/*display:none;*/
-		/*display:none;*/
 		margin-top: 0px;
 	}
 
@@ -606,25 +618,34 @@ label .control-label {
 		margin-left: 0;
 	}
 
+	#action-box .form-control {
+		margin-bottom: 15px;
+	}
+
 	#banner-text {
+		margin: 0;
 		font-size: 42px;
 		line-height: 45px;
-		margin-top: 20px;
 	}
 
 	.banner-text-sub {
-		font-size: 20px;
+		font-size: 14px;
+		line-height: 20px;
 	}
 
 	#action-box {
-		margin-top: 60px;
+		margin-top: 10px;
 	}
 
-	#btn-find-container {
+	.email-container {
 		width: 100%;
 	}
 
-	.personal-info-form {
+	.btn-find-container {
+		width: 100%;
+	}
+
+	.info-form {
 		top: none;
 	}
 
@@ -644,7 +665,7 @@ label .control-label {
 	}
 
 	.text-center {
-		line-height: 38px;
+		line-height: 15px;
 	}
 
 	.navbar-toggle {
@@ -677,7 +698,6 @@ label .control-label {
 		font-size: 1em;
 		margin: 0px;
 		width: 100%;
-	}
 	}
 }
 

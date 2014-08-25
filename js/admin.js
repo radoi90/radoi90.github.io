@@ -142,7 +142,6 @@ $(function() {
   var Property = Parse.Object.extend("Property", {
     // Default attributes for the property.
     defaults: {
-      content: "empty listing",
       hidden: false,
       starred: false,
       booked: false,
@@ -150,9 +149,15 @@ $(function() {
 
     // Ensure that each property created has `content`.
     initialize: function() {
-      if (!this.get("content")) {
-        this.set({"content": this.defaults.content});
+      for (var key in defaults) {
+        this.set({key: defaults[key]});
       }
+    },
+
+    initialize: function(data) {
+      this.set(data);
+
+      this.set({"content": data});
     },
 
     // Toggle the `starred` state of this property item.
@@ -452,20 +457,16 @@ $(function() {
                       '&api_key=kwt27yfdcvd6ek4gq2bqy2z5&callback=?';
 
       this.input.val('');
-      getJSONP(zooplaAPI, function(data) {
+      getJSONP(zooplaAPI, function(data) {      
         var propACL = new Parse.ACL(hook.currentUser);
         propACL.setRoleReadAccess("Administrator",true);
         propACL.setRoleWriteAccess("Administrator",true);
 
-        hook.properties.create({
-          //TODO:
-          content:         data.listing[0],
-          hidden:          false,
-          starred:         false,
-          booked:          false,
-          user:            hook.currentUser,
-          ACL:             propACL
-        });
+        var newProp =  new Property(data.listing[0]);
+        newProp.set({"ACL": propACL});
+        newProp.set({"user": hook.currentUser});
+
+        hook.properties.create(newProp);
 
         hook.resetFilters();
       });
